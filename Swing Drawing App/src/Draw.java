@@ -1,9 +1,14 @@
-
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Draw
 {
@@ -41,6 +46,15 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 	private Point[] stroke;	
 	final int MAX_SAMPLES = (Integer.MAX_VALUE/4 - 10); //Sufficient number of samples for points.
 	
+	private JMenuItem openFile;
+	private JMenuItem saveFile;
+	private JMenuItem newFile;
+	
+	JFileChooser fc;
+	File f;
+	ImageIcon image = new ImageIcon("Default.jpg");
+	JLabel label = new JLabel("",image,JLabel.CENTER);
+	
 	// constructor
 	public DrawFrame()
 	{
@@ -49,8 +63,46 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		
 		contentPane = new JPanel();
 		outerPanel = new JPanel(new BorderLayout());
+		// ----------------
+		// create a menu bar
+		// ----------------
+
 		JMenuBar menuBar = new JMenuBar();
 		this.setJMenuBar(menuBar);
+		// ----------------
+		// create the file menu
+		// ----------------
+
+		JMenu fileMenu = new JMenu("File");
+
+		openFile = new JMenuItem("Open");
+		saveFile = new JMenuItem("Save");
+		newFile = new JMenuItem("New");
+
+		menuBar.add(fileMenu);
+
+		// ----------------
+		// create a file chooser for saving and opening
+		// ----------------
+
+		fc = new JFileChooser(new File("."));
+		final String[] EXTENSIONS = { ".jpg", ".jpeg" };
+		fc.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png"));
+
+		fileMenu.add(openFile);
+		fileMenu.add(saveFile);
+		fileMenu.add(newFile);
+
+		// ----------------
+		// add action listeners to menu options
+		// ----------------
+
+		openFile.addActionListener(this);
+		saveFile.addActionListener(this);
+		newFile.addActionListener(this);
+
+		JPanel panel = new JPanel();
+				
 		inkPanel = new PaintPanel();
 		clearButton = new JButton("Clear");
 		stroke = new Point[MAX_SAMPLES];
@@ -63,7 +115,8 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		
 		contentPane.add(outerPanel);
 		contentPane.add(clearButton);
-
+		contentPane.add(label);
+		
 		// add listeners
 		this.addWindowListener(new WindowCloser());
 		inkPanel.addMouseMotionListener(this);
@@ -78,8 +131,63 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 	@Override
 	public void actionPerformed(ActionEvent ae)
 	{
-		inkPanel.clear();
-		sampleCount = 0;
+		Object source = ae.getSource();
+
+		if (source == openFile) {
+			if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+				f = fc.getSelectedFile();
+				openFile(f);
+			}
+		} else if (source == saveFile) {
+			// open file saver
+			if (fc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+				f = fc.getSelectedFile();
+
+				try {
+					saveFile(f);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		} else if (source == newFile) {
+			// open new tab with new picture
+			// blank canvas
+
+
+
+
+
+		} else if (source == clearButton){
+			inkPanel.clear();
+			sampleCount = 0;
+		}
+
+	}
+	private void openFile(File f) {
+
+		// ----------------
+		// update the contents of the jlabel to be the image from the selected file
+		// ----------------
+
+		Image image = Toolkit.getDefaultToolkit().getImage(f.getPath());
+		label.setIcon(new ImageIcon(image));
+		label.repaint();
+	}
+
+	private void saveFile(File f) throws IOException {
+
+		// ----------------
+		// Take all the contents of the jpanel and save them to a png 
+		// 		destination is the file they selected via the filechooser
+		// ----------------
+
+		Container c = this.getContentPane();
+		BufferedImage im = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		c.paint(im.getGraphics());
+		ImageIO.write(im, "PNG", f);
+
+
 	}
 
 	// implement MouseMotionListener methods (7)
