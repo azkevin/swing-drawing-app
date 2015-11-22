@@ -158,7 +158,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 
 		} else if (source == clearButton){
 			inkPanel.clear();
-			sampleCount = 0;
+			
 		}
 
 	}
@@ -169,12 +169,9 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		// ----------------
 
 		Image image = Toolkit.getDefaultToolkit().getImage(f.getPath());
-//		label.setIcon(new ImageIcon(image));
-//		label.repaint();
-		
 		
 		inkPanel.drawImage(image);
-	//	inkPanel.repaint();
+
 	}
 
 	private void saveFile(File f) throws IOException {
@@ -184,7 +181,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		// 		destination is the file they selected via the filechooser
 		// ----------------
 
-		Container c = this.getContentPane();
+		Container c = inkPanel;
 		BufferedImage im = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		c.paint(im.getGraphics());
 		ImageIO.write(im, "PNG", f);
@@ -230,6 +227,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 	@Override
 	public void mousePressed(MouseEvent me)
 	{
+		sampleCount = 0;
 		int x = me.getX();
 		int y = me.getY();
 		stroke[sampleCount] = new Point(x, y);

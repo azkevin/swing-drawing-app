@@ -42,9 +42,7 @@ class PaintPanel extends JPanel
 			this.setBorder(BorderFactory.createLineBorder(Color.black));
 			this.setPreferredSize(new Dimension(250, 250));
 			
-			//label = new JLabel("",new ImageIcon(image),JLabel.CENTER);
-			//this.add(label);
-			//Image image = Toolkit.getDefaultToolkit().getImage(f.getPath());
+
 		}
 		public PaintPanel(Image image){
 			
