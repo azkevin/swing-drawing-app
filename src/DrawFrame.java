@@ -104,7 +104,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		// create a tool bar
 		// ----------------
 		
-		JToolBar toolBar = new JToolBar();
+		JToolBar toolBar = new JToolBar(JToolBar.VERTICAL);
 		
 		
 		
