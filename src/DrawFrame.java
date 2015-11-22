@@ -172,9 +172,9 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 //		label.setIcon(new ImageIcon(image));
 //		label.repaint();
 		
-		inkPanel.setImage(image);
-		inkPanel.drawImage();
-		inkPanel.repaint();
+		
+		inkPanel.drawImage(image);
+	//	inkPanel.repaint();
 	}
 
 	private void saveFile(File f) throws IOException {

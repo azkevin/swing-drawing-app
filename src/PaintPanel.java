@@ -62,14 +62,13 @@ class PaintPanel extends JPanel
 			this.image = image;
 		}
 		
-		public void drawImage(){
+		public void drawImage(Image image){
 			
 			label = new JLabel("",new ImageIcon(image),JLabel.CENTER);
+			this.add(label);
 			
-			
-			label.setIcon(new ImageIcon(image));
-			label.repaint();
-					
+			this.revalidate();
+			this.repaint();		
 			
 		}
 		
