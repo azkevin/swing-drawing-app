@@ -50,8 +50,8 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 	
 	JFileChooser fc;
 	File f;
-	Image image ;
-	JLabel label = new JLabel("",new ImageIcon(image),JLabel.CENTER);
+	Image image  ;
+//	JLabel label = new JLabel("",new ImageIcon(image),JLabel.CENTER);
 	
 	// constructor
 	public DrawFrame()
@@ -99,9 +99,9 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		saveFile.addActionListener(this);
 		newFile.addActionListener(this);
 
-		JPanel panel = new JPanel();
+	//	JPanel panel = new JPanel();
 				
-		inkPanel = new PaintPanel(image);
+		inkPanel = new PaintPanel();
 		clearButton = new JButton("Clear");
 		stroke = new Point[MAX_SAMPLES];
 		
@@ -113,7 +113,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		
 		contentPane.add(outerPanel);
 		contentPane.add(clearButton);
-		contentPane.add(label);
+		// contentPane.add(label);
 		
 		// add listeners
 		this.addWindowListener(new WindowCloser());
@@ -169,12 +169,12 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		// ----------------
 
 		Image image = Toolkit.getDefaultToolkit().getImage(f.getPath());
-		label.setIcon(new ImageIcon(image));
-		label.repaint();
+//		label.setIcon(new ImageIcon(image));
+//		label.repaint();
 		
 		inkPanel.setImage(image);
 		inkPanel.drawImage();
-		
+		inkPanel.repaint();
 	}
 
 	private void saveFile(File f) throws IOException {

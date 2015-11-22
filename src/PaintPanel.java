@@ -5,10 +5,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Stroke;
+import java.awt.Toolkit;
 import java.awt.geom.Line2D;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 class PaintPanel extends JPanel
@@ -22,8 +25,9 @@ class PaintPanel extends JPanel
 		private Vector<Line2D.Double> v;
 
 		private Image image;
+		private JLabel label;
 		
-		public PaintPanel(Image image)
+		public PaintPanel()
 		{
 			// construct components
 			// contentPane > outerPanel > inkPanel > (Components: clearButton, stroke)
@@ -35,20 +39,37 @@ class PaintPanel extends JPanel
 			// set components into the contentPane
 			v = new Vector<Line2D.Double>();
 			this.setBackground(Color.white);
-			this.image = image;
 			this.setBorder(BorderFactory.createLineBorder(Color.black));
 			this.setPreferredSize(new Dimension(250, 250));
+			
+			//label = new JLabel("",new ImageIcon(image),JLabel.CENTER);
+			//this.add(label);
+			//Image image = Toolkit.getDefaultToolkit().getImage(f.getPath());
 		}
-		
+		public PaintPanel(Image image){
+			
+			v = new Vector<Line2D.Double>();
+			this.setBackground(Color.white);
+			this.setBorder(BorderFactory.createLineBorder(Color.black));
+			this.setPreferredSize(new Dimension(250, 250));
+			
+			label = new JLabel("",new ImageIcon(image),JLabel.CENTER);
+			this.image = image;
+			this.add(label);
+			
+		}
 		public void setImage(Image image){
 			this.image = image;
 		}
 		
 		public void drawImage(){
 			
+			label = new JLabel("",new ImageIcon(image),JLabel.CENTER);
 			
 			
-			
+			label.setIcon(new ImageIcon(image));
+			label.repaint();
+					
 			
 		}
 		
