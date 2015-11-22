@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
@@ -25,6 +26,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -48,6 +50,23 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 	private JMenuItem saveFile;
 	private JMenuItem newFile;
 	
+	private JButton select;
+	private JButton open;
+	private JButton line;
+	private JButton rectangle;
+	private JButton circle;
+	private JButton oval;
+	private JButton rotateLeft;
+	private JButton rotateRight;
+	private JButton flipHorizontal;
+	private JButton flipVertical;
+	private JButton text;
+	private JButton erase;
+	private JButton fill;
+	private JButton undo;
+	private JButton redo;
+	
+	
 	JFileChooser fc;
 	File f;
 	Image image  ;
@@ -61,6 +80,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		
 		contentPane = new JPanel();
 		outerPanel = new JPanel(new BorderLayout());
+		
 		// ----------------
 		// create a menu bar
 		// ----------------
@@ -74,11 +94,80 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		JMenu fileMenu = new JMenu("File");
 
 		openFile = new JMenuItem("Open");
-		saveFile = new JMenuItem("Save");
+		saveFile = new JMenuItem("Save",new ImageIcon(this.getClass().getResource("/icons/Save-24.png")));
+		
 		newFile = new JMenuItem("New");
 
 		menuBar.add(fileMenu);
 
+		// ----------------
+		// create a tool bar
+		// ----------------
+		
+		JToolBar toolBar = new JToolBar();
+		
+		
+		
+		select = new JButton("Select");
+		open = new JButton("Open");
+		line = new JButton("Line",new ImageIcon(this.getClass().getResource("/icons/Line-24.png")));
+		rectangle = new JButton("Rectangle",new ImageIcon(this.getClass().getResource("/icons/Rectangle-24.png")));
+		circle = new JButton("Circle",new ImageIcon(this.getClass().getResource("/icons/Circled.png")));
+		oval = new JButton("Oval");
+		rotateLeft = new JButton("Rotate left",new ImageIcon(this.getClass().getResource("/icons/Rotate Left-24.png")));
+		rotateRight  = new JButton("Rotate right",new ImageIcon(this.getClass().getResource("/icons/Rotate Right-24.png")));
+		flipHorizontal = new JButton("Flip horizontal",new ImageIcon(this.getClass().getResource("/icons/Flip Horizontal-24.png")));
+		flipVertical  = new JButton("Flip vertical",new ImageIcon(this.getClass().getResource("/icons/Flip Vertical-24.png")));
+		text = new JButton("Text");
+		erase = new JButton("Erase",new ImageIcon(this.getClass().getResource("/icons/Eraser-24.png")));
+		fill = new JButton("Fill",new ImageIcon(this.getClass().getResource("/icons/Fill Color-24.png")));
+		undo = new JButton("Undo",new ImageIcon(this.getClass().getResource("/icons/Undo-24.png")));
+		redo = new JButton("Redo",new ImageIcon(this.getClass().getResource("/icons/Redo-24.png")));
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		toolBar.add(select);
+		toolBar.add(open);
+		toolBar.addSeparator();
+		toolBar.add(line);
+		toolBar.add(rectangle);
+		toolBar.add(circle);
+		toolBar.add(oval);
+		toolBar.addSeparator();
+		toolBar.add(rotateLeft);
+		toolBar.add(rotateRight);
+		toolBar.add(flipHorizontal);
+		toolBar.add(flipVertical);
+		toolBar.addSeparator();
+		toolBar.add(text);
+		toolBar.add(erase);
+		toolBar.add(fill);
+		toolBar.addSeparator();
+		toolBar.add(undo);
+		toolBar.add(redo);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		// ----------------
 		// create a file chooser for saving and opening
 		// ----------------
@@ -110,9 +199,11 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		
 		outerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		outerPanel.add(inkPanel, "Center");
-		
+	
+		contentPane.add(toolBar);
 		contentPane.add(outerPanel);
 		contentPane.add(clearButton);
+	
 		// contentPane.add(label);
 		
 		// add listeners
@@ -123,6 +214,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 
 		// set components into the contentPane
 		this.setContentPane(contentPane);
+		this.setPreferredSize(new Dimension(1064,768));
 	}
 
 	// implement ActionListener method (initially run)

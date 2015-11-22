@@ -44,21 +44,21 @@ class PaintPanel extends JPanel
 			
 
 		}
-		public PaintPanel(Image image){
-			
-			v = new Vector<Line2D.Double>();
-			this.setBackground(Color.white);
-			this.setBorder(BorderFactory.createLineBorder(Color.black));
-			this.setPreferredSize(new Dimension(250, 250));
-			
-			label = new JLabel("",new ImageIcon(image),JLabel.CENTER);
-			this.image = image;
-			this.add(label);
-			
-		}
-		public void setImage(Image image){
-			this.image = image;
-		}
+//		public PaintPanel(Image image){
+//			
+//			v = new Vector<Line2D.Double>();
+//			this.setBackground(Color.white);
+//			this.setBorder(BorderFactory.createLineBorder(Color.black));
+//			this.setPreferredSize(new Dimension(250, 250));
+//			
+//			label = new JLabel("",new ImageIcon(image),JLabel.CENTER);
+//			this.image = image;
+//			this.add(label);
+//			
+//		}
+//		public void setImage(Image image){
+//			this.image = image;
+//		}
 		
 		public void drawImage(Image image){
 			
