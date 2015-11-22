@@ -42,7 +42,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 	private PaintPanel inkPanel;
 	private JButton clearButton;
 	private Point[] stroke;	
-	final int MAX_SAMPLES = (Integer.MAX_VALUE/4 - 10); //Sufficient number of samples for points.
+	final int MAX_SAMPLES = (30000); //Sufficient number of samples for points.
 	
 	private JMenuItem openFile;
 	private JMenuItem saveFile;
