@@ -14,6 +14,7 @@ public class Draw
 
 		DrawFrame frame = new DrawFrame();
 		frame.setTitle("Draw");
+		frame.setBackground( new Color(39,174,96));
 		frame.pack();
 
 		// put the frame in the middle of the display

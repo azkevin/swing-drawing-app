@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -53,6 +54,11 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 	private JMenuItem saveFile;
 	private JMenuItem newFile;
 	
+	private JMenuItem undoMenu;
+	private JMenuItem redoMenu;
+
+	private Color background = new Color(39,174,96);
+	
 	private JButton select;
 	private JButton open;
 	private JButton line;
@@ -79,6 +85,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 	// constructor
 	public DrawFrame()
 	{
+		//this.setBackground(background);
 		// construct components
 		// contentPane > outerPanel > inkPanel > (Components: clearButton, stroke)
 		
@@ -99,10 +106,28 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 
 		openFile = new JMenuItem("Open");
 		saveFile = new JMenuItem("Save",new ImageIcon(this.getClass().getResource("/icons/Save-24.png")));
-		
 		newFile = new JMenuItem("New");
 
 		menuBar.add(fileMenu);
+		
+		fileMenu.add(openFile);
+		fileMenu.add(saveFile);
+		fileMenu.add(newFile);
+		
+		// ----------------
+		// create the edit menu
+		// ----------------
+
+		JMenu editMenu = new JMenu("Edit");
+
+		undoMenu = new JMenuItem("Undo");
+		redoMenu = new JMenuItem("Redo");
+		// newFile = new JMenuItem("");
+
+		editMenu.add(undoMenu);
+		editMenu.add(redoMenu);
+		
+		menuBar.add(editMenu);
 
 		// ----------------
 		// create a tool bar
@@ -165,9 +190,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		final String[] EXTENSIONS = { ".jpg", ".jpeg" };
 		fc.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png"));
 
-		fileMenu.add(openFile);
-		fileMenu.add(saveFile);
-		fileMenu.add(newFile);
+
 
 		cc = new JColorChooser();
 		
@@ -226,6 +249,8 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 			if (fc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
 				f = fc.getSelectedFile();
 
+				
+				
 				try {
 					saveFile(f);
 				} catch (IOException e1) {
@@ -275,10 +300,12 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		// 		destination is the file they selected via the filechooser
 		// ----------------
 		
+		
+		
 		Container c = inkPanel;
 		BufferedImage im = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		c.paint(im.getGraphics());
-		ImageIO.write(im, "PNG", f );
+		ImageIO.write(im, ".png", f );
 
 
 	}

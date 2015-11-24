@@ -122,6 +122,10 @@ class PaintPanel extends JPanel
 			
 		}
 
+		public void drawCirc(int x, int y, int r){
+			
+		}
+		
 		public void eraser(){
 			currentColor = white;
 		}
