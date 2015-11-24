@@ -190,7 +190,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 
 	//	JPanel panel = new JPanel();
 				
-		inkPanel = new PaintPanel();
+		inkPanel = new PaintPanel(0);
 		clearButton = new JButton("Clear");
 		stroke = new Point[MAX_SAMPLES];
 		
@@ -208,8 +208,6 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		
 		// add listeners
 		this.addWindowListener(new WindowCloser());
-		inkPanel.addMouseMotionListener(this);
-		inkPanel.addMouseListener(this);
 		clearButton.addActionListener(this);
 
 		// set components into the contentPane
@@ -281,27 +279,8 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 
 	}
 
-	// implement MouseMotionListener methods (7)
-	@Override
-	public void mouseDragged(MouseEvent e)
-	{
-		int x = e.getX();
-		int y = e.getY();
 
-		if (SwingUtilities.isLeftMouseButton(e))
-		{
-			stroke[sampleCount] = new Point(x, y);
-			int x1 = (int) stroke[sampleCount - 1].getX();
-			int y1 = (int) stroke[sampleCount - 1].getY();
-			int x2 = (int) stroke[sampleCount].getX();
-			int y2 = (int) stroke[sampleCount].getY();
-			if (sampleCount < MAX_SAMPLES - 1)
-				++sampleCount;
 
-			// draw ink trail from previous point to current point
-			inkPanel.drawInk(x1, y1, x2, y2);
-		}
-	}
 
 	@Override
 	public void mouseMoved(MouseEvent me) {}
@@ -315,17 +294,6 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 	@Override
 	public void mouseExited(MouseEvent me) {}
 	
-	// a mouse button was pressed
-	@Override
-	public void mousePressed(MouseEvent me)
-	{
-		sampleCount = 0;
-		int x = me.getX();
-		int y = me.getY();
-		stroke[sampleCount] = new Point(x, y);
-		if (sampleCount < MAX_SAMPLES - 1)
-			++sampleCount;
-	}
 
 	// a mouse button was released
 	@Override
@@ -340,5 +308,19 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		{
 			System.exit(0);
 		}
+	}
+
+
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
