@@ -105,8 +105,11 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		// ----------------
 		
 		JToolBar toolBar = new JToolBar(JToolBar.VERTICAL);
+		toolBar.setFloatable(false);
 		
-		
+		// ----------------
+		// create buttons for the tool bar
+		// ----------------
 		
 		select = new JButton("Select");
 		open = new JButton("Open");
@@ -124,17 +127,9 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		undo = new JButton("Undo",new ImageIcon(this.getClass().getResource("/icons/Undo-24.png")));
 		redo = new JButton("Redo",new ImageIcon(this.getClass().getResource("/icons/Redo-24.png")));
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		// ----------------
+		// add buttons to the tool bar
+		// ----------------
 		
 		toolBar.add(select);
 		toolBar.add(open);
@@ -155,16 +150,6 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		toolBar.addSeparator();
 		toolBar.add(undo);
 		toolBar.add(redo);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		
@@ -195,7 +180,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		stroke = new Point[MAX_SAMPLES];
 		
 		// configure components
-		inkPanel.setSize(200, 200);
+		//inkPanel.setSize(200, 200);
 		
 		outerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		outerPanel.add(inkPanel, "Center");

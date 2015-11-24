@@ -51,6 +51,7 @@ class PaintPanel extends JPanel
 		//Now for the constructors
 		public PaintPanel(int f){
 			setDoubleBuffered(false);
+			this.setPreferredSize(new Dimension(800,600));
 			addMouseListener(new MouseAdapter(){
 				public void mousePressed(MouseEvent e){
 					x1 = e.getX();
@@ -108,7 +109,11 @@ class PaintPanel extends JPanel
 		//thin it sets the color back to black
 
 
-
+		public void drawRect(int x, int y, int width, int height){
+			
+			
+			
+		}
 
 
 
