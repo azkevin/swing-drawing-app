@@ -19,6 +19,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,11 +29,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 
-class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, ActionListener
+class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, ActionListener, ChangeListener
 {
 	// the following avoids a "warning" with Java 1.5.0 complier (?)
 	static final long serialVersionUID = 42L;
@@ -70,6 +73,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 	JFileChooser fc;
 	File f;
 	Image image  ;
+	JColorChooser cc;
 //	JLabel label = new JLabel("",new ImageIcon(image),JLabel.CENTER);
 	
 	// constructor
@@ -151,7 +155,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		toolBar.add(undo);
 		toolBar.add(redo);
 		
-		
+		erase.addActionListener(this);
 		
 		// ----------------
 		// create a file chooser for saving and opening
@@ -165,10 +169,16 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		fileMenu.add(saveFile);
 		fileMenu.add(newFile);
 
+		cc = new JColorChooser();
+		
+		cc.setPreviewPanel(new JPanel());
+		
+		cc.getSelectionModel().addChangeListener(this);
+		
 		// ----------------
 		// add action listeners to menu options
 		// ----------------
-
+		
 		openFile.addActionListener(this);
 		saveFile.addActionListener(this);
 		newFile.addActionListener(this);
@@ -188,7 +198,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		contentPane.add(toolBar);
 		contentPane.add(outerPanel);
 		contentPane.add(clearButton);
-	
+		contentPane.add(cc);
 		// contentPane.add(label);
 		
 		// add listeners
@@ -197,7 +207,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 
 		// set components into the contentPane
 		this.setContentPane(contentPane);
-		this.setPreferredSize(new Dimension(1064,768));
+		this.setPreferredSize(new Dimension(1064,1000));
 	}
 
 	// implement ActionListener method (initially run)
@@ -234,9 +244,18 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		} else if (source == clearButton){
 			inkPanel.clear();
 			
+		} else if (source == erase){
+			inkPanel.eraser();
 		}
 
 	}
+	
+	public void stateChanged(ChangeEvent e){
+
+		
+		inkPanel.setColor(cc.getColor());
+	}
+	
 	private void openFile(File f) {
 
 		// ----------------
@@ -255,11 +274,11 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		// Take all the contents of the jpanel and save them to a png 
 		// 		destination is the file they selected via the filechooser
 		// ----------------
-
+		
 		Container c = inkPanel;
 		BufferedImage im = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		c.paint(im.getGraphics());
-		ImageIO.write(im, "PNG", f);
+		ImageIO.write(im, "PNG", f );
 
 
 	}

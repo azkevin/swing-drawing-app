@@ -31,10 +31,13 @@ class PaintPanel extends JPanel
 		
 		int x1, y1, x2, y2;
 		
-		private final Color INK_COLOR_BLACK = new Color(0, 0, 0);
+		private final Color white = new Color(255, 255, 255);
+		private final Color black = new Color(0, 0, 0);
+		private final Color red = new Color(255, 0, 0);
+		private final Color blue = new Color(0, 0, 255);
 		private final Stroke INK_STROKE_3 = new BasicStroke(3.0f);
 
-
+		private Color currentColor;
 
 		public PaintPanel()
 		{
@@ -52,6 +55,8 @@ class PaintPanel extends JPanel
 		public PaintPanel(int f){
 			setDoubleBuffered(false);
 			this.setPreferredSize(new Dimension(800,600));
+			currentColor = black;
+			
 			addMouseListener(new MouseAdapter(){
 				public void mousePressed(MouseEvent e){
 					x1 = e.getX();
@@ -65,7 +70,9 @@ class PaintPanel extends JPanel
 				public void mouseDragged(MouseEvent e){
 					x2 = e.getX();
 					y2 = e.getY();
+					
 					if(graphics2D != null)
+						graphics2D.setColor(currentColor);
 						graphics2D.drawLine(x1, y1, x2, y2);
 					repaint();
 					x1 = x2;
@@ -115,8 +122,12 @@ class PaintPanel extends JPanel
 			
 		}
 
-
-
+		public void eraser(){
+			currentColor = white;
+		}
+		public void setColor(Color c){
+			currentColor = c;
+		}
 
 
 		
