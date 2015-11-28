@@ -58,6 +58,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 
 	private JButton select;
 	private JButton open;
+	private JButton pencil;
 	private JButton line;
 	private JButton rectangle;
 	private JButton circle;
@@ -82,6 +83,11 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 	private File f;
 	private Image image  ;
 	private JColorChooser cc;
+	
+	private final int CONTENT_PANE_WIDTH = 800;
+	private final int CONTENT_PANE_HEIGHT = 700;
+	private final int CC_WIDTH = 100;
+	private final int CC_HEIGHT = 150;
 	
 	//ContentPane > Toolbar, Clearbutton, cc, (OuterPanel > inkPanel),
 	public DrawFrame()
@@ -115,10 +121,13 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		// create a file chooser for saving and opening
 		fc = new JFileChooser(new File("."));
 		fc.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png"));
+		
+		// create a color chooser for the drawing components.
 		cc = new JColorChooser();
 		cc.setPreviewPanel(new JPanel());
+		cc.setPreferredSize(new Dimension(CC_WIDTH,CC_HEIGHT));
 		cc.getSelectionModel().addChangeListener(this);
-		
+
 		// add the components together.
 		menuBar.add(fileMenu);
 		menuBar.add(editMenu);
@@ -138,8 +147,8 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		outerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		outerPanel.add(inkPanel, "Center");
 		contentPane.add(toolBar, "West");
-		contentPane.add(outerPanel);
-		contentPane.add(cc, "East");
+		contentPane.add(outerPanel, "Center");
+		contentPane.add(cc, "South");
 		// contentPane.add(label);
 		
 		// add listeners to buttons
@@ -152,7 +161,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 
 		// set components into the contentPane
 		this.setContentPane(contentPane);
-		this.setPreferredSize(new Dimension(1064,1000));
+		this.setPreferredSize(new Dimension(CONTENT_PANE_WIDTH,CONTENT_PANE_HEIGHT));
 	}
 
 	private void initializeToolBar(JToolBar toolBar) {
@@ -162,6 +171,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		
 		select = new JButton("Select");
 		open = new JButton("Open");
+		pencil = new JButton("Pencil");
 		line = new JButton("Line",new ImageIcon(this.getClass().getResource("/icons/Line-24.png")));
 		rectangle = new JButton("Rectangle",new ImageIcon(this.getClass().getResource("/icons/Rectangle-24.png")));
 		circle = new JButton("Circle",new ImageIcon(this.getClass().getResource("/icons/Circled.png")));
@@ -184,6 +194,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		toolBar.add(select);
 		toolBar.add(open);
 		toolBar.addSeparator();
+		toolBar.add(pencil);
 		toolBar.add(line);
 		toolBar.add(rectangle);
 		toolBar.add(circle);
