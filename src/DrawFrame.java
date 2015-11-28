@@ -372,10 +372,33 @@ private void initializeToolBar(JToolBar toolBar) {
 						System.out.println("0");
 					}
 					else if (activeTool == RECTANGLE_TOOL) {
-						graphics2D.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
+						if (x1 < x2 && y1 < y2) {
+							graphics2D.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
+						}
+						else if (x2 < x1 && y1 < y2) {
+							graphics2D.draw(new Rectangle2D.Double(x2, y1, x1 - x2, y2 - y1));
+						}
+						else if (x1 < x2 && y2 < y1) {
+							graphics2D.draw(new Rectangle2D.Double(x1, y2, x2 - x1, y1 - y2));
+						}
+						else if (x2 < x1 && y2 < y1) {
+							graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
+						}
+						
 					}
 					else if (activeTool == CIRCLE_TOOL) {
-						graphics2D.draw(new Ellipse2D.Double(x1, y1, x2-x1, y2-y1));
+						if (x1 < x2 && y1 < y2) {
+							graphics2D.draw(new Ellipse2D.Double(x1, y1, x2 - x1, y2 - y1));
+						}
+						else if (x2 < x1 && y1 < y2) {
+							graphics2D.draw(new Ellipse2D.Double(x2, y1, x1 - x2, y2 - y1));
+						}
+						else if (x1 < x2 && y2 < y1) {
+							graphics2D.draw(new Ellipse2D.Double(x1, y2, x2 - x1, y1 - y2));
+						}
+						else if (x2 < x1 && y2 < y1) {
+							graphics2D.draw(new Ellipse2D.Double(x2, y2, x1 - x2, y1 - y2));
+						}
 					}
 					repaint();
 				}
