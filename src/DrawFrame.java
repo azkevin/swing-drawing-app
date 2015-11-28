@@ -1,8 +1,11 @@
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.ComponentOrientation;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -46,7 +49,6 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 
 	//fields
 	private JPanel contentPane;	
-	private JPanel outerPanel;
 	private PaintPanel inkPanel;
 	final int MAX_SAMPLES = (30000); //Sufficient number of samples for points to draw.
 	
@@ -79,22 +81,28 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 	private JMenu fileMenu;
 	private JToolBar toolBar;
 	
+	private CoordinateBar coordinateBar;
+	
 	private JFileChooser fc;
 	private File f;
 	private Image image  ;
 	private JColorChooser cc;
 	
-	private final int CONTENT_PANE_WIDTH = 800;
-	private final int CONTENT_PANE_HEIGHT = 700;
-	private final int CC_WIDTH = 100;
-	private final int CC_HEIGHT = 150;
+	private FlowLayout layout;
 	
-	//ContentPane > Toolbar, Clearbutton, cc, (OuterPanel > inkPanel),
+	private final int CONTENT_PANE_WIDTH = 1400;
+	private final int CONTENT_PANE_HEIGHT = 700;
+	private final int CC_WIDTH = 400;
+	private final int CC_HEIGHT = 300;
+	
+	//ContentPane > Toolbar,  cc, InkPanel,
 	public DrawFrame()
 	{
+		// construct our layout manager.
+		layout = new FlowLayout(FlowLayout.RIGHT);
+		
 		// construct the panels needed
-		contentPane = new JPanel(new BorderLayout());
-		outerPanel = new JPanel(new BorderLayout());
+		contentPane = new JPanel(layout);
 		inkPanel = new PaintPanel(0);
 		
 		// create a menu bar
@@ -117,6 +125,9 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		toolBar = new JToolBar(JToolBar.VERTICAL);
 		toolBar.setFloatable(false);		
 		this.initializeToolBar(toolBar);
+		
+		// create coordinate bar at the bottom
+		coordinateBar = new CoordinateBar();
 		
 		// create a file chooser for saving and opening
 		fc = new JFileChooser(new File("."));
@@ -143,12 +154,14 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		newFile.addActionListener(this);
 		
 		// configure components and add them to the frame.
-		//inkPanel.setSize(200, 200);
-		outerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		outerPanel.add(inkPanel, "Center");
-		contentPane.add(toolBar, "West");
-		contentPane.add(outerPanel, "Center");
-		contentPane.add(cc, "South");
+//		outerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+//		outerPanel.add(inkPanel, "Center");
+		contentPane.add(inkPanel);
+		contentPane.add(toolBar);
+		contentPane.add(cc);
+		contentPane.setBackground(Color.GRAY);
+        contentPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+    	contentPane.add(coordinateBar, BorderLayout.PAGE_END);
 		// contentPane.add(label);
 		
 		// add listeners to buttons
@@ -288,8 +301,6 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		c.paint(im.getGraphics());
 		ImageIO.write(im, ".png", f );
 	}
-
-
 
 	@Override
 	public void mouseMoved(MouseEvent me) {}
