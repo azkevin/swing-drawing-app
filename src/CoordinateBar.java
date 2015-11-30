@@ -6,9 +6,10 @@ public class CoordinateBar extends JToolBar
     private JLabel coordinates;
     private JLabel frameSize;
     private Separator separator;
-
+    
     public CoordinateBar()
     {
+
 		coordinates = new JLabel();
 		coordinates.setText("  0 x 0  ");
 		this.add(coordinates);
@@ -18,7 +19,8 @@ public class CoordinateBar extends JToolBar
 		frameSize.setText("  0 x 0  ");
 		this.add(frameSize);
     }
-
+    
+    
     public JLabel getCoordinates() 
     {
     	return coordinates;
