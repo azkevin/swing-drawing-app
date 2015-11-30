@@ -80,7 +80,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 	private JButton redo;
 	private JButton clear;
 	
-	
+	private JButton thicker;
 	
 	private JMenuBar menuBar;
 	private JMenu editMenu;
@@ -194,7 +194,15 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		//cc.add(swatch, 0);
 		//cc.setChooserPanels(choosers.toArray(new AbstractColorChooserPanel[0]));
 		
+		//JPanel width = new JPanel();
 		
+		thicker = new JButton("Thicker");
+		JButton width3 = new JButton("x3");
+		JButton width4 = new JButton("x4");
+		JButton width5 = new JButton("x5");
+		
+		//width.add(thicker);
+		thicker.addActionListener(this);
 		
 		JPanel cc = new JPanel();
 		cc.setLayout(new GridLayout(4,5));
@@ -246,6 +254,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 
 		contentPane.add(inkPanel);
 		contentPane.add(toolBar);
+		contentPane.add(thicker);
 		contentPane.add(cc);
 		contentPane.setBackground(background);
         contentPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -273,12 +282,12 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		// ----------------
 		
 		select = new JButton("Select");
-		open = new JButton("Open");
+		//open = new JButton("Open");
 		pencil = new JButton("Pencil");
 		line = new JButton("Line",new ImageIcon(this.getClass().getResource("/icons/Line-24.png")));
 		rectangle = new JButton("Rectangle",new ImageIcon(this.getClass().getResource("/icons/Rectangle-24.png")));
 		circle = new JButton("Circle",new ImageIcon(this.getClass().getResource("/icons/Circled.png")));
-		oval = new JButton("Oval");
+		//oval = new JButton("Oval");
 		rotateLeft = new JButton("Rotate left",new ImageIcon(this.getClass().getResource("/icons/Rotate Left-24.png")));
 		rotateRight  = new JButton("Rotate right",new ImageIcon(this.getClass().getResource("/icons/Rotate Right-24.png")));
 		flipHorizontal = new JButton("Flip horizontal",new ImageIcon(this.getClass().getResource("/icons/Flip Horizontal-24.png")));
@@ -291,20 +300,20 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		clear = new JButton("Clear");
 		
 		select.setBackground(background);
-		open.setBackground(background);
+		//open.setBackground(background);
 		pencil.setBackground(background);
 		// ----------------
 		// add buttons to the tool bar
 		// ----------------
 		
 		toolBar.add(select);
-		toolBar.add(open);
+		//toolBar.add(open);
 		toolBar.addSeparator();
 		toolBar.add(pencil);
 		toolBar.add(line);
 		toolBar.add(rectangle);
 		toolBar.add(circle);
-		toolBar.add(oval);
+		//toolBar.add(oval);
 		toolBar.addSeparator();
 		toolBar.add(rotateLeft);
 		toolBar.add(rotateRight);
@@ -459,7 +468,14 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		}
 		else if (source == erase){
 			inkPanel.eraser();
-		}else{
+		}
+		else if (source == thicker){
+			
+			inkPanel.thicker();
+		}
+		else{
+			
+		
 			JButton b = (JButton) source;
 			inkPanel.setColor(b.getBackground());
 		}

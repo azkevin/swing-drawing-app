@@ -1,3 +1,4 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -25,6 +26,7 @@ public class PaintPanel extends JPanel
 		private final int SELECT_TOOL = 4;
 		private final int TEXT_TOOL = 5;
 		
+		private BasicStroke stroke = new BasicStroke((float) 0.1);
 		BufferedImage canvas;
 		Graphics2D graphics2D;
 		private int activeTool = 0;
@@ -50,6 +52,8 @@ public class PaintPanel extends JPanel
 		//Now for the constructors
 		public PaintPanel(int f){
 			this.setPreferredSize(new Dimension(800,600));
+			
+			
 			currentColor = Color.BLACK;
 			addMouseListener(new MouseAdapter(){
 				public void mousePressed(MouseEvent e){
@@ -59,10 +63,12 @@ public class PaintPanel extends JPanel
 				
 				public void mouseReleased(MouseEvent e) {
 					if (activeTool == LINE_TOOL) {
+						
 						graphics2D.drawLine(x1, y1, x2, y2);
 						System.out.println("0");
 					}
 					else if (activeTool == RECTANGLE_TOOL) {
+					
 						if (x1 < x2 && y1 < y2) {
 							graphics2D.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
 						}
@@ -162,6 +168,10 @@ public class PaintPanel extends JPanel
 		public void setColor(Color c){
 			currentColor = c;
 			graphics2D.setColor(c);
+		}
+		public void thicker(){
+			stroke = new BasicStroke(stroke.getLineWidth() + 2f);
+			graphics2D.setStroke(stroke);
 		}
 		
 	}
