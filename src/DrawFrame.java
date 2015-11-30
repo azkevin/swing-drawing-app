@@ -81,6 +81,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 	private JButton clear;
 	
 	private JButton thicker;
+	private JButton thinner;
 	
 	private JMenuBar menuBar;
 	private JMenu editMenu;
@@ -197,12 +198,14 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		//JPanel width = new JPanel();
 		
 		thicker = new JButton("Thicker");
+		thinner = new JButton("Thinner");
 		JButton width3 = new JButton("x3");
 		JButton width4 = new JButton("x4");
 		JButton width5 = new JButton("x5");
 		
 		//width.add(thicker);
 		thicker.addActionListener(this);
+		thinner.addActionListener(this);
 		
 		JPanel cc = new JPanel();
 		cc.setLayout(new GridLayout(4,5));
@@ -255,6 +258,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		contentPane.add(inkPanel);
 		contentPane.add(toolBar);
 		contentPane.add(thicker);
+		contentPane.add(thinner);
 		contentPane.add(cc);
 		contentPane.setBackground(background);
         contentPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -470,8 +474,12 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 			inkPanel.eraser();
 		}
 		else if (source == thicker){
-			
+		
 			inkPanel.thicker();
+		}
+		else if (source == thinner){
+	
+			inkPanel.thinner();
 		}
 		else{
 			

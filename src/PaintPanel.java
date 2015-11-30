@@ -11,6 +11,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.math.BigDecimal;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -170,8 +171,19 @@ public class PaintPanel extends JPanel
 			graphics2D.setColor(c);
 		}
 		public void thicker(){
+			System.out.println(stroke.getLineWidth());
 			stroke = new BasicStroke(stroke.getLineWidth() + 2f);
 			graphics2D.setStroke(stroke);
+		}
+		public void thinner(){
+			if (stroke.getLineWidth() >= 2.1f){
+				System.out.println(stroke.getLineWidth());
+				BigDecimal bd = new BigDecimal(Float.toString(stroke.getLineWidth()-2f));
+				bd = bd.setScale(1, BigDecimal.ROUND_HALF_UP);
+				stroke = new BasicStroke(bd.floatValue());
+				graphics2D.setStroke(stroke); 
+			}
+			
 		}
 		
 	}
