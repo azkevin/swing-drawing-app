@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
@@ -18,7 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-public class PaintPanel extends JPanel
+public class PaintPanel extends JPanel implements MouseListener,MouseMotionListener
 	{
 		private final int PENCIL_TOOL = 0;
 		private final int LINE_TOOL = 1;
@@ -54,80 +55,12 @@ public class PaintPanel extends JPanel
 		public PaintPanel(int f){
 			this.setPreferredSize(new Dimension(800,600));
 			
-			
 			currentColor = Color.BLACK;
-			addMouseListener(new MouseAdapter(){
-				public void mousePressed(MouseEvent e){
-					x1 = e.getX();
-					y1 = e.getY();
-				}
-				
-				public void mouseReleased(MouseEvent e) {
-					if (activeTool == LINE_TOOL) {
-						
-						graphics2D.drawLine(x1, y1, x2, y2);
-						System.out.println("0");
-					}
-					else if (activeTool == RECTANGLE_TOOL) {
-					
-						if (x1 < x2 && y1 < y2) {
-							graphics2D.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
-						}
-						else if (x2 < x1 && y1 < y2) {
-							graphics2D.draw(new Rectangle2D.Double(x2, y1, x1 - x2, y2 - y1));
-						}
-						else if (x1 < x2 && y2 < y1) {
-							graphics2D.draw(new Rectangle2D.Double(x1, y2, x2 - x1, y1 - y2));
-						}
-						else if (x2 < x1 && y2 < y1) {
-							graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
-						}
-						
-					}
-					else if (activeTool == CIRCLE_TOOL) {
-						if (x1 < x2 && y1 < y2) {
-							graphics2D.draw(new Ellipse2D.Double(x1, y1, x2 - x1, y2 - y1));
-						}
-						else if (x2 < x1 && y1 < y2) {
-							graphics2D.draw(new Ellipse2D.Double(x2, y1, x1 - x2, y2 - y1));
-						}
-						else if (x1 < x2 && y2 < y1) {
-							graphics2D.draw(new Ellipse2D.Double(x1, y2, x2 - x1, y1 - y2));
-						}
-						else if (x2 < x1 && y2 < y1) {
-							graphics2D.draw(new Ellipse2D.Double(x2, y2, x1 - x2, y1 - y2));
-						}
-					}
-					else if (activeTool == SELECT_TOOL){
-						
-					}
-					else if (activeTool == TEXT_TOOL){
-						
-						
-					}
-					repaint();
-				}
-			});
+			this.addMouseListener(this);
+			this.addMouseMotionListener(this);
 			//if the mouse is pressed it sets the oldX & oldY
 			//coordinates as the mouses x & y coordinates
-			addMouseMotionListener(new MouseMotionListener()
-			{
-				public void mouseDragged(MouseEvent e){
-					x2 = e.getX();
-					y2 = e.getY();
-					if (activeTool == PENCIL_TOOL) {
-						graphics2D.drawLine(x1, y1, x2, y2);
-						repaint();
-						x1 = x2;
-						y1 = y2;
-					}
-					
-				}
-				public void mouseMoved(MouseEvent e) {
-					
-				}
 
-			});
 			//while the mouse is dragged it sets currentX & currentY as the mouses x and y
 			//then it draws a line at the coordinates
 			//it repaints it and sets oldX and oldY as currentX and currentY
@@ -165,6 +98,7 @@ public class PaintPanel extends JPanel
 		
 		public void eraser(){ // find a transparent color later
 			graphics2D.setColor(Color.WHITE);
+		//	graphics2D.setStroke(s);
 		}
 		public void setColor(Color c){
 			currentColor = c;
@@ -189,5 +123,97 @@ public class PaintPanel extends JPanel
 //			}
 //			
 //		}
+
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			// TODO Auto-generated method stub
+			x2 = e.getX();
+			y2 = e.getY();
+			if (activeTool == PENCIL_TOOL) {
+				graphics2D.drawLine(x1, y1, x2, y2);
+				repaint();
+				x1 = x2;
+				y1 = y2;
+			}
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			x1 = e.getX();
+			y1 = e.getY();
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			if (activeTool == LINE_TOOL) {
+				
+				graphics2D.drawLine(x1, y1, x2, y2);
+				System.out.println("0");
+			}
+			else if (activeTool == RECTANGLE_TOOL) {
+			
+				if (x1 < x2 && y1 < y2) {
+					graphics2D.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
+				}
+				else if (x2 < x1 && y1 < y2) {
+					graphics2D.draw(new Rectangle2D.Double(x2, y1, x1 - x2, y2 - y1));
+				}
+				else if (x1 < x2 && y2 < y1) {
+					graphics2D.draw(new Rectangle2D.Double(x1, y2, x2 - x1, y1 - y2));
+				}
+				else if (x2 < x1 && y2 < y1) {
+					graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
+				}
+				
+			}
+			else if (activeTool == CIRCLE_TOOL) {
+				if (x1 < x2 && y1 < y2) {
+					graphics2D.draw(new Ellipse2D.Double(x1, y1, x2 - x1, y2 - y1));
+				}
+				else if (x2 < x1 && y1 < y2) {
+					graphics2D.draw(new Ellipse2D.Double(x2, y1, x1 - x2, y2 - y1));
+				}
+				else if (x1 < x2 && y2 < y1) {
+					graphics2D.draw(new Ellipse2D.Double(x1, y2, x2 - x1, y1 - y2));
+				}
+				else if (x2 < x1 && y2 < y1) {
+					graphics2D.draw(new Ellipse2D.Double(x2, y2, x1 - x2, y1 - y2));
+				}
+			}
+			else if (activeTool == SELECT_TOOL){
+				
+			}
+			else if (activeTool == TEXT_TOOL){
+				
+				
+			}
+			repaint();
+		}
 		
 	}
