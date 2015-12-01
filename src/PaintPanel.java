@@ -176,7 +176,7 @@ public class PaintPanel extends JPanel
 			graphics2D.setStroke(stroke);
 		}
 		public void thinner(){
-			if (stroke.getLineWidth() >= 2.1f){
+			if (stroke.getLineWidth() > 2.1f){
 				System.out.println(stroke.getLineWidth());
 				BigDecimal bd = new BigDecimal(Float.toString(stroke.getLineWidth()-2f));
 				bd = bd.setScale(1, BigDecimal.ROUND_HALF_UP);
