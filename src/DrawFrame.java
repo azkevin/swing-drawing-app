@@ -33,6 +33,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -80,8 +81,9 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 	private JButton redo;
 	private JButton clear;
 	
-	private JButton thicker;
-	private JButton thinner;
+	private JComboBox comboBox;
+	//private JButton thicker;
+	//private JButton thinner;
 	
 	private JMenuBar menuBar;
 	private JMenu editMenu;
@@ -194,28 +196,20 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		//JPanel swatch = new JPanel();
 		//cc.add(swatch, 0);
 		//cc.setChooserPanels(choosers.toArray(new AbstractColorChooserPanel[0]));
-		
-		//JPanel width = new JPanel();
-		
-		thicker = new JButton("Thicker");
-		thinner = new JButton("Thinner");
-		JButton width3 = new JButton("x3");
-		JButton width4 = new JButton("x4");
-		JButton width5 = new JButton("x5");
-		
+				
+		//thicker = new JButton("Thicker");
+		//thinner = new JButton("Thinner");
+	
 		//width.add(thicker);
-		thicker.addActionListener(this);
-		thinner.addActionListener(this);
+		//width.add(thinner);
+		
+		//thicker.addActionListener(this);
+		//thinner.addActionListener(this);
 		
 		JPanel cc = new JPanel();
 		cc.setLayout(new GridLayout(4,5));
 		this.initializeColorChooser(cc);
-		
-		
-		
 
-		
-		
 		turquoise.addActionListener(this);
 		emerald.addActionListener(this);
 		peter_river.addActionListener(this);
@@ -257,8 +251,8 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 
 		contentPane.add(inkPanel);
 		contentPane.add(toolBar);
-		contentPane.add(thicker);
-		contentPane.add(thinner);
+		//contentPane.add(thicker);
+		//contentPane.add(thinner);
 		contentPane.add(cc);
 		contentPane.setBackground(background);
         contentPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -273,7 +267,8 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		circle.addActionListener(this);
 		erase.addActionListener(this);
 		pencil.addActionListener(this);
-
+		comboBox.addActionListener(this);
+		
 		// set components into the contentPane
 		this.setContentPane(contentPane);
 		this.setPreferredSize(new Dimension(CONTENT_PANE_WIDTH,CONTENT_PANE_HEIGHT));
@@ -306,6 +301,10 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		select.setBackground(background);
 		//open.setBackground(background);
 		pencil.setBackground(background);
+		
+		String[] items = {"2","3","4","5","6","7","8","9","10"};
+		comboBox = new JComboBox(items);
+		
 		// ----------------
 		// add buttons to the tool bar
 		// ----------------
@@ -332,6 +331,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		toolBar.add(redo);
 		toolBar.addSeparator();
 		toolBar.add(clear);
+		toolBar.add(comboBox);
 	}
 	private void initializeColorChooser(JPanel panel) {
 		turquoise = new JButton("");
@@ -473,17 +473,21 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		else if (source == erase){
 			inkPanel.eraser();
 		}
-		else if (source == thicker){
-		
-			inkPanel.thicker();
-		}
-		else if (source == thinner){
-	
-			inkPanel.thinner();
+//		else if (source == thicker){
+//		
+//			inkPanel.thicker();
+//		}
+//		else if (source == thinner){
+//	
+//			inkPanel.thinner();
+//		}
+		else if (source == comboBox){
+			System.out.println(1);
+			JComboBox combo = (JComboBox)ae.getSource();
+			String current = (String) combo.getSelectedItem();
+			inkPanel.setThickness(Float.valueOf(current) );
 		}
 		else{
-			
-		
 			JButton b = (JButton) source;
 			inkPanel.setColor(b.getBackground());
 		}

@@ -170,20 +170,24 @@ public class PaintPanel extends JPanel
 			currentColor = c;
 			graphics2D.setColor(c);
 		}
-		public void thicker(){
-			System.out.println(stroke.getLineWidth());
-			stroke = new BasicStroke(stroke.getLineWidth() + 2f);
+		public void setThickness(float f){
+			stroke = new BasicStroke(f);
 			graphics2D.setStroke(stroke);
 		}
-		public void thinner(){
-			if (stroke.getLineWidth() > 2.1f){
-				System.out.println(stroke.getLineWidth());
-				BigDecimal bd = new BigDecimal(Float.toString(stroke.getLineWidth()-2f));
-				bd = bd.setScale(1, BigDecimal.ROUND_HALF_UP);
-				stroke = new BasicStroke(bd.floatValue());
-				graphics2D.setStroke(stroke); 
-			}
-			
-		}
+//		public void thicker(){
+//			System.out.println(stroke.getLineWidth());
+//			stroke = new BasicStroke(stroke.getLineWidth() + 2f);
+//			graphics2D.setStroke(stroke);
+//		}
+//		public void thinner(){
+//			if (stroke.getLineWidth() > 2.1f){
+//				System.out.println(stroke.getLineWidth());
+//				BigDecimal bd = new BigDecimal(Float.toString(stroke.getLineWidth()-2f));
+//				bd = bd.setScale(1, BigDecimal.ROUND_HALF_UP);
+//				stroke = new BasicStroke(bd.floatValue());
+//				graphics2D.setStroke(stroke); 
+//			}
+//			
+//		}
 		
 	}
