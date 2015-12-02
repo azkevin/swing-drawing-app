@@ -53,9 +53,15 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 
 		//Now for the constructors
 		public PaintPanel(int f){
-			this.setPreferredSize(new Dimension(800,600));
-			
+			//this.setPreferredSize(new Dimension(300,300));
+			this.setSize(700, 500); //important for displaying on the draw frame.
+			this.setLayout(null);
+			setDoubleBuffered(true);
+			setLocation(10, 10);
+			setBackground(Color.WHITE);
 			currentColor = Color.BLACK;
+			setFocusable(true);
+			requestFocus();
 			this.addMouseListener(this);
 			this.addMouseMotionListener(this);
 			//if the mouse is pressed it sets the oldX & oldY

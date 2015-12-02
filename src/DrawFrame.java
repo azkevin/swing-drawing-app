@@ -25,25 +25,22 @@ public class DrawFrame extends JFrame
 	private JColorChooser cc2;
 	private CoordinateBar coordinateBar;
 
-	private FlowLayout layout;
-	
-	private final int CONTENT_PANE_WIDTH = 1400;
+	private final int CONTENT_PANE_WIDTH = 1300;
 	private final int CONTENT_PANE_HEIGHT = 700;
-	private final Color background = Color.gray;
+	private final Color background = Color.GRAY;
 	
 	//ContentPane > Toolbar,  cc, InkPanel,
 	public DrawFrame()
 	{
 		// construct our layout manager.
-		layout = new FlowLayout(FlowLayout.RIGHT);
+		contentPane = new JPanel();
+		contentPane.setLayout(null);
 		
 		// construct the panels needed
-		contentPane = new JPanel(layout);
 		inkPanel = new PaintPanel(0);
 		
 		// create a menu bar
 		menuBar = (new MenuBar(this, this.inkPanel)).getMenuBar();
-		this.setJMenuBar(menuBar);
 		
 
 		// create a tool bar		
@@ -60,22 +57,25 @@ public class DrawFrame extends JFrame
 		
 		
 		// configure components and add them to the frame.
-
 		contentPane.add(inkPanel);
-		contentPane.add(toolBar);
-		contentPane.add(cc1);
-		contentPane.add(cc2);
+		//contentPane.add(cc1);
+		//contentPane.add(cc2);
 		contentPane.setBackground(background);
-        contentPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-    	contentPane.add(coordinateBar, BorderLayout.PAGE_END);
 		
 		// add listeners to buttons
 		this.addWindowListener(new WindowCloser());
 
 		// set components into the contentPane
-		this.setContentPane(contentPane);
+		this.setJMenuBar(menuBar);
+		this.add(coordinateBar, BorderLayout.PAGE_END);
+		this.add(toolBar, BorderLayout.WEST);
+		this.add(contentPane);
+		this.add(cc1, BorderLayout.EAST);
+		
+		this.setSize(CONTENT_PANE_WIDTH, CONTENT_PANE_HEIGHT);
 		this.setPreferredSize(new Dimension(CONTENT_PANE_WIDTH,CONTENT_PANE_HEIGHT));
 	}
+	
 	
 	private class WindowCloser extends WindowAdapter
 	{
