@@ -8,6 +8,32 @@ import javax.swing.JToolBar;
 
 public class ToolBar implements ActionListener
 {
+	//commented code from Mina:
+	
+	//private JComboBox comboBox;
+	//private JButton thicker;
+	//private JButton thinner;
+	// create a color chooser for the drawing components.
+	//cc = new ColorChooser();
+	//cc.setPreviewPanel(new JPanel());
+	//cc.setPreferredSize(new Dimension(CC_WIDTH,CC_HEIGHT));
+	//cc.getSelectionModel().addChangeListener(this);
+
+	//List<AbstractColorChooserPanel> choosers = new ArrayList<>(Arrays.asList(cc.getChooserPanels()));
+	//cc.remove(0);
+	//JPanel swatch = new JPanel();
+	//cc.add(swatch, 0);
+	//cc.setChooserPanels(choosers.toArray(new AbstractColorChooserPanel[0]));
+			
+	//thicker = new JButton("Thicker");
+	//thinner = new JButton("Thinner");
+
+	//width.add(thicker);
+	//width.add(thinner);
+	
+	//thicker.addActionListener(this);
+	//thinner.addActionListener(this);
+	
 	private JToolBar toolBar;
 	
 	private JButton select;
