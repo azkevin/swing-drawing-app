@@ -55,13 +55,8 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 	//fields
 	private JPanel contentPane;	
 	private PaintPanel inkPanel;
+	private JMenuBar menuBar;
 	final int MAX_SAMPLES = (30000); //Sufficient number of samples for points to draw.
-	
-	private JMenuItem openFile;
-	private JMenuItem saveFile;
-	private JMenuItem newFile;
-	private JMenuItem undoMenu;
-	private JMenuItem redoMenu;
 
 	private JButton select;
 	private JButton open;
@@ -84,10 +79,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 	private JComboBox comboBox;
 	//private JButton thicker;
 	//private JButton thinner;
-	
-	private JMenuBar menuBar;
-	private JMenu editMenu;
-	private JMenu fileMenu;
+
 	private JToolBar toolBar;
 	
 	private CoordinateBar coordinateBar;
@@ -158,20 +150,9 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		inkPanel = new PaintPanel(0);
 		
 		// create a menu bar
-		menuBar = new JMenuBar();
+		menuBar = (new MenuBar(this, inkPanel)).getMenuBar();
 		this.setJMenuBar(menuBar);
 		
-		// create the file menu and its components.
-		fileMenu = new JMenu("File");
-		openFile = new JMenuItem("Open");
-		saveFile = new JMenuItem("Save",new ImageIcon(this.getClass().getResource("/icons/Save-24.png")));
-		newFile = new JMenuItem("New");
-		
-		// create the edit menu
-		editMenu = new JMenu("Edit");
-		undoMenu = new JMenuItem("Undo");
-		redoMenu = new JMenuItem("Redo");
-		// newFile = new JMenuItem("");
 
 		// create a tool bar		
 		toolBar = new JToolBar(JToolBar.VERTICAL);
@@ -231,21 +212,6 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 		silver.addActionListener(this);
 		asbestos.addActionListener(this);
 		
-		
-		
-		// add the components together.
-		menuBar.add(fileMenu);
-		menuBar.add(editMenu);
-		fileMenu.add(openFile);
-		fileMenu.add(saveFile);
-		fileMenu.add(newFile);
-		editMenu.add(undoMenu);
-		editMenu.add(redoMenu);
-		
-		// add action listeners to menu options
-		openFile.addActionListener(this);
-		saveFile.addActionListener(this);
-		newFile.addActionListener(this);
 		
 		// configure components and add them to the frame.
 
@@ -430,26 +396,7 @@ class DrawFrame extends JFrame implements MouseMotionListener, MouseListener, Ac
 	{
 		Object source = ae.getSource();
 
-		if (source == openFile) {
-			if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-				f = fc.getSelectedFile();
-				openFile(f);
-			}
-		} else if (source == saveFile) {
-			// open file saver
-			if (fc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-				f = fc.getSelectedFile();								
-				try {
-					saveFile(f);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
-		} else if (source == newFile) {
-			// open new tab with new picture
-			// blank canvas
-		} else if (source == clear){
+		if (source == clear){
 			inkPanel.clear();
 		}
 		else if (source == pencil){
