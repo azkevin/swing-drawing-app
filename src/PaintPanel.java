@@ -34,6 +34,8 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		private int activeTool = 0;
 		private JLabel label;
 		
+		private DrawFrame frame;
+		
 		int x1, y1, x2, y2;
 		
 
@@ -52,7 +54,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		}
 
 		//Now for the constructors
-		public PaintPanel(int f){
+		public PaintPanel(int f, DrawFrame frame){
 			//this.setPreferredSize(new Dimension(300,300));
 			this.setSize(700, 500); //important for displaying on the draw frame.
 			this.setLayout(null);
@@ -64,6 +66,8 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			requestFocus();
 			this.addMouseListener(this);
 			this.addMouseMotionListener(this);
+			this.frame = frame;
+			this.printPaintPanelSize(700, 500);
 			//if the mouse is pressed it sets the oldX & oldY
 			//coordinates as the mouses x & y coordinates
 
@@ -133,6 +137,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			// TODO Auto-generated method stub
+			printCoords(e);
 			x2 = e.getX();
 			y2 = e.getY();
 			if (activeTool == PENCIL_TOOL) {
@@ -146,7 +151,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		@Override
 		public void mouseMoved(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+			printCoords(e);
 		}
 
 		@Override
@@ -170,6 +175,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		@Override
 		public void mousePressed(MouseEvent e) {
 			// TODO Auto-generated method stub
+			printCoords(e);
 			x1 = e.getX();
 			y1 = e.getY();
 		}
@@ -221,5 +227,18 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			}
 			repaint();
 		}
+		
+	    public void printCoords(MouseEvent e) 
+	    {
+	    	String posX = String.valueOf((int) e.getPoint().getX());
+	    	String posY = String.valueOf((int) e.getPoint().getY());
+	    	frame.getCoordinateBar().getCoordinates().setText(posX + ",  " + posY + " px");
+	    }
+
+	        // print drawer panel size at status tool bar
+	    public void printPaintPanelSize(int width, int height) 
+	    {
+	    	frame.getCoordinateBar().getFrameSize().setText(width + ",  " + height + " px");
+	    }
 		
 	}
