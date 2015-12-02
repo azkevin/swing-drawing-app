@@ -41,7 +41,7 @@ public class DrawFrame extends JFrame
 		
 
 		// create a tool bar		
-		toolBar = (new ToolBar(this, this.inkPanel)).getToolBar();
+		toolBar = (new ToolBar(this)).getToolBar();
 
 		// create coordinate bar at the bottom
 		coordinateBar = new CoordinateBar();
@@ -91,5 +91,9 @@ public class DrawFrame extends JFrame
     	return this.coordinateBar;
     }
     
+    public PaintPanel getInkPanel()
+    {
+    	return this.inkPanel;
+    }
 
 }

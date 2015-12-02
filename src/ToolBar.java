@@ -56,12 +56,10 @@ public class ToolBar implements ActionListener
 	private JComboBox comboBox;
 	
 	private DrawFrame frame;
-	private PaintPanel paint;
 	
-    public ToolBar(DrawFrame frame, PaintPanel paint) 
+    public ToolBar(DrawFrame frame) 
 	{
     	this.frame = frame;
-    	this.paint = paint;
     	
     	this.initializeToolBar();
 		
@@ -140,28 +138,28 @@ public class ToolBar implements ActionListener
 		Object source = ae.getSource();
 
 		if (source == clear){
-			paint.clear();
+			frame.getInkPanel().clear();
 		}
 		else if (source == pencil){
-			paint.setTool(0);
+			frame.getInkPanel().setTool(0);
 		}
 		else if (source == line) {
-			paint.setTool(1);
+			frame.getInkPanel().setTool(1);
 		}
 		else if (source == rectangle) {
-			paint.setTool(2);
+			frame.getInkPanel().setTool(2);
 		}
 		else if (source == circle) {
-			paint.setTool(3);
+			frame.getInkPanel().setTool(3);
 		}
 		else if (source == select){
-			paint.setTool(4);
+			frame.getInkPanel().setTool(4);
 		}
 		else if (source == text){
-			paint.setTool(5);
+			frame.getInkPanel().setTool(5);
 		}
 		else if (source == erase){
-			paint.eraser();
+			frame.getInkPanel().eraser();
 		}
 //		else if (source == thicker){
 //		
@@ -175,11 +173,11 @@ public class ToolBar implements ActionListener
 			System.out.println(1);
 			JComboBox combo = (JComboBox)ae.getSource();
 			String current = (String) combo.getSelectedItem();
-			paint.setThickness(Float.valueOf(current) );
+			frame.getInkPanel().setThickness(Float.valueOf(current) );
 		}
 		else{
 			JButton b = (JButton) source;
-			paint.setColor(b.getBackground());
+			frame.getInkPanel().setColor(b.getBackground());
 		}
 	}
     public JToolBar getToolBar()
