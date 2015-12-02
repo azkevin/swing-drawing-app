@@ -12,11 +12,11 @@ public class ColorChooser2 extends JPanel implements ChangeListener
 	private final int CC_WIDTH = 400;
 	private final int CC_HEIGHT = 300;
 	
-	private PaintPanel paintPanel;
+	private DrawFrame frame;
 	
-	public ColorChooser2(PaintPanel panel)
+	public ColorChooser2(DrawFrame frame)
 	{
-		this.paintPanel = panel;
+		this.frame = frame;
 		cc = new JColorChooser();
 		cc.setPreviewPanel(new JPanel());
 		cc.setPreferredSize(new Dimension(CC_WIDTH, CC_HEIGHT));
@@ -25,7 +25,7 @@ public class ColorChooser2 extends JPanel implements ChangeListener
 
 	
 	public void stateChanged(ChangeEvent e){
-		paintPanel.setColor(cc.getColor());
+		this.frame.getInkPanel().setColor(cc.getColor());
 	}
 	
 	

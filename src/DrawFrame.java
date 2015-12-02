@@ -50,7 +50,7 @@ public class DrawFrame extends JFrame
 		cc1 = (new ColorChooser1()).getPanel();
 
 		// create default color chooser
-		cc2 = (new ColorChooser2(this.inkPanel)).getColorChooser();
+		cc2 = (new ColorChooser2(this)).getColorChooser();
 		
 		// construct the panels needed. (INKPANEL COMES LAST)
 		inkPanel = new PaintPanel(0, this);
@@ -70,7 +70,7 @@ public class DrawFrame extends JFrame
 		this.add(coordinateBar, BorderLayout.PAGE_END);
 		this.add(toolBar, BorderLayout.WEST);
 		this.add(contentPane);
-		this.add(cc1, BorderLayout.EAST);
+		this.add(cc2, BorderLayout.EAST);
 		
 		this.setSize(CONTENT_PANE_WIDTH, CONTENT_PANE_HEIGHT);
 		this.setPreferredSize(new Dimension(CONTENT_PANE_WIDTH,CONTENT_PANE_HEIGHT));
