@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
@@ -203,8 +204,12 @@ public class ColorChooser1 extends JPanel implements ActionListener
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		JButton b = (JButton) e.getSource();
+		if (b == newColor){
+			ColorDialog c = new ColorDialog();
+		}else{
+					
 		DrawFrame.getInkPanel().setColor(b.getBackground());;
-		
+		}
 	}
 	
     public JPanel getPanel()

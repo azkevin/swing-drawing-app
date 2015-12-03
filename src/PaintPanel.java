@@ -45,6 +45,8 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		private Stack<Shape> shapes;
 		private Stack<Shape> removed;
 		
+		
+		
 		int x1, y1, x2, y2;
 		
 
@@ -81,6 +83,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			this.printPaintPanelSize(700, 500);
 			this.shapes = new Stack<Shape>();
 			this.removed = new Stack<Shape>();
+			
 			//if the mouse is pressed it sets the oldX & oldY
 			//coordinates as the mouses x & y coordinates
 
@@ -100,26 +103,17 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			g.drawImage(canvas, 0, 0, null);
 			
 			for(Shape s : shapes){
-				
+				Graphics2D g2 = (Graphics2D) g;
+				g2.setColor(s.getColor());
+				g2.setStroke(s.getStroke());
 				if (s.getShape() == LINE){
-					
-					g.setColor(s.getColor());
-					
-					g.drawLine(s.getx1(), s.gety1(), s.getx2(), s.gety2());
+					g2.drawLine(s.getx1(), s.gety1(), s.getx2(), s.gety2());
 				}
 				else if (s.getShape() == RECTANGLE){
-					
-				
-					g.setColor(s.getColor());
-					
-					g.drawRect(s.getx1(), s.gety1(), s.getx2(), s.gety2());
+					g2.drawRect(s.getx1(), s.gety1(), s.getx2(), s.gety2());
 				}
 				else if (s.getShape() == CIRCLE){
-					
-					
-					g.setColor(s.getColor());
-					
-					g.drawOval(s.getx1(), s.gety1(), s.getx2(), s.gety2());
+					g2.drawOval(s.getx1(), s.gety1(), s.getx2(), s.gety2());
 				}
 			}
 			
@@ -141,6 +135,8 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		public void clear(){
 			graphics2D.setPaint(Color.white);
 			graphics2D.fillRect(0, 0, getSize().width, getSize().height);
+			shapes.removeAllElements();
+			removed.removeAllElements();
 			repaint();
 			graphics2D.setColor(currentColor);
 		}
@@ -185,6 +181,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 				repaint();
 				x1 = x2;
 				y1 = y2;
+				
 			}
 		}
 
@@ -228,7 +225,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			
 				if (activeTool == LINE_TOOL) {
 					shapes.push(new Shape(x1, y1, x2, y2,currentColor,stroke,1));
-					repaint();
+					//repaint();
 					//graphics2D.drawLine(x1, y1, x2, y2);
 					//System.out.println("0");
 				}

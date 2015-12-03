@@ -1,5 +1,6 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.util.Stack;
 
 public class Shape {
 
@@ -13,6 +14,7 @@ public class Shape {
 	
 	private int shape;
 	
+	public int group = 0;
 	
 	
 	public Shape(int x1, int y1,int x2, int y2, Color color,BasicStroke stroke, int shape){
@@ -23,6 +25,7 @@ public class Shape {
 		this.color = color;
 		this.stroke = stroke;
 		this.shape = shape;
+		
 	}
 	public int getShape(){
 		return this.shape;
@@ -41,5 +44,8 @@ public class Shape {
 	}
 	public Color getColor(){
 		return this.color;
+	}
+	public BasicStroke getStroke(){
+		return this.stroke;
 	}
 }
