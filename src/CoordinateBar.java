@@ -1,3 +1,6 @@
+import java.awt.Color;
+
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JToolBar;
 
@@ -18,6 +21,8 @@ public class CoordinateBar extends JToolBar
 		frameSize = new JLabel();
 		frameSize.setText("  0 x 0  ");
 		this.add(frameSize);
+		this.setFloatable(false);
+		this.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.BLACK));
     }
     
     
@@ -31,7 +36,7 @@ public class CoordinateBar extends JToolBar
 		return frameSize;
     }
 
-    public JToolBar getStatusBar() 
+    public JToolBar getCoordinateBar() 
     {
 		return this;
     }

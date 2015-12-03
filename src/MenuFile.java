@@ -159,7 +159,7 @@ public class MenuFile implements ActionListener
 							newDimensions = new Dimension(Integer.parseInt(width.getText()), 
 									Integer.parseInt(height.getText()));
 							System.out.println(newDimensions);
-							frame.setInkPanel(new PaintPanel(0, frame.getDrawFrame(), newDimensions.width, newDimensions.height));
+							DrawFrame.setInkPanel(new PaintPanel(0, frame.getDrawFrame(), newDimensions.width, newDimensions.height));
 							newFileFrame.dispose();
 						}
 						catch (NumberFormatException nfe)
