@@ -204,12 +204,10 @@ public class ColorChooser1 extends JPanel implements ActionListener
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		JButton b = (JButton) e.getSource();
-		if (b == newColor){
-			ColorDialog c = new ColorDialog();
-		}else{
+		
 					
 		DrawFrame.getInkPanel().setColor(b.getBackground());;
-		}
+		
 	}
 	
     public JPanel getPanel()
