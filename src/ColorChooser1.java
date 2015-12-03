@@ -53,6 +53,7 @@ public class ColorChooser1 extends JPanel implements ActionListener
 	private Color asbestosC = new Color(127, 140, 141);
 	
 	private JPanel cc;
+
 	
 	public ColorChooser1()
 	{
@@ -176,6 +177,8 @@ public class ColorChooser1 extends JPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		JButton b = (JButton) e.getSource();
+		DrawFrame.getInkPanel().setColor(b.getBackground());;
 		
 	}
 	

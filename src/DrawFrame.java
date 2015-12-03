@@ -18,7 +18,7 @@ public class DrawFrame extends JFrame
 
 	//fields
 	private JPanel contentPane;	
-	private PaintPanel inkPanel;
+	private static PaintPanel inkPanel;
 	private JMenuBar menuBar;
 	private JToolBar toolBar;
 	private JPanel cc1;
@@ -70,7 +70,7 @@ public class DrawFrame extends JFrame
 		this.add(coordinateBar, BorderLayout.PAGE_END);
 		this.add(toolBar, BorderLayout.WEST);
 		this.add(contentPane);
-		this.add(cc2, BorderLayout.EAST);
+		this.add(cc1, BorderLayout.EAST);
 		
 		this.setSize(CONTENT_PANE_WIDTH, CONTENT_PANE_HEIGHT);
 		this.setPreferredSize(new Dimension(CONTENT_PANE_WIDTH,CONTENT_PANE_HEIGHT));
@@ -91,9 +91,9 @@ public class DrawFrame extends JFrame
     	return this.coordinateBar;
     }
     
-    public PaintPanel getInkPanel()
+    public static PaintPanel getInkPanel()
     {
-    	return this.inkPanel;
+    	return inkPanel;
     }
 
 }
