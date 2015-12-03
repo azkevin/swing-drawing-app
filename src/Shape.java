@@ -13,9 +13,7 @@ public class Shape {
 	
 	private int shape;
 	
-	private final int LINE = 1;
-	private final int RECTANGLE = 2;
-	private final int CIRCLE = 3;
+	
 	
 	public Shape(int x1, int y1,int x2, int y2, Color color,BasicStroke stroke, int shape){
 		this.x1 = x1;
@@ -40,5 +38,8 @@ public class Shape {
 	}
 	public int gety2(){
 		return this.y2;
+	}
+	public Color getColor(){
+		return this.color;
 	}
 }
