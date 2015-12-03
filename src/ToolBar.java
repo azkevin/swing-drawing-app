@@ -103,7 +103,7 @@ public class ToolBar implements ActionListener
 		//open.setBackground(background);
 		//pencil.setBackground(background);
 		
-		String[] items = {"2","3","4","5","6","7","8","9","10"};
+		String[] items = {"1","2","3","4","5","6","7","8"};
 		comboBox = new JComboBox(items);
 		
 		// ----------------
