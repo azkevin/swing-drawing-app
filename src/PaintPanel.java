@@ -43,7 +43,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		private DrawFrame frame;
 		
 		private Stack<Shape> shapes;
-		
+		private Stack<Shape> removed;
 		
 		int x1, y1, x2, y2;
 		
@@ -80,6 +80,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			this.frame = frame;
 			this.printPaintPanelSize(700, 500);
 			this.shapes = new Stack<Shape>();
+			this.removed = new Stack<Shape>();
 			//if the mouse is pressed it sets the oldX & oldY
 			//coordinates as the mouses x & y coordinates
 
@@ -97,6 +98,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 				clear();
 			}
 			g.drawImage(canvas, 0, 0, null);
+			
 			for(Shape s : shapes){
 				
 				if (s.getShape() == LINE){
@@ -120,6 +122,8 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 					g.drawOval(s.getx1(), s.gety1(), s.getx2(), s.gety2());
 				}
 			}
+			
+			
 		}
 		
 		public void setTool(int tool) {
@@ -142,10 +146,17 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		}
 	
 		public void undo(){
-			shapes.pop();
-			repaint();
+			if(shapes.size()>0){
+				removed.push(shapes.pop());
+				repaint();
+			}
 		}
-		
+		public void redo(){
+			if(removed.size()>0){
+				shapes.push(removed.pop());
+				repaint();
+			}
+		}
 		public void setColor(Color c){
 			currentColor = c;
 			graphics2D.setColor(c);
