@@ -61,16 +61,18 @@ public class ColorChooser1 extends JPanel implements ActionListener
 	private Color asbestosC = new Color(127, 140, 141);
 	
 	private JToolBar cc;
+	
+	private DrawFrame frame;
 
 	
-	public ColorChooser1()
+	public ColorChooser1(DrawFrame frame)
 	{
 		cc = new JToolBar(JToolBar.HORIZONTAL);
 		//cc.setLayout(new GridLayout(5,5));
 		cc.setLayout(new FlowLayout());
 		cc.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.BLACK));
 		cc.setFloatable(false);
-
+		this.frame = frame;
 		this.initializeColorChooser(cc);
 
 		turquoise.addActionListener(this);
@@ -213,7 +215,7 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		JButton b = (JButton) e.getSource();
 		
 					
-		DrawFrame.getInkPanel().setColor(b.getBackground());;
+		frame.getInkPanel().setColor(b.getBackground());;
 		
 	}
 	

@@ -98,7 +98,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 
 		public void paintComponent(Graphics g){
 			if(canvas == null){
-				canvas = new BufferedImage(800, 600,BufferedImage.TYPE_INT_ARGB);
+				canvas = new BufferedImage(inkPanelWidth, inkPanelHeight,BufferedImage.TYPE_INT_ARGB);
 				graphics2D = canvas.createGraphics();
 				graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 				clear();
@@ -143,6 +143,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			repaint();
 			graphics2D.setColor(currentColor);
 		}
+		
 	
 		public void undo(){
 			if(shapes.size()>0){
@@ -295,11 +296,22 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 	    
 	    public void setInkPanelWidth(int width)
 	    {
-	    	this.inkPanelHeight = width;
+	    	this.inkPanelWidth = width;
 	    }
 	    public void setInkPanelHeight(int height)
 	    {
 	    	this.inkPanelHeight = height;
+	    }
+	    
+	    public void setInkPanel(int width, int height)
+	    {
+			canvas = new BufferedImage(width, height,BufferedImage.TYPE_INT_ARGB);
+			graphics2D = canvas.createGraphics();
+			graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			this.setSize(width, height);
+			this.printPaintPanelSize(width, height);
+			clear();
+	    	
 	    }
 		
 	}

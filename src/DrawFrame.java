@@ -18,7 +18,7 @@ public class DrawFrame extends JFrame
 
 	//fields
 	private JPanel contentPane;	
-	private static PaintPanel inkPanel;
+	private PaintPanel inkPanel;
 	private JMenuBar menuBar;
 	private JToolBar toolBar;
 	private JToolBar cc1;
@@ -50,7 +50,7 @@ public class DrawFrame extends JFrame
 		coordinateBar = new CoordinateBar();
 		
 		// create color chooser 1 (minas)
-		cc1 = (new ColorChooser1()).getToolBar();
+		cc1 = (new ColorChooser1(this)).getToolBar();
 
 		// create default color chooser
 		cc2 = (new ColorChooser2(this)).getColorChooser();
@@ -94,15 +94,11 @@ public class DrawFrame extends JFrame
     	return this.coordinateBar;
     }
     
-    public static PaintPanel getInkPanel()
+    public PaintPanel getInkPanel()
     {
-    	return inkPanel;
+    	return this.inkPanel;
     }
-    public static void setInkPanel(PaintPanel panel)
-    {
-    	inkPanel = panel;
-    	inkPanel.repaint();
-    }
+
     public DrawFrame getDrawFrame()
     {
     	return this;
