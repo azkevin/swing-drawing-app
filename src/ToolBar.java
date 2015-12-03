@@ -159,7 +159,7 @@ public class ToolBar implements ActionListener
 			frame.getInkPanel().setTool(5);
 		}
 		else if (source == erase){
-			frame.getInkPanel().eraser();
+			frame.getInkPanel().setTool(6);
 		}
 //		else if (source == thicker){
 //		

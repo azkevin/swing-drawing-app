@@ -27,13 +27,14 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		private final int CIRCLE_TOOL = 3;
 		private final int SELECT_TOOL = 4;
 		private final int TEXT_TOOL = 5;
+		private final int ERASER_TOOL = 6;
 		
 		private BasicStroke stroke = new BasicStroke((float) 0.1);
 		BufferedImage canvas;
 		Graphics2D graphics2D;
 		private int activeTool = 0;
 		private JLabel label;
-		
+		private boolean eraser;
 		private DrawFrame frame;
 		
 		int x1, y1, x2, y2;
@@ -51,6 +52,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			this.setBackground(Color.white);
 			this.setBorder(BorderFactory.createLineBorder(Color.black));
 			this.setPreferredSize(new Dimension(250, 250));
+			this.eraser = false;
 		}
 
 		//Now for the constructors
@@ -106,10 +108,11 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			graphics2D.setColor(currentColor);
 		}
 		
-		public void eraser(){ // find a transparent color later
-			graphics2D.setColor(Color.WHITE);
+	//	public void eraser(){ // find a transparent color later
+	//		this.eraser = true;
+			//graphics2D.setColor(Color.WHITE);
 		//	graphics2D.setStroke(s);
-		}
+	//	}
 		public void setColor(Color c){
 			currentColor = c;
 			graphics2D.setColor(c);
@@ -140,7 +143,15 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			printCoords(e);
 			x2 = e.getX();
 			y2 = e.getY();
+			if (activeTool == ERASER_TOOL){
+				graphics2D.setColor(Color.white);
+				graphics2D.drawLine(x1, y1, x2, y2);
+				repaint();
+				x1 = x2;
+				y1 = y2;
+			}
 			if (activeTool == PENCIL_TOOL) {
+				graphics2D.setColor(currentColor);
 				graphics2D.drawLine(x1, y1, x2, y2);
 				repaint();
 				x1 = x2;
@@ -183,48 +194,51 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
-			if (activeTool == LINE_TOOL) {
-				
-				graphics2D.drawLine(x1, y1, x2, y2);
-				System.out.println("0");
-			}
-			else if (activeTool == RECTANGLE_TOOL) {
 			
-				if (x1 < x2 && y1 < y2) {
-					graphics2D.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
+			
+			
+				if (activeTool == LINE_TOOL) {
+					
+					graphics2D.drawLine(x1, y1, x2, y2);
+					System.out.println("0");
 				}
-				else if (x2 < x1 && y1 < y2) {
-					graphics2D.draw(new Rectangle2D.Double(x2, y1, x1 - x2, y2 - y1));
-				}
-				else if (x1 < x2 && y2 < y1) {
-					graphics2D.draw(new Rectangle2D.Double(x1, y2, x2 - x1, y1 - y2));
-				}
-				else if (x2 < x1 && y2 < y1) {
-					graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
-				}
+				else if (activeTool == RECTANGLE_TOOL) {
 				
-			}
-			else if (activeTool == CIRCLE_TOOL) {
-				if (x1 < x2 && y1 < y2) {
-					graphics2D.draw(new Ellipse2D.Double(x1, y1, x2 - x1, y2 - y1));
+					if (x1 < x2 && y1 < y2) {
+						graphics2D.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
+					}
+					else if (x2 < x1 && y1 < y2) {
+						graphics2D.draw(new Rectangle2D.Double(x2, y1, x1 - x2, y2 - y1));
+					}
+					else if (x1 < x2 && y2 < y1) {
+						graphics2D.draw(new Rectangle2D.Double(x1, y2, x2 - x1, y1 - y2));
+					}
+					else if (x2 < x1 && y2 < y1) {
+						graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
+					}
+					
 				}
-				else if (x2 < x1 && y1 < y2) {
-					graphics2D.draw(new Ellipse2D.Double(x2, y1, x1 - x2, y2 - y1));
+				else if (activeTool == CIRCLE_TOOL) {
+					if (x1 < x2 && y1 < y2) {
+						graphics2D.draw(new Ellipse2D.Double(x1, y1, x2 - x1, y2 - y1));
+					}
+					else if (x2 < x1 && y1 < y2) {
+						graphics2D.draw(new Ellipse2D.Double(x2, y1, x1 - x2, y2 - y1));
+					}
+					else if (x1 < x2 && y2 < y1) {
+						graphics2D.draw(new Ellipse2D.Double(x1, y2, x2 - x1, y1 - y2));
+					}
+					else if (x2 < x1 && y2 < y1) {
+						graphics2D.draw(new Ellipse2D.Double(x2, y2, x1 - x2, y1 - y2));
+					}
 				}
-				else if (x1 < x2 && y2 < y1) {
-					graphics2D.draw(new Ellipse2D.Double(x1, y2, x2 - x1, y1 - y2));
+				else if (activeTool == SELECT_TOOL){
+					
 				}
-				else if (x2 < x1 && y2 < y1) {
-					graphics2D.draw(new Ellipse2D.Double(x2, y2, x1 - x2, y1 - y2));
+				else if (activeTool == TEXT_TOOL){
+					
 				}
-			}
-			else if (activeTool == SELECT_TOOL){
-				
-			}
-			else if (activeTool == TEXT_TOOL){
-				
-				
-			}
+			
 			repaint();
 		}
 		
