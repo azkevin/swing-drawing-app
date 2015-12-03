@@ -1,9 +1,12 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -57,13 +60,17 @@ public class ColorChooser1 extends JPanel implements ActionListener
 	private Color silverC = new Color(189, 195, 199);
 	private Color asbestosC = new Color(127, 140, 141);
 	
-	private JPanel cc;
+	private JToolBar cc;
 
 	
 	public ColorChooser1()
 	{
-		cc = new JPanel();
-		cc.setLayout(new GridLayout(5,5));
+		cc = new JToolBar(JToolBar.HORIZONTAL);
+		//cc.setLayout(new GridLayout(5,5));
+		cc.setLayout(new FlowLayout());
+		cc.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.BLACK));
+		cc.setFloatable(false);
+
 		this.initializeColorChooser(cc);
 
 		turquoise.addActionListener(this);
@@ -91,86 +98,86 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		custom3.addActionListener(this);
 	}
 
-	private void initializeColorChooser(JPanel panel) {
+	private void initializeColorChooser(JToolBar panel) {
 		turquoise = new JButton("");
-		turquoise.setPreferredSize(new Dimension(50,50));
+		turquoise.setPreferredSize(new Dimension(25,25));
 		turquoise.setBackground(turquoiseC);
 	
 		
 		emerald = new JButton("");
-		emerald.setPreferredSize(new Dimension(50,50));
+		emerald.setPreferredSize(new Dimension(25,25));
 		emerald.setBackground(emeraldC);
 		
 		peter_river = new JButton("");
-		peter_river.setPreferredSize(new Dimension(50,50));
+		peter_river.setPreferredSize(new Dimension(25,25));
 		peter_river.setBackground(peter_riverC);
 		amethyst = new JButton("");
-		amethyst.setPreferredSize(new Dimension(50,50));
+		amethyst.setPreferredSize(new Dimension(25,25));
 		amethyst.setBackground(amethystC);
 		wet_asphalt = new JButton("");
-		wet_asphalt.setPreferredSize(new Dimension(50,50));
+		wet_asphalt.setPreferredSize(new Dimension(25,25));
 		wet_asphalt.setBackground(wet_asphaltC);
 		green_sea = new JButton("");
-		green_sea.setPreferredSize(new Dimension(50,50));
+		green_sea.setPreferredSize(new Dimension(25,25));
 		green_sea.setBackground(green_seaC);
 		nephritis = new JButton("");
-		nephritis.setPreferredSize(new Dimension(50,50));
+		nephritis.setPreferredSize(new Dimension(25,25));
 		nephritis.setBackground(nephritisC);
 		belize_hole = new JButton("");
-		belize_hole.setPreferredSize(new Dimension(50,50));
+		belize_hole.setPreferredSize(new Dimension(25,25));
 		belize_hole.setBackground(belize_holeC);
 		wisteria = new JButton("");
-		wisteria.setPreferredSize(new Dimension(50,50));
+		wisteria.setPreferredSize(new Dimension(25,25));
 		wisteria.setBackground(wisteriaC);
 		midnight_blue = new JButton("");
-		midnight_blue.setPreferredSize(new Dimension(50,50));
+		midnight_blue.setPreferredSize(new Dimension(25,25));
 		midnight_blue.setBackground(midnight_blueC);
 		sun_flower = new JButton("");
-		sun_flower.setPreferredSize(new Dimension(50,50));
+		sun_flower.setPreferredSize(new Dimension(25,25));
 		sun_flower.setBackground(sun_flowerC);
 		carrot = new JButton("");
-		carrot.setPreferredSize(new Dimension(50,50));
+		carrot.setPreferredSize(new Dimension(25,25));
 		carrot.setBackground(carrotC);
 		alizarin = new JButton("");
-		alizarin.setPreferredSize(new Dimension(50,50));
+		alizarin.setPreferredSize(new Dimension(25,25));
 		alizarin.setBackground(alizarinC);
 		clouds = new JButton("");
-		clouds.setPreferredSize(new Dimension(50,50));
+		clouds.setPreferredSize(new Dimension(25,25));
 		clouds.setBackground(cloudsC);
 		concrete = new JButton("");
-		concrete.setPreferredSize(new Dimension(50,50));
+		concrete.setPreferredSize(new Dimension(25,25));
 		concrete.setBackground(concreteC);
 		orange = new JButton("");
-		orange.setPreferredSize(new Dimension(50,50));
+		orange.setPreferredSize(new Dimension(25,25));
 		orange.setBackground(orangeC);
 		pumpkin = new JButton("");
-		pumpkin.setPreferredSize(new Dimension(50,50));
+		pumpkin.setPreferredSize(new Dimension(25,25));
 		pumpkin.setBackground(pumpkinC);
 		pomegranate = new JButton("");
-		pomegranate.setPreferredSize(new Dimension(50,50));
+		pomegranate.setPreferredSize(new Dimension(25,25));
 		pomegranate.setBackground(pomegranateC);
 		silver = new JButton("");
-		silver.setPreferredSize(new Dimension(50,50));
+		silver.setPreferredSize(new Dimension(25,25));
 		silver.setBackground(silverC);
 		asbestos = new JButton("");
-		asbestos.setPreferredSize(new Dimension(50,50));
+		asbestos.setPreferredSize(new Dimension(25,25));
 		asbestos.setBackground(asbestosC);
 		
 		custom1 = new JButton("");
-		custom1.setPreferredSize(new Dimension(50,50));
+		custom1.setPreferredSize(new Dimension(25,25));
 		custom1.setBackground(Color.white);
 		
 		
 		custom2 = new JButton("");
-		custom2.setPreferredSize(new Dimension(50,50));
+		custom2.setPreferredSize(new Dimension(25,25));
 		custom2.setBackground(Color.white);
 	
 		custom3 = new JButton("");
-		custom3.setPreferredSize(new Dimension(50,50));
+		custom3.setPreferredSize(new Dimension(25,25));
 		custom3.setBackground(Color.white);
 		
 		newColor = new JButton("Edit Color");
-		newColor.setPreferredSize(new Dimension(50,50));
+		newColor.setPreferredSize(new Dimension(25,25));
 		
 		
 		panel.add(turquoise);
@@ -210,7 +217,7 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		
 	}
 	
-    public JPanel getPanel()
+    public JToolBar getToolBar()
     {
     	return this.cc;
     }

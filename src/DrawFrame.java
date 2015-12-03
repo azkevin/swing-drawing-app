@@ -21,7 +21,7 @@ public class DrawFrame extends JFrame
 	private static PaintPanel inkPanel;
 	private JMenuBar menuBar;
 	private JToolBar toolBar;
-	private JPanel cc1;
+	private JToolBar cc1;
 	private JColorChooser cc2;
 	private CoordinateBar coordinateBar;
 
@@ -47,7 +47,7 @@ public class DrawFrame extends JFrame
 		coordinateBar = new CoordinateBar();
 		
 		// create color chooser 1 (minas)
-		cc1 = (new ColorChooser1()).getPanel();
+		cc1 = (new ColorChooser1()).getToolBar();
 
 		// create default color chooser
 		cc2 = (new ColorChooser2(this)).getColorChooser();
@@ -57,6 +57,7 @@ public class DrawFrame extends JFrame
 		
 		
 		// configure components and add them to the frame.
+		this.add(cc1, BorderLayout.PAGE_START);
 		contentPane.add(inkPanel);
 		//contentPane.add(cc1);
 		//contentPane.add(cc2);
@@ -70,7 +71,6 @@ public class DrawFrame extends JFrame
 		this.add(coordinateBar, BorderLayout.PAGE_END);
 		this.add(toolBar, BorderLayout.WEST);
 		this.add(contentPane);
-		this.add(cc1, BorderLayout.EAST);
 		
 		this.setSize(CONTENT_PANE_WIDTH, CONTENT_PANE_HEIGHT);
 		this.setPreferredSize(new Dimension(CONTENT_PANE_WIDTH,CONTENT_PANE_HEIGHT));

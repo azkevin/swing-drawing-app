@@ -79,6 +79,7 @@ public class ToolBar implements ActionListener
 		// create buttons for the tool bar
 		// ----------------
 		toolBar = new JToolBar(JToolBar.VERTICAL);
+		
 		toolBar.setFloatable(false);		
 		
 		select = new JButton("Select");
