@@ -30,6 +30,10 @@ public class ColorChooser1 extends JPanel implements ActionListener
 	private JButton pomegranate;
 	private JButton silver;
 	private JButton asbestos;
+	private JButton custom1;
+	private JButton custom2;
+	private JButton custom3;
+	private JButton newColor;
 	
 	private Color turquoiseC = new Color(26, 188, 156);
 	private Color emeraldC = new Color(46, 204, 113);
@@ -58,7 +62,7 @@ public class ColorChooser1 extends JPanel implements ActionListener
 	public ColorChooser1()
 	{
 		cc = new JPanel();
-		cc.setLayout(new GridLayout(4,5));
+		cc.setLayout(new GridLayout(5,5));
 		this.initializeColorChooser(cc);
 
 		turquoise.addActionListener(this);
@@ -81,6 +85,9 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		pomegranate.addActionListener(this);
 		silver.addActionListener(this);
 		asbestos.addActionListener(this);
+		custom1.addActionListener(this);
+		custom2.addActionListener(this);
+		custom3.addActionListener(this);
 	}
 
 	private void initializeColorChooser(JPanel panel) {
@@ -148,6 +155,21 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		asbestos.setPreferredSize(new Dimension(50,50));
 		asbestos.setBackground(asbestosC);
 		
+		custom1 = new JButton("");
+		custom1.setPreferredSize(new Dimension(50,50));
+		custom1.setBackground(Color.white);
+		
+		
+		custom2 = new JButton("");
+		custom2.setPreferredSize(new Dimension(50,50));
+		custom2.setBackground(Color.white);
+	
+		custom3 = new JButton("");
+		custom3.setPreferredSize(new Dimension(50,50));
+		custom3.setBackground(Color.white);
+		
+		newColor = new JButton("Edit Color");
+		newColor.setPreferredSize(new Dimension(50,50));
 		
 		
 		panel.add(turquoise);
@@ -170,7 +192,10 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		panel.add(pomegranate);
 		panel.add(silver);
 		panel.add(asbestos);
-		
+		panel.add(custom1);
+		panel.add(custom2);
+		panel.add(custom3);
+		panel.add(newColor);
 	}
 	
 	

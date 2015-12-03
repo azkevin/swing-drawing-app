@@ -13,6 +13,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
+import java.util.Stack;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -33,9 +34,12 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		BufferedImage canvas;
 		Graphics2D graphics2D;
 		private int activeTool = 0;
-		private JLabel label;
-		private boolean eraser;
+		//private JLabel label;
+	//	private boolean eraser;
 		private DrawFrame frame;
+		
+		private Stack<Shape> shapes;
+		
 		
 		int x1, y1, x2, y2;
 		
@@ -52,7 +56,8 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			this.setBackground(Color.white);
 			this.setBorder(BorderFactory.createLineBorder(Color.black));
 			this.setPreferredSize(new Dimension(250, 250));
-			this.eraser = false;
+			//this.eraser = false;
+			this.shapes = new Stack<Shape>();
 		}
 
 		//Now for the constructors
@@ -70,6 +75,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			this.addMouseMotionListener(this);
 			this.frame = frame;
 			this.printPaintPanelSize(700, 500);
+			this.shapes = new Stack<Shape>();
 			//if the mouse is pressed it sets the oldX & oldY
 			//coordinates as the mouses x & y coordinates
 
@@ -87,6 +93,15 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 				clear();
 			}
 			g.drawImage(canvas, 0, 0, null);
+			for(Shape s : shapes){
+				
+				if (s.getShape() == 1){
+					
+					//g.setColor(currentColor);
+				
+					g.drawLine(s.getx1(), s.gety1(), s.getx2(), s.gety2());
+				}
+			}
 		}
 		
 		public void setTool(int tool) {
@@ -107,12 +122,12 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			repaint();
 			graphics2D.setColor(currentColor);
 		}
+	
+		public void undo(){
+			shapes.pop();
+			repaint();
+		}
 		
-	//	public void eraser(){ // find a transparent color later
-	//		this.eraser = true;
-			//graphics2D.setColor(Color.WHITE);
-		//	graphics2D.setStroke(s);
-	//	}
 		public void setColor(Color c){
 			currentColor = c;
 			graphics2D.setColor(c);
@@ -121,21 +136,6 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			stroke = new BasicStroke(f);
 			graphics2D.setStroke(stroke);
 		}
-//		public void thicker(){
-//			System.out.println(stroke.getLineWidth());
-//			stroke = new BasicStroke(stroke.getLineWidth() + 2f);
-//			graphics2D.setStroke(stroke);
-//		}
-//		public void thinner(){
-//			if (stroke.getLineWidth() > 2.1f){
-//				System.out.println(stroke.getLineWidth());
-//				BigDecimal bd = new BigDecimal(Float.toString(stroke.getLineWidth()-2f));
-//				bd = bd.setScale(1, BigDecimal.ROUND_HALF_UP);
-//				stroke = new BasicStroke(bd.floatValue());
-//				graphics2D.setStroke(stroke); 
-//			}
-//			
-//		}
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
@@ -198,9 +198,10 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			
 			
 				if (activeTool == LINE_TOOL) {
-					
-					graphics2D.drawLine(x1, y1, x2, y2);
-					System.out.println("0");
+					shapes.push(new Shape(x1, y1, x2, y2,currentColor,stroke,1));
+					repaint();
+					//graphics2D.drawLine(x1, y1, x2, y2);
+					//System.out.println("0");
 				}
 				else if (activeTool == RECTANGLE_TOOL) {
 				

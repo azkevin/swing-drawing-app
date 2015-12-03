@@ -70,6 +70,7 @@ public class ToolBar implements ActionListener
 		erase.addActionListener(this);
 		pencil.addActionListener(this);
 		comboBox.addActionListener(this);
+		undo.addActionListener(this);
 	}
     
 	private void initializeToolBar() {
@@ -160,6 +161,9 @@ public class ToolBar implements ActionListener
 		}
 		else if (source == erase){
 			frame.getInkPanel().setTool(6);
+		}
+		else if (source == undo){
+			frame.getInkPanel().undo();
 		}
 //		else if (source == thicker){
 //		
