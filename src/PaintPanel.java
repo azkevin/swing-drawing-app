@@ -51,6 +51,9 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		
 
 		private Color currentColor;
+		
+		private int inkPanelWidth = 700;
+		private int inkPanelHeight = 500;
 
 		public PaintPanel()
 		{
@@ -67,9 +70,9 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		}
 
 		//Now for the constructors
-		public PaintPanel(int f, DrawFrame frame){
+		public PaintPanel(int f, DrawFrame frame, int width, int height){
 			//this.setPreferredSize(new Dimension(300,300));
-			this.setSize(700, 500); //important for displaying on the draw frame.
+			this.setSize(inkPanelWidth, inkPanelHeight); //important for displaying on the draw frame.
 			this.setLayout(null);
 			setDoubleBuffered(true);
 			setLocation(10, 10);
@@ -80,7 +83,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			this.addMouseListener(this);
 			this.addMouseMotionListener(this);
 			this.frame = frame;
-			this.printPaintPanelSize(700, 500);
+			this.printPaintPanelSize(inkPanelWidth, inkPanelHeight);
 			this.shapes = new Stack<Shape>();
 			this.removed = new Stack<Shape>();
 			
@@ -288,6 +291,15 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 	    public void printPaintPanelSize(int width, int height) 
 	    {
 	    	frame.getCoordinateBar().getFrameSize().setText(width + ",  " + height + " px");
+	    }
+	    
+	    public void setInkPanelWidth(int width)
+	    {
+	    	this.inkPanelHeight = width;
+	    }
+	    public void setInkPanelHeight(int height)
+	    {
+	    	this.inkPanelHeight = height;
 	    }
 		
 	}

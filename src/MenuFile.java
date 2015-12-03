@@ -1,5 +1,8 @@
+import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -8,9 +11,14 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -26,6 +34,7 @@ public class MenuFile implements ActionListener
 	
 	private DrawFrame frame;
 	private PaintPanel paint;
+	private Dimension newDimensions = new Dimension(700,500);
 	
     public MenuFile(DrawFrame frame, PaintPanel paint) 
 	{
@@ -77,6 +86,12 @@ public class MenuFile implements ActionListener
 	{
 		Object source = ae.getSource();
 
+		if (source == newFile)
+		{
+			newFile();
+			
+		}
+		
 		if (source == openFile) {
 			if (fc.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
 				f = fc.getSelectedFile();
@@ -99,6 +114,84 @@ public class MenuFile implements ActionListener
 		}
 	}
 	
+	private void newFile()
+	{
+		JFrame newFileFrame = new JFrame();
+		newFileFrame.setTitle("New");
+		newFileFrame.setBackground(Color.GRAY);
+		newFileFrame.setSize(400, 200);
+		newFileFrame.setPreferredSize(new Dimension(400,200));
+		newFileFrame.setLayout(null);
+		newFileFrame.setResizable(false);
+		newFileFrame.pack();
+
+		// put the frame in the middle of the display
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		newFileFrame.setLocation(dim.width / 2 - newFileFrame.getSize().width / 2, dim.height / 2 - newFileFrame.getSize().height / 2);
+
+		newFileFrame.setVisible(true);
+
+		JTextField width = new JTextField();
+		width.setSize(100, 25);
+		width.setLocation(100, 25);
+		
+		JLabel widthLabel = new JLabel("Width (px):");
+		widthLabel.setSize(75, 25);
+		widthLabel.setLocation(25, 25);
+		
+		JLabel heightLabel = new JLabel("Height (px):");
+		heightLabel.setSize(75, 25);
+		heightLabel.setLocation(25, 75);
+		
+		JTextField height = new JTextField();
+		height.setLocation(100, 75);
+		height.setSize(100, 25);
+
+		JButton okay = new JButton("OK");
+		okay.setLocation(250, 25);
+		okay.setSize(75, 25);
+		okay.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						try
+						{
+							newDimensions = new Dimension(Integer.parseInt(width.getText()), 
+									Integer.parseInt(height.getText()));
+							System.out.println(newDimensions);
+							frame.setInkPanel(new PaintPanel(0, frame.getDrawFrame(), newDimensions.width, newDimensions.height));
+							newFileFrame.dispose();
+						}
+						catch (NumberFormatException nfe)
+						{
+							JOptionPane.showMessageDialog(null, 
+									"Invalid numeric entry. A proper integer is required.", 
+									"New", 
+									JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				}
+		);
+
+		JButton cancel = new JButton("Cancel");
+		cancel.setSize(75, 25);
+		cancel.setLocation(250, 75);
+		cancel.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					newFileFrame.dispose();
+				}
+			}
+		);
+		
+		newFileFrame.add(heightLabel);
+		newFileFrame.add(widthLabel);
+		newFileFrame.add(width);
+		newFileFrame.add(height);
+		newFileFrame.add(okay);
+		newFileFrame.add(cancel);
+	}
     
 	private void openFile(File f) {
 

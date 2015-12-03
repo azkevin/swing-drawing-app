@@ -27,6 +27,9 @@ public class DrawFrame extends JFrame
 
 	private final int CONTENT_PANE_WIDTH = 1300;
 	private final int CONTENT_PANE_HEIGHT = 700;
+	
+	private int inkPanelWidth = 700;
+	private int inkPanelHeight = 500;
 	private final Color background = Color.GRAY;
 	
 	//ContentPane > Toolbar,  cc, InkPanel,
@@ -37,7 +40,7 @@ public class DrawFrame extends JFrame
 		contentPane.setLayout(null);
 		
 		// create a menu bar
-		menuBar = (new MenuBar(this, this.inkPanel)).getMenuBar();
+		menuBar = (new MenuBar(this, this.inkPanel )).getMenuBar();
 		
 
 		// create a tool bar		
@@ -53,7 +56,7 @@ public class DrawFrame extends JFrame
 		cc2 = (new ColorChooser2(this)).getColorChooser();
 		
 		// construct the panels needed. (INKPANEL COMES LAST)
-		inkPanel = new PaintPanel(0, this);
+		inkPanel = new PaintPanel(0, this, inkPanelWidth, inkPanelHeight);
 		
 		
 		// configure components and add them to the frame.
@@ -94,6 +97,15 @@ public class DrawFrame extends JFrame
     public static PaintPanel getInkPanel()
     {
     	return inkPanel;
+    }
+    public static void setInkPanel(PaintPanel panel)
+    {
+    	inkPanel = panel;
+    	inkPanel.repaint();
+    }
+    public DrawFrame getDrawFrame()
+    {
+    	return this;
     }
 
 }

@@ -1,6 +1,9 @@
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -79,7 +82,7 @@ public class ToolBar implements ActionListener
 		// create buttons for the tool bar
 		// ----------------
 		toolBar = new JToolBar(JToolBar.VERTICAL);
-		
+		toolBar.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
 		toolBar.setFloatable(false);		
 		
 		select = new JButton("Select");
