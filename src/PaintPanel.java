@@ -56,6 +56,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		
 		private Color currentColor;
 		private Color fillColor;
+		private boolean transparent;
 		
 		private int inkPanelWidth = 700;
 		private int inkPanelHeight = 500;
@@ -94,7 +95,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			this.removed = new Stack<Shape>();
 			this.grouped = 1;
 			this.preview = new Stack<Shape>();
-			
+			this.transparent = true;
 			//if the mouse is pressed it sets the oldX & oldY
 			//coordinates as the mouses x & y coordinates
 
@@ -125,13 +126,17 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 				else if (s.getShape() == RECTANGLE){
 					
 					g2.drawRect(s.getx1(), s.gety1(), s.getx2(), s.gety2());
-					g2.setColor(s.getfillColor());
-					g2.fillRect(s.getx1(), s.gety1(), s.getx2(), s.gety2());
+					if(transparent == false){
+						g2.setColor(s.getfillColor());
+						g2.fillRect(s.getx1(), s.gety1(), s.getx2(), s.gety2());
+					}
 				}
 				else if (s.getShape() == CIRCLE){
 					g2.drawOval(s.getx1(), s.gety1(), s.getx2(), s.gety2());
-					g2.setColor(s.getfillColor());
-					g2.fillOval(s.getx1(), s.gety1(), s.getx2(), s.gety2());
+					if(transparent == false){
+						g2.setColor(s.getfillColor());
+						g2.fillOval(s.getx1(), s.gety1(), s.getx2(), s.gety2());
+				}
 				}
 			}
 			if (preview.size() > 0){
@@ -145,13 +150,17 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 				else if (s.getShape() == RECTANGLE){
 				
 					g2.drawRect(s.getx1(), s.gety1(), s.getx2(), s.gety2());
-					g2.setColor(s.getfillColor());
-					g2.fillRect(s.getx1(), s.gety1(), s.getx2(), s.gety2());
+					if(transparent == false){
+						g2.setColor(s.getfillColor());
+						g2.fillRect(s.getx1(), s.gety1(), s.getx2(), s.gety2());
+					}
 				}
 				else if (s.getShape() == CIRCLE){
 					g2.drawOval(s.getx1(), s.gety1(), s.getx2(), s.gety2());
-					g2.setColor(s.getfillColor());
+					if(transparent == false){
+						g2.setColor(s.getfillColor());
 					g2.fillOval(s.getx1(), s.gety1(), s.getx2(), s.gety2());
+					}
 				}
 				
 			}
@@ -222,6 +231,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		}
 		public void setFillColor(Color c){
 			this.fillColor = c;
+			this.transparent = false;
 		}
 		public void setThickness(float f){
 			stroke = new BasicStroke(f);
