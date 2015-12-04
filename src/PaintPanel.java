@@ -47,6 +47,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		
 		private Stack<Shape> shapes;
 		private Stack<Shape> removed;
+		private Stack<Shape> preview;
 		
 		private int grouped;
 		
@@ -90,7 +91,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			this.shapes = new Stack<Shape>();
 			this.removed = new Stack<Shape>();
 			this.grouped = 1;
-
+			this.preview = new Stack<Shape>();
 			
 			//if the mouse is pressed it sets the oldX & oldY
 			//coordinates as the mouses x & y coordinates
@@ -109,9 +110,16 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 				clear();
 			}
 			g.drawImage(canvas, 0, 0, null);
-			
+			Graphics2D g2 = (Graphics2D) g;
+			if (preview.size() > 0){
+				Shape s = preview.pop();
+				g2.setColor(s.getColor());
+				g2.setStroke(s.getStroke());
+				g2.drawRect(s.getx1(), s.gety1(), s.getx2(), s.gety2());
+				
+			}
 			for(Shape s : shapes){
-				Graphics2D g2 = (Graphics2D) g;
+				
 				g2.setColor(s.getColor());
 				g2.setStroke(s.getStroke());
 				
@@ -217,6 +225,25 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 				repaint();
 				x1 = x2;
 				y1 = y2;
+			}
+			else if (activeTool == RECTANGLE_TOOL){
+				if (x1 < x2 && y1 < y2) {
+					preview.push(new Shape(x1, y1, x2 - x1, y2 - y1,currentColor,stroke,2));
+					//graphics2D.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
+				}
+				else if (x2 < x1 && y1 < y2) {
+					preview.push(new Shape(x2, y1, x1 - x2, y2 - y1,currentColor,stroke,2));
+					//graphics2D.draw(new Rectangle2D.Double(x2, y1, x1 - x2, y2 - y1));
+				}
+				else if (x1 < x2 && y2 < y1) {
+					preview.push(new Shape(x1, y2, x2 - x1, y1 - y2,currentColor,stroke,2));
+					//graphics2D.draw(new Rectangle2D.Double(x1, y2, x2 - x1, y1 - y2));
+				}
+				else if (x2 < x1 && y2 < y1) {
+					preview.push(new Shape(x2, y2, x1 - x2, y1 - y2,currentColor,stroke,2));
+					//graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
+				}
+				repaint();
 			}
 			
 		}
