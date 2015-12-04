@@ -277,13 +277,14 @@ public class ColorChooser1 extends JPanel implements ActionListener
 				primaryColor.setBackground(b.getBackground());
 			}else {
 				secondaryColor.setBackground(b.getBackground());
+				
 			}
 			
 		}
 		
 		
 		frame.getInkPanel().setColor(primaryColor.getBackground());
-		
+		frame.getInkPanel().setFillColor(secondaryColor.getBackground());
 	}
 	
     public JToolBar getToolBar()
