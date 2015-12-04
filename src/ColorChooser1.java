@@ -207,14 +207,25 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		panel.add(custom3);
 		panel.add(newColor);
 	}
-	
+	public void setCustom1(Color c){
+		custom1.setBackground(c);
+	}
+	public void setCustom2(Color c){
+		custom2.setBackground(c);
+	}
+	public void setCustom3(Color c){
+		custom3.setBackground(c);
+	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		JButton b = (JButton) e.getSource();
 		
-					
+		custom3.setBackground(custom2.getBackground());
+		custom2.setBackground(custom1.getBackground());
+		custom1.setBackground(b.getBackground());
+		
 		frame.getInkPanel().setColor(b.getBackground());;
 		
 	}

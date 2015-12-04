@@ -13,12 +13,15 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Queue;
 import java.util.Stack;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JToolBar;
 
 public class PaintPanel extends JPanel implements MouseListener,MouseMotionListener
 	{
@@ -49,7 +52,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		
 		int x1, y1, x2, y2;
 		
-
+		
 		private Color currentColor;
 		
 		private int inkPanelWidth = 700;
@@ -87,6 +90,8 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			this.shapes = new Stack<Shape>();
 			this.removed = new Stack<Shape>();
 			this.grouped = 1;
+
+			
 			//if the mouse is pressed it sets the oldX & oldY
 			//coordinates as the mouses x & y coordinates
 
@@ -183,6 +188,10 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		public void setColor(Color c){
 			currentColor = c;
 			graphics2D.setColor(c);
+			
+		
+			
+			
 		}
 		public void setThickness(float f){
 			stroke = new BasicStroke(f);
@@ -301,7 +310,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 				else if (activeTool == TEXT_TOOL){
 					
 				}
-			
+			removed.removeAllElements();
 			repaint();
 		}
 		
