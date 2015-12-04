@@ -3,11 +3,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -35,11 +37,11 @@ public class ColorChooser1 extends JPanel implements ActionListener
 	private JButton pomegranate;
 	private JButton silver;
 	private JButton asbestos;
-	private JButton custom1;
+	private JButton primaryColor;
 	private JButton custom2;
 	private JButton custom3;
 	private JButton newColor;
-	private JButton fillColor;
+	private JButton secondaryColor;
 	
 	private Color turquoiseC = new Color(26, 188, 156);
 	private Color emeraldC = new Color(46, 204, 113);
@@ -66,6 +68,10 @@ public class ColorChooser1 extends JPanel implements ActionListener
 	
 	private DrawFrame frame;
 
+	private JComboBox option;
+	
+	private final String PRIMARY_COLOR = "Primary Color";
+	private final String SECONDARY_COLOR = "Secondary Color";
 	
 	public ColorChooser1(DrawFrame frame)
 	{
@@ -97,12 +103,13 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		pomegranate.addActionListener(this);
 		silver.addActionListener(this);
 		asbestos.addActionListener(this);
-		custom1.addActionListener(this);
+		primaryColor.addActionListener(this);
 		custom2.addActionListener(this);
 		custom3.addActionListener(this);
-		fillColor.addActionListener(this);
+		secondaryColor.addActionListener(this);
+		newColor.addActionListener(this);
 	}
-
+	
 	private void initializeColorChooser(JToolBar panel) {
 		turquoise = new JButton("");
 		turquoise.setPreferredSize(new Dimension(25,25));
@@ -168,9 +175,9 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		asbestos.setPreferredSize(new Dimension(25,25));
 		asbestos.setBackground(asbestosC);
 		
-		custom1 = new JButton("");
-		custom1.setPreferredSize(new Dimension(25,25));
-		custom1.setBackground(Color.black);
+		primaryColor = new JButton("");
+		primaryColor.setPreferredSize(new Dimension(25,25));
+		primaryColor.setBackground(Color.black);
 		
 		
 		custom2 = new JButton("");
@@ -181,13 +188,16 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		custom3.setPreferredSize(new Dimension(25,25));
 		custom3.setBackground(Color.white);
 		
-		fillColor = new JButton("");
-		fillColor.setPreferredSize(new Dimension(25,25));
-		fillColor.setBackground(Color.white);
+		secondaryColor = new JButton("");
+		secondaryColor.setPreferredSize(new Dimension(25,25));
+		secondaryColor.setBackground(Color.white);
 		
 		newColor = new JButton("Edit Color");
 
-		
+		option = new JComboBox<String>();
+		option.addItem(PRIMARY_COLOR);
+		option.addItem(SECONDARY_COLOR);
+		option.setSelectedItem(PRIMARY_COLOR);
 		
 		panel.add(turquoise);
 		panel.add(emerald);
@@ -215,9 +225,10 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		panel.add(custom3);
 		panel.add(newColor);
 		panel.add(new JLabel("Current color"));
-		panel.add(custom1);
+		panel.add(primaryColor);
 		panel.add(new JLabel("Fill color"));
-		panel.add(fillColor);
+		panel.add(secondaryColor);
+		panel.add(option);
 	}
 
 	
@@ -229,32 +240,49 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		if (b == custom2){
 		
 			Color switchs = custom2.getBackground();
-			custom2.setBackground(custom1.getBackground());
-			custom1.setBackground(switchs);
+			custom2.setBackground(primaryColor.getBackground());
+			primaryColor.setBackground(switchs);
 			
 			
 		}
 		else if (b == custom3){
 		
-			Color oldCustom1 = custom1.getBackground();
-			custom1.setBackground(custom3.getBackground());
+			Color oldCustom1 = primaryColor.getBackground();
+			primaryColor.setBackground(custom3.getBackground());
 			custom3.setBackground(custom2.getBackground());
 			custom2.setBackground(oldCustom1);
 			
 		}
-		else if (b == custom1){}
-		else if (b == fillColor){
-			fillColor.setBackground(custom1.getBackground());
-			frame.getInkPanel().setFillColor(fillColor.getBackground());
+		else if (b == primaryColor){}
+		else if (b == secondaryColor){
+			secondaryColor.setBackground(primaryColor.getBackground());
+			frame.getInkPanel().setFillColor(secondaryColor.getBackground());
 		}
-		else{	
-			custom3.setBackground(custom2.getBackground());
-			custom2.setBackground(custom1.getBackground());
-			custom1.setBackground(b.getBackground());
+		else if (b == newColor){
+			ColorDialogFrame frame = new ColorDialogFrame(primaryColor.getBackground());
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setTitle("Custom Color Dialog");
+			frame.pack();
+
+			// put the frame in the middle of the display
+			Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+			frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
+
+			frame.setVisible(true);
+		}
+		else{
+			if (option.getSelectedItem() == PRIMARY_COLOR){
+				custom3.setBackground(custom2.getBackground());
+				custom2.setBackground(primaryColor.getBackground());
+				primaryColor.setBackground(b.getBackground());
+			}else {
+				secondaryColor.setBackground(b.getBackground());
+			}
+			
 		}
 		
 		
-		frame.getInkPanel().setColor(custom1.getBackground());
+		frame.getInkPanel().setColor(primaryColor.getBackground());
 		
 	}
 	

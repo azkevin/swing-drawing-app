@@ -256,7 +256,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 							queue.add(new Point2D.Double(p.getX() + 1, p.getY()));
 							queue.add(new Point2D.Double(p.getX(), p.getY() - 1));
 							queue.add(new Point2D.Double(p.getX(), p.getY() + 1));
-							System.out.println("0");
+							//System.out.println("0");
 						}
 			}
 		}
@@ -412,7 +412,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 					
 				}
 				else if (activeTool == FILL_TOOL) {
-					floodFill(new Point2D.Double(x1, y1), currentColor);
+					floodFill(new Point2D.Double(x1, y1), fillColor);
 				}
 			removed.removeAllElements();
 			repaint();
