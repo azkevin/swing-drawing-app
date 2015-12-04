@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
 
 public class ColorChooser1 extends JPanel implements ActionListener
@@ -69,6 +70,7 @@ public class ColorChooser1 extends JPanel implements ActionListener
 	private DrawFrame frame;
 
 	private JComboBox option;
+	private JRadioButton fill;
 	
 	private final String PRIMARY_COLOR = "Primary Color";
 	private final String SECONDARY_COLOR = "Secondary Color";
@@ -108,6 +110,7 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		custom3.addActionListener(this);
 		secondaryColor.addActionListener(this);
 		newColor.addActionListener(this);
+		fill.addActionListener(this);
 	}
 	
 	private void initializeColorChooser(JToolBar panel) {
@@ -199,6 +202,9 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		option.addItem(SECONDARY_COLOR);
 		option.setSelectedItem(PRIMARY_COLOR);
 		
+		fill = new JRadioButton("Fill");
+		fill.setSelected(false);
+		
 		panel.add(turquoise);
 		panel.add(emerald);
 		panel.add(peter_river);
@@ -229,12 +235,18 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		panel.add(new JLabel("Fill color"));
 		panel.add(secondaryColor);
 		panel.add(option);
+		panel.add(fill);
 	}
 
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		if (e.getSource() == fill){
+			JRadioButton b = (JRadioButton) e.getSource();
+			frame.getInkPanel().setTransparency(!b.isSelected());
+		}else{
+		
 		JButton b = (JButton) e.getSource();
 			
 		if (b == custom2){
@@ -270,6 +282,7 @@ public class ColorChooser1 extends JPanel implements ActionListener
 
 			frame.setVisible(true);
 		}
+
 		else{
 			if (option.getSelectedItem() == PRIMARY_COLOR){
 				custom3.setBackground(custom2.getBackground());
@@ -285,6 +298,7 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		
 		frame.getInkPanel().setColor(primaryColor.getBackground());
 		frame.getInkPanel().setFillColor(secondaryColor.getBackground());
+		}
 	}
 	
     public JToolBar getToolBar()
