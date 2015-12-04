@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
 
+
 public class ColorChooser1 extends JPanel implements ActionListener
 {
 	private JButton turquoise;
@@ -72,6 +73,8 @@ public class ColorChooser1 extends JPanel implements ActionListener
 	private JComboBox option;
 	private JRadioButton fill;
 	
+	ColorDialog cd;
+	
 	private final String PRIMARY_COLOR = "Primary Color";
 	private final String SECONDARY_COLOR = "Secondary Color";
 	
@@ -85,6 +88,8 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		this.frame = frame;
 		this.initializeColorChooser(cc);
 
+		cd = new ColorDialog(frame, primaryColor.getBackground());
+		
 		turquoise.addActionListener(this);
 		emerald.addActionListener(this);
 		peter_river.addActionListener(this);
@@ -205,6 +210,8 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		fill = new JRadioButton("Fill");
 		fill.setSelected(false);
 		
+		cd = new ColorDialog(frame,primaryColor.getBackground());
+		
 		panel.add(turquoise);
 		panel.add(emerald);
 		panel.add(peter_river);
@@ -271,16 +278,26 @@ public class ColorChooser1 extends JPanel implements ActionListener
 			frame.getInkPanel().setFillColor(secondaryColor.getBackground());
 		}
 		else if (b == newColor){
-			ColorDialogFrame frame = new ColorDialogFrame(primaryColor.getBackground());
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.setTitle("Custom Color Dialog");
-			frame.pack();
+			int i;
+			if (option.getSelectedItem() == PRIMARY_COLOR){
+				i = cd.showCustomDialog(frame, primaryColor.getBackground());
+			}else{
+				i = cd.showCustomDialog(frame, secondaryColor.getBackground());
+			}
+			// The returned int indicates whether the user closed the dialog
+			// by pressing the Apply button or the Cancel button. If the Apply
+			// button was used, re-configure the message using the new
+			// attribute values. These are retrieved using instance methods.
 
-			// put the frame in the middle of the display
-			Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-			frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
-
-			frame.setVisible(true);
+			if (i == ColorDialog.APPLY_OPTION)
+			{
+				if (option.getSelectedItem() == PRIMARY_COLOR){
+					primaryColor.setBackground(cd.currentColor);
+				}else {
+					secondaryColor.setBackground(cd.currentColor);
+				}
+				
+			}	
 		}
 
 		else{
@@ -305,4 +322,5 @@ public class ColorChooser1 extends JPanel implements ActionListener
     {
     	return this.cc;
     }
+    
 }

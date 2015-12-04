@@ -366,44 +366,44 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 				if (activeTool == LINE_TOOL) {
 					shapes.push(new Shape(x1, y1, x2, y2,currentColor,stroke,1,fillColor,transparent));
 					repaint();
-					graphics2D.drawLine(x1, y1, x2, y2);
+					//graphics2D.drawLine(x1, y1, x2, y2);
 				}
 				else if (activeTool == RECTANGLE_TOOL) {
 				
 					if (x1 < x2 && y1 < y2) {
 						shapes.push(new Shape(x1, y1, x2 - x1, y2 - y1,currentColor,stroke,2,fillColor,transparent));
-						graphics2D.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
+						//graphics2D.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
 					}
 					else if (x2 < x1 && y1 < y2) {
 						shapes.push(new Shape(x2, y1, x1 - x2, y2 - y1,currentColor,stroke,2,fillColor,transparent));
-						graphics2D.draw(new Rectangle2D.Double(x2, y1, x1 - x2, y2 - y1));
+					//	graphics2D.draw(new Rectangle2D.Double(x2, y1, x1 - x2, y2 - y1));
 					}
 					else if (x1 < x2 && y2 < y1) {
 						shapes.push(new Shape(x1, y2, x2 - x1, y1 - y2,currentColor,stroke,2,fillColor,transparent));
-						graphics2D.draw(new Rectangle2D.Double(x1, y2, x2 - x1, y1 - y2));
+						//graphics2D.draw(new Rectangle2D.Double(x1, y2, x2 - x1, y1 - y2));
 					}
 					else if (x2 < x1 && y2 < y1) {
 						shapes.push(new Shape(x2, y2, x1 - x2, y1 - y2,currentColor,stroke,2,fillColor,transparent));
-						graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
+					//	graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
 					}
 					
 				}
 				else if (activeTool == CIRCLE_TOOL) {
 					if (x1 < x2 && y1 < y2) {
 						shapes.push(new Shape(x1, y1, x2 - x1, y2 - y1,currentColor,stroke,3,fillColor,transparent));
-						graphics2D.draw(new Ellipse2D.Double(x1, y1, x2 - x1, y2 - y1));
+					//	graphics2D.draw(new Ellipse2D.Double(x1, y1, x2 - x1, y2 - y1));
 					}
 					else if (x2 < x1 && y1 < y2) {
 						shapes.push(new Shape(x2, y1, x1 - x2, y2 - y1,currentColor,stroke,3,fillColor,transparent));
-						graphics2D.draw(new Ellipse2D.Double(x2, y1, x1 - x2, y2 - y1));
+						//graphics2D.draw(new Ellipse2D.Double(x2, y1, x1 - x2, y2 - y1));
 					}
 					else if (x1 < x2 && y2 < y1) {
 						shapes.push(new Shape(x1, y2, x2 - x1, y1 - y2,currentColor,stroke,3,fillColor,transparent));
-						graphics2D.draw(new Ellipse2D.Double(x1, y2, x2 - x1, y1 - y2));
+						//graphics2D.draw(new Ellipse2D.Double(x1, y2, x2 - x1, y1 - y2));
 					}
 					else if (x2 < x1 && y2 < y1) {
 						shapes.push(new Shape(x2, y2, x1 - x2, y1 - y2,currentColor,stroke,3,fillColor,transparent));
-						graphics2D.draw(new Ellipse2D.Double(x2, y2, x1 - x2, y1 - y2));
+					//	graphics2D.draw(new Ellipse2D.Double(x2, y2, x1 - x2, y1 - y2));
 					}
 				}
 				else if (activeTool == SELECT_TOOL){
