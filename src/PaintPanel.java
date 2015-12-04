@@ -114,10 +114,12 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 				Graphics2D g2 = (Graphics2D) g;
 				g2.setColor(s.getColor());
 				g2.setStroke(s.getStroke());
+				
 				if (s.getShape() == LINE){
 					g2.drawLine(s.getx1(), s.gety1(), s.getx2(), s.gety2());
 				}
 				else if (s.getShape() == RECTANGLE){
+					System.out.println(123456);
 					g2.drawRect(s.getx1(), s.gety1(), s.getx2(), s.gety2());
 				}
 				else if (s.getShape() == CIRCLE){
@@ -206,14 +208,17 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			y2 = e.getY();
 			if (activeTool == ERASER_TOOL){
 				shapes.push(new Shape(x1, y1, x2, y2,Color.white,stroke,1,grouped));
-		
+				repaint();
+				x1 = x2;
+				y1 = y2;
 			}
 			if (activeTool == PENCIL_TOOL) {
 				shapes.push(new Shape(x1, y1, x2, y2,currentColor,stroke,1,grouped));
+				repaint();
+				x1 = x2;
+				y1 = y2;
 			}
-			repaint();
-			x1 = x2;
-			y1 = y2;
+			
 		}
 
 		@Override

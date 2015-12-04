@@ -168,7 +168,7 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		
 		custom1 = new JButton("");
 		custom1.setPreferredSize(new Dimension(25,25));
-		custom1.setBackground(Color.white);
+		custom1.setBackground(Color.black);
 		
 		
 		custom2 = new JButton("");
@@ -219,7 +219,7 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		JButton b = (JButton) e.getSource();
 			
 		if (b == custom2){
-			System.out.println(2);
+		
 			Color switchs = custom2.getBackground();
 			custom2.setBackground(custom1.getBackground());
 			custom1.setBackground(switchs);
@@ -227,7 +227,7 @@ public class ColorChooser1 extends JPanel implements ActionListener
 			
 		}
 		else if (b == custom3){
-			System.out.println(3);
+		
 			Color oldCustom1 = custom1.getBackground();
 			custom1.setBackground(custom3.getBackground());
 			custom3.setBackground(custom2.getBackground());
