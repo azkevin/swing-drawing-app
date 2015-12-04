@@ -21,11 +21,12 @@ So with that, we should save the shapes into a stack, and call the respective me
  So, when we undo an action, we simply take the original image, and create a copy of it and define it as the new canvas. Then, we will use an iterator, and iterate through all the actions of the history stack, and essentially repeat all the actions done in the history on the image.
  
 When we are considering layers:
-	- We will have to keep track of which layer an action was performed on.
-	- The list of layers will contain a stack of the "history" of actions done on that layer
-	- When undoing an action, we will pop the action from the overall history stack and push it onto the undo stack.
-	- This will also pop the same action from the respective stack from the layer list.
-	- We will then proceed to redraw that specific layer through iterating through the stack of the respective layer.
+
+ - We will have to keep track of which layer an action was performed on.
+ - The list of layers will contain a stack of the "history" of actions done on that layer
+ - When undoing an action, we will pop the action from the overall history stack and push it onto the undo stack.
+ - This will also pop the same action from the respective stack from the layer list.
+ - We will then proceed to redraw that specific layer through iterating through the stack of the respective layer.
 	
 When considering filled shapes, a good solution would be to have a drop down list, with the options, no fill, or fill. A toggleable button would be sufficient as well. 
 	
