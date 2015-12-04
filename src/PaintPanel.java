@@ -180,6 +180,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		
 		public void setImage(BufferedImage image) {
 			graphics2D.dispose();
+			this.setInkPanel(image.getWidth(), image.getHeight());
 			canvas = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
 			graphics2D = canvas.createGraphics();
 			graphics2D.drawImage(image, 0, 0, null);
