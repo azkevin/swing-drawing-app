@@ -242,7 +242,7 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		}
 		
 		
-		frame.getInkPanel().setColor(b.getBackground());;
+		frame.getInkPanel().setColor(custom1.getBackground());
 		
 	}
 	
