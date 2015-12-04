@@ -4,7 +4,7 @@ A few comments:
 
 First, after some investigation and discussion with a friend about how the undo/redo mechanism should work, it seems that saving the actions should be the best course of action to minimize memory usage. 
 
-	So with that, we should save the shapes into a stack, and call the respective method on that shape. (assuming that is what is already done)
+So with that, we should save the shapes into a stack, and call the respective method on that shape. (assuming that is what is already done)
  
  - Fill will use a Point2D.Double.
  - Text will also use Point2D.Double. 
@@ -29,7 +29,7 @@ When we are considering layers:
 	
 When considering filled shapes, a good solution would be to have a drop down list, with the options, no fill, or fill. A toggleable button would be sufficient as well. 
 	
-	Having a no fill option, over selecting a white fill would synergize very well when considering layers.
+Having a no fill option, over selecting a white fill would synergize very well when considering layers.
  
 Fill has already been implemented, but there is a certain bug with it.
 I will fix it when I wake up. It is caused by attempting to fill when the target colour and the fill colour are the same, resulting in an infinite loop.
