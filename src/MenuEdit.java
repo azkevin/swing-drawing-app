@@ -53,11 +53,12 @@ public class MenuEdit implements ActionListener
 		Object source = ae.getSource();
 
 		if (source == undoMenu) {
-
+			frame.getInkPanel().undo();
 		} 
 		if (source == redoMenu) {
-			// open file save
+			frame.getInkPanel().redo();
 		}
+		
 	}
 	
 
