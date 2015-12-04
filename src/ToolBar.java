@@ -75,6 +75,7 @@ public class ToolBar implements ActionListener
 		comboBox.addActionListener(this);
 		undo.addActionListener(this);
 		redo.addActionListener(this);
+		fill.addActionListener(this);
 	}
     
 	private void initializeToolBar() {
@@ -167,6 +168,9 @@ public class ToolBar implements ActionListener
 		else if (source == erase){
 			frame.getInkPanel().setTool(6);
 		}
+		else if (source == fill) {
+			frame.getInkPanel().setTool(7);
+		}
 		else if (source == undo){
 			frame.getInkPanel().undo();
 		}
@@ -185,7 +189,7 @@ public class ToolBar implements ActionListener
 			System.out.println(1);
 			JComboBox combo = (JComboBox)ae.getSource();
 			String current = (String) combo.getSelectedItem();
-			frame.getInkPanel().setThickness(Float.valueOf(current) );
+			frame.getInkPanel().setThickness(Float.valueOf(current));
 		}
 		else{
 			JButton b = (JButton) source;

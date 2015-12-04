@@ -9,11 +9,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.*;
 import java.awt.image.BufferedImage;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -22,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
+
 
 public class PaintPanel extends JPanel implements MouseListener,MouseMotionListener
 	{
@@ -32,6 +33,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		private final int SELECT_TOOL = 4;
 		private final int TEXT_TOOL = 5;
 		private final int ERASER_TOOL = 6;
+		private final int FILL_TOOL = 7;
 		
 		private final int LINE = 1;
 		private final int RECTANGLE = 2;
@@ -238,6 +240,26 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			graphics2D.setStroke(stroke);
 		}
 
+		public void floodFill(Point2D.Double point, Color fillColor) {
+			Color targetColor = new Color(canvas.getRGB((int)point.getX(), (int)point.getY()));
+			Queue<Point2D.Double> queue = new LinkedList<Point2D.Double>();
+			queue.add(point);
+			if (!targetColor.equals(fillColor));
+			while (!queue.isEmpty()) {
+				Point2D.Double p = queue.remove();
+				
+					if ((int)p.getX() >= 0 && (int)p.getX() < canvas.getWidth() && 
+					(int)p.getY() >= 0 && (int)p.getY() < canvas.getHeight())
+						if (canvas.getRGB((int)p.getX(), (int)p.getY()) == targetColor.getRGB()) {
+							canvas.setRGB((int)p.getX(), (int)p.getY(), fillColor.getRGB());
+							queue.add(new Point2D.Double(p.getX() - 1, p.getY()));
+							queue.add(new Point2D.Double(p.getX() + 1, p.getY()));
+							queue.add(new Point2D.Double(p.getX(), p.getY() - 1));
+							queue.add(new Point2D.Double(p.getX(), p.getY() + 1));
+							System.out.println("0");
+						}
+			}
+		}
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			// TODO Auto-generated method stub
@@ -342,46 +364,45 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			
 				if (activeTool == LINE_TOOL) {
 					shapes.push(new Shape(x1, y1, x2, y2,currentColor,stroke,1,fillColor));
-					//repaint();
-					//graphics2D.drawLine(x1, y1, x2, y2);
-					//System.out.println("0");
+					repaint();
+					graphics2D.drawLine(x1, y1, x2, y2);
 				}
 				else if (activeTool == RECTANGLE_TOOL) {
 				
 					if (x1 < x2 && y1 < y2) {
 						shapes.push(new Shape(x1, y1, x2 - x1, y2 - y1,currentColor,stroke,2,fillColor));
-						//graphics2D.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
+						graphics2D.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
 					}
 					else if (x2 < x1 && y1 < y2) {
 						shapes.push(new Shape(x2, y1, x1 - x2, y2 - y1,currentColor,stroke,2,fillColor));
-						//graphics2D.draw(new Rectangle2D.Double(x2, y1, x1 - x2, y2 - y1));
+						graphics2D.draw(new Rectangle2D.Double(x2, y1, x1 - x2, y2 - y1));
 					}
 					else if (x1 < x2 && y2 < y1) {
 						shapes.push(new Shape(x1, y2, x2 - x1, y1 - y2,currentColor,stroke,2,fillColor));
-						//graphics2D.draw(new Rectangle2D.Double(x1, y2, x2 - x1, y1 - y2));
+						graphics2D.draw(new Rectangle2D.Double(x1, y2, x2 - x1, y1 - y2));
 					}
 					else if (x2 < x1 && y2 < y1) {
 						shapes.push(new Shape(x2, y2, x1 - x2, y1 - y2,currentColor,stroke,2,fillColor));
-						//graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
+						graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
 					}
 					
 				}
 				else if (activeTool == CIRCLE_TOOL) {
 					if (x1 < x2 && y1 < y2) {
 						shapes.push(new Shape(x1, y1, x2 - x1, y2 - y1,currentColor,stroke,3,fillColor));
-						//graphics2D.draw(new Ellipse2D.Double(x1, y1, x2 - x1, y2 - y1));
+						graphics2D.draw(new Ellipse2D.Double(x1, y1, x2 - x1, y2 - y1));
 					}
 					else if (x2 < x1 && y1 < y2) {
 						shapes.push(new Shape(x2, y1, x1 - x2, y2 - y1,currentColor,stroke,3,fillColor));
-						//graphics2D.draw(new Ellipse2D.Double(x2, y1, x1 - x2, y2 - y1));
+						graphics2D.draw(new Ellipse2D.Double(x2, y1, x1 - x2, y2 - y1));
 					}
 					else if (x1 < x2 && y2 < y1) {
 						shapes.push(new Shape(x1, y2, x2 - x1, y1 - y2,currentColor,stroke,3,fillColor));
-						//graphics2D.draw(new Ellipse2D.Double(x1, y2, x2 - x1, y1 - y2));
+						graphics2D.draw(new Ellipse2D.Double(x1, y2, x2 - x1, y1 - y2));
 					}
 					else if (x2 < x1 && y2 < y1) {
 						shapes.push(new Shape(x2, y2, x1 - x2, y1 - y2,currentColor,stroke,3,fillColor));
-						//graphics2D.draw(new Ellipse2D.Double(x2, y2, x1 - x2, y1 - y2));
+						graphics2D.draw(new Ellipse2D.Double(x2, y2, x1 - x2, y1 - y2));
 					}
 				}
 				else if (activeTool == SELECT_TOOL){
@@ -389,6 +410,9 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 				}
 				else if (activeTool == TEXT_TOOL){
 					
+				}
+				else if (activeTool == FILL_TOOL) {
+					floodFill(new Point2D.Double(x1, y1), currentColor);
 				}
 			removed.removeAllElements();
 			repaint();
