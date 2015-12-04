@@ -10,6 +10,7 @@ public class Shape {
 	private int y2;
 	
 	private Color color;
+	private Color fillColor;
 	private BasicStroke stroke;
 	
 	private int shape;
@@ -17,7 +18,7 @@ public class Shape {
 	public int group = 0;
 	
 	
-	public Shape(int x1, int y1,int x2, int y2, Color color,BasicStroke stroke, int shape){
+	public Shape(int x1, int y1,int x2, int y2, Color color,BasicStroke stroke, int shape,Color fill){
 		this.x1 = x1;
 		this.x2 = x2;
 		this.y1 = y1;
@@ -26,6 +27,7 @@ public class Shape {
 		this.stroke = stroke;
 		this.shape = shape;
 		this.group = 0;
+		this.fillColor = fill;
 	}
 	public Shape(int x1, int y1,int x2, int y2, Color color,BasicStroke stroke, int shape,int group){
 		this.x1 = x1;
@@ -54,6 +56,9 @@ public class Shape {
 	}
 	public Color getColor(){
 		return this.color;
+	}
+	public Color getfillColor(){
+		return this.fillColor;
 	}
 	public BasicStroke getStroke(){
 		return this.stroke;

@@ -39,6 +39,7 @@ public class ColorChooser1 extends JPanel implements ActionListener
 	private JButton custom2;
 	private JButton custom3;
 	private JButton newColor;
+	private JButton fillColor;
 	
 	private Color turquoiseC = new Color(26, 188, 156);
 	private Color emeraldC = new Color(46, 204, 113);
@@ -99,6 +100,7 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		custom1.addActionListener(this);
 		custom2.addActionListener(this);
 		custom3.addActionListener(this);
+		fillColor.addActionListener(this);
 	}
 
 	private void initializeColorChooser(JToolBar panel) {
@@ -179,6 +181,10 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		custom3.setPreferredSize(new Dimension(25,25));
 		custom3.setBackground(Color.white);
 		
+		fillColor = new JButton("");
+		fillColor.setPreferredSize(new Dimension(25,25));
+		fillColor.setBackground(Color.white);
+		
 		newColor = new JButton("Edit Color");
 
 		
@@ -210,6 +216,8 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		panel.add(newColor);
 		panel.add(new JLabel("Current color"));
 		panel.add(custom1);
+		panel.add(new JLabel("Fill color"));
+		panel.add(fillColor);
 	}
 
 	
@@ -235,6 +243,10 @@ public class ColorChooser1 extends JPanel implements ActionListener
 			
 		}
 		else if (b == custom1){}
+		else if (b == fillColor){
+			fillColor.setBackground(custom1.getBackground());
+			frame.getInkPanel().setFillColor(fillColor.getBackground());
+		}
 		else{	
 			custom3.setBackground(custom2.getBackground());
 			custom2.setBackground(custom1.getBackground());
