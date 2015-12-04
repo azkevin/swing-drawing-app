@@ -160,6 +160,24 @@ public class MenuFile implements ActionListener
 									Integer.parseInt(height.getText()));
 							System.out.println(newDimensions);
 							frame.getInkPanel().setInkPanel(newDimensions.width, newDimensions.height);
+							Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+							System.out.println(dim);
+							if(newDimensions.height > dim.height - 160 && newDimensions.width > dim.width - 150)
+							{
+								frame.getSP().setSize(dim.width - 150, dim.height - 160);
+							}	
+							else if(newDimensions.width > dim.width - 150)
+							{
+								frame.getSP().setSize(dim.width - 150, newDimensions.height);
+							}
+							else if(newDimensions.height > dim.height - 160)
+							{
+								frame.getSP().setSize(newDimensions.width, dim.height - 160);
+							}
+							else
+							{
+								frame.getSP().setSize(newDimensions.width, newDimensions.height);
+							}
 							newFileFrame.dispose();
 						}
 						catch (NumberFormatException nfe)

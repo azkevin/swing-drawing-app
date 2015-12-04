@@ -3,12 +3,14 @@ import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
 public class DrawFrame extends JFrame
@@ -24,17 +26,21 @@ public class DrawFrame extends JFrame
 	private JToolBar cc1;
 	private JColorChooser cc2;
 	private CoordinateBar coordinateBar;
+	private JScrollPane sp;
 
 	private final int CONTENT_PANE_WIDTH = 1300;
 	private final int CONTENT_PANE_HEIGHT = 700;
 	
-	private int inkPanelWidth = 700;
-	private int inkPanelHeight = 500;
+	private int inkPanelWidth;
+	private int inkPanelHeight;
 	private final Color background = Color.GRAY;
 	
 	//ContentPane > Toolbar,  cc, InkPanel,
 	public DrawFrame()
 	{
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		inkPanelWidth = dim.width - 150;
+		inkPanelHeight = dim.height- 160;
 		// construct our layout manager.
 		contentPane = new JPanel();
 		contentPane.setLayout(null);
@@ -61,7 +67,13 @@ public class DrawFrame extends JFrame
 		
 		// configure components and add them to the frame.
 		this.add(cc1, BorderLayout.PAGE_START);
-		contentPane.add(inkPanel);
+		sp = new JScrollPane();
+		sp.setLocation(10, 10);
+		sp.setViewportView(inkPanel);
+		sp.setSize(inkPanelWidth, inkPanelHeight);
+		sp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		contentPane.add(sp);
 		//contentPane.add(cc1);
 		//contentPane.add(cc2);
 		contentPane.setBackground(background);
@@ -77,6 +89,7 @@ public class DrawFrame extends JFrame
 		
 		this.setSize(CONTENT_PANE_WIDTH, CONTENT_PANE_HEIGHT);
 		this.setPreferredSize(new Dimension(CONTENT_PANE_WIDTH,CONTENT_PANE_HEIGHT));
+		
 	}
 	
 	
@@ -102,6 +115,10 @@ public class DrawFrame extends JFrame
     public DrawFrame getDrawFrame()
     {
     	return this;
+    }
+    public JScrollPane getSP()
+    {
+    	return this.sp;
     }
 
 }

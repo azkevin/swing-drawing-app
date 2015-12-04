@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -60,8 +61,8 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		private Color fillColor;
 		private boolean transparent;
 		
-		private int inkPanelWidth = 700;
-		private int inkPanelHeight = 500;
+		private int inkPanelWidth;
+		private int inkPanelHeight;
 
 		public PaintPanel()
 		{
@@ -80,7 +81,11 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		//Now for the constructors
 		public PaintPanel(int f, DrawFrame frame, int width, int height){
 			//this.setPreferredSize(new Dimension(300,300));
-			this.setSize(inkPanelWidth, inkPanelHeight); //important for displaying on the draw frame.
+			Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+			inkPanelWidth = dim.width - 150;
+			inkPanelHeight = dim.height- 160;
+			this.setSize(inkPanelWidth - 3, inkPanelHeight - 3); //the 3 accounts for the sp scroller
+			this.setPreferredSize(new Dimension(inkPanelWidth - 3,inkPanelHeight - 3));
 			this.setLayout(null);
 			setDoubleBuffered(true);
 			setLocation(10, 10);
@@ -446,8 +451,9 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			canvas = new BufferedImage(width, height,BufferedImage.TYPE_INT_ARGB);
 			graphics2D = canvas.createGraphics();
 			graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			this.setSize(width, height);
 			this.printPaintPanelSize(width, height);
+			this.setSize(width-3, height-3);
+			this.setPreferredSize(new Dimension(width - 3, height - 3));
 			clear();
 	    	
 	    }
