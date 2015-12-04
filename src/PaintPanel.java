@@ -34,7 +34,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		private final int RECTANGLE = 2;
 		private final int CIRCLE = 3;
 		
-		private BasicStroke stroke = new BasicStroke((float) 0.1);
+		private BasicStroke stroke = new BasicStroke((float) 1);
 		BufferedImage canvas;
 		Graphics2D graphics2D;
 		private int activeTool = 0;
@@ -45,7 +45,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		private Stack<Shape> shapes;
 		private Stack<Shape> removed;
 		
-		
+		private int grouped;
 		
 		int x1, y1, x2, y2;
 		
@@ -86,7 +86,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			this.printPaintPanelSize(inkPanelWidth, inkPanelHeight);
 			this.shapes = new Stack<Shape>();
 			this.removed = new Stack<Shape>();
-			
+			this.grouped = 1;
 			//if the mouse is pressed it sets the oldX & oldY
 			//coordinates as the mouses x & y coordinates
 
@@ -146,15 +146,38 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		
 	
 		public void undo(){
-			if(shapes.size()>0){
+			if(shapes.size()> 0 && shapes.peek().group == 0){
 				removed.push(shapes.pop());
 				repaint();
 			}
+			else if (shapes.size() > 0 && shapes.peek().group != 0){
+				
+				Shape lastRemoved = shapes.pop();
+				removed.push(lastRemoved);
+				
+				while (shapes.isEmpty() == false && shapes.peek().group == lastRemoved.group ){
+						removed.push(shapes.pop());
+						repaint();
+					
+				}
+				
+			}
 		}
 		public void redo(){
-			if(removed.size()>0){
+			if(removed.size()>0 && removed.peek().group == 0){
 				shapes.push(removed.pop());
 				repaint();
+			}else if (removed.size() > 0 && removed.peek().group != 0){
+				
+				Shape lastRemoved = removed.pop();
+				shapes.push(lastRemoved);
+				
+				while (removed.isEmpty() == false && removed.peek().group == lastRemoved.group ){
+					shapes.push(removed.pop());
+						repaint();
+					
+				}
+				
 			}
 		}
 		public void setColor(Color c){
@@ -180,8 +203,9 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 				y1 = y2;
 			}
 			if (activeTool == PENCIL_TOOL) {
-				graphics2D.setColor(currentColor);
-				graphics2D.drawLine(x1, y1, x2, y2);
+			//	graphics2D.setColor(currentColor);
+			//	graphics2D.drawLine(x1, y1, x2, y2);
+				shapes.push(new Shape(x1, y1, x2, y2,currentColor,stroke,1,grouped));
 				repaint();
 				x1 = x2;
 				y1 = y2;
@@ -224,7 +248,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+				grouped++;
 			
 			
 				if (activeTool == LINE_TOOL) {
