@@ -160,6 +160,8 @@ public class MenuFile implements ActionListener
 									Integer.parseInt(height.getText()));
 							System.out.println(newDimensions);
 							frame.getInkPanel().setInkPanel(newDimensions.width, newDimensions.height);
+							Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+							setDimensions(newDimensions.width, newDimensions.height);
 							newFileFrame.dispose();
 						}
 						catch (NumberFormatException nfe)
@@ -201,7 +203,9 @@ public class MenuFile implements ActionListener
 
 	//	Image image = Toolkit.getDefaultToolkit().getImage(f.getPath());
 		try {
-			paint.setImage(ImageIO.read(f));
+			frame.getInkPanel().setImage(ImageIO.read(f));
+			newDimensions = new Dimension(ImageIO.read(f).getWidth(), ImageIO.read(f).getHeight());
+			setDimensions(newDimensions.width, newDimensions.height);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -216,10 +220,29 @@ public class MenuFile implements ActionListener
 		// Take all the contents of the jpanel and save them to a png 
 		// 		destination is the file they selected via the filechooser
 		// ----------------
-		Container c = paint;
+		Container c = frame.getInkPanel();
 		BufferedImage im = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		c.paint(im.getGraphics());
 		ImageIO.write(im, ".png", f );
 	}
-	
+	private void setDimensions(int width, int height)
+	{
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		if(height > dim.height - 160 && width > dim.width - 150)
+		{
+			frame.getSP().setSize(dim.width - 150, dim.height - 160);
+		}	
+		else if(width > dim.width - 150)
+		{
+			frame.getSP().setSize(dim.width - 150, height);
+		}
+		else if(height > dim.height - 160)
+		{
+			frame.getSP().setSize(width, dim.height - 160);
+		}
+		else
+		{
+			frame.getSP().setSize(width, height);
+		}
+	}
 }

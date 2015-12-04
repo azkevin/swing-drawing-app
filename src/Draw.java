@@ -20,6 +20,7 @@ public class Draw
 		// put the frame in the middle of the display
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 
 		frame.setVisible(true);
 	}
