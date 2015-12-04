@@ -205,21 +205,15 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			x2 = e.getX();
 			y2 = e.getY();
 			if (activeTool == ERASER_TOOL){
-				graphics2D.setColor(Color.white);
-				graphics2D.drawLine(x1, y1, x2, y2);
-				repaint();
-				x1 = x2;
-				y1 = y2;
+				shapes.push(new Shape(x1, y1, x2, y2,Color.white,stroke,1,grouped));
+		
 			}
 			if (activeTool == PENCIL_TOOL) {
-			//	graphics2D.setColor(currentColor);
-			//	graphics2D.drawLine(x1, y1, x2, y2);
 				shapes.push(new Shape(x1, y1, x2, y2,currentColor,stroke,1,grouped));
-				repaint();
-				x1 = x2;
-				y1 = y2;
-				
 			}
+			repaint();
+			x1 = x2;
+			y1 = y2;
 		}
 
 		@Override
