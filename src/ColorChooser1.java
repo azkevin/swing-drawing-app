@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
@@ -179,7 +180,7 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		custom3.setBackground(Color.white);
 		
 		newColor = new JButton("Edit Color");
-		newColor.setPreferredSize(new Dimension(25,25));
+
 		
 		
 		panel.add(turquoise);
@@ -202,20 +203,15 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		panel.add(pomegranate);
 		panel.add(silver);
 		panel.add(asbestos);
-		panel.add(custom1);
+		panel.add(new JLabel("Most Recent"));
+		
 		panel.add(custom2);
 		panel.add(custom3);
 		panel.add(newColor);
+		panel.add(new JLabel("Current color"));
+		panel.add(custom1);
 	}
-	public void setCustom1(Color c){
-		custom1.setBackground(c);
-	}
-	public void setCustom2(Color c){
-		custom2.setBackground(c);
-	}
-	public void setCustom3(Color c){
-		custom3.setBackground(c);
-	}
+
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
