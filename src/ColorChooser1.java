@@ -16,9 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
 
-
-public class ColorChooser1 extends JPanel implements ActionListener
-{
+public class ColorChooser1 extends JPanel implements ActionListener {
 	private JButton turquoise;
 	private JButton emerald;
 	private JButton peter_river;
@@ -44,7 +42,7 @@ public class ColorChooser1 extends JPanel implements ActionListener
 	private JButton custom3;
 	private JButton newColor;
 	private JButton secondaryColor;
-	
+
 	private Color turquoiseC = new Color(26, 188, 156);
 	private Color emeraldC = new Color(46, 204, 113);
 	private Color peter_riverC = new Color(52, 152, 219);
@@ -65,23 +63,22 @@ public class ColorChooser1 extends JPanel implements ActionListener
 	private Color pomegranateC = new Color(192, 57, 43);
 	private Color silverC = new Color(189, 195, 199);
 	private Color asbestosC = new Color(127, 140, 141);
-	
+
 	private JToolBar cc;
-	
+
 	private DrawFrame frame;
 
 	private JComboBox option;
 	private JRadioButton fill;
-	
+
 	ColorDialog cd;
-	
+
 	private final String PRIMARY_COLOR = "Primary Color";
 	private final String SECONDARY_COLOR = "Secondary Color";
-	
-	public ColorChooser1(DrawFrame frame)
-	{
+
+	public ColorChooser1(DrawFrame frame) {
 		cc = new JToolBar(JToolBar.HORIZONTAL);
-		//cc.setLayout(new GridLayout(5,5));
+		// cc.setLayout(new GridLayout(5,5));
 		cc.setLayout(new FlowLayout());
 		cc.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.BLACK));
 		cc.setFloatable(false);
@@ -89,7 +86,7 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		this.initializeColorChooser(cc);
 
 		cd = new ColorDialog(frame, primaryColor.getBackground());
-		
+
 		turquoise.addActionListener(this);
 		emerald.addActionListener(this);
 		peter_river.addActionListener(this);
@@ -117,101 +114,99 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		newColor.addActionListener(this);
 		fill.addActionListener(this);
 	}
-	
+
 	private void initializeColorChooser(JToolBar panel) {
 		turquoise = new JButton("");
-		turquoise.setPreferredSize(new Dimension(25,25));
+		turquoise.setPreferredSize(new Dimension(25, 25));
 		turquoise.setBackground(turquoiseC);
-	
-		
+
 		emerald = new JButton("");
-		emerald.setPreferredSize(new Dimension(25,25));
+		emerald.setPreferredSize(new Dimension(25, 25));
 		emerald.setBackground(emeraldC);
-		
+
 		peter_river = new JButton("");
-		peter_river.setPreferredSize(new Dimension(25,25));
+		peter_river.setPreferredSize(new Dimension(25, 25));
 		peter_river.setBackground(peter_riverC);
 		amethyst = new JButton("");
-		amethyst.setPreferredSize(new Dimension(25,25));
+		amethyst.setPreferredSize(new Dimension(25, 25));
 		amethyst.setBackground(amethystC);
 		wet_asphalt = new JButton("");
-		wet_asphalt.setPreferredSize(new Dimension(25,25));
+		wet_asphalt.setPreferredSize(new Dimension(25, 25));
 		wet_asphalt.setBackground(wet_asphaltC);
 		green_sea = new JButton("");
-		green_sea.setPreferredSize(new Dimension(25,25));
+		green_sea.setPreferredSize(new Dimension(25, 25));
 		green_sea.setBackground(green_seaC);
 		nephritis = new JButton("");
-		nephritis.setPreferredSize(new Dimension(25,25));
+		nephritis.setPreferredSize(new Dimension(25, 25));
 		nephritis.setBackground(nephritisC);
 		belize_hole = new JButton("");
-		belize_hole.setPreferredSize(new Dimension(25,25));
+		belize_hole.setPreferredSize(new Dimension(25, 25));
 		belize_hole.setBackground(belize_holeC);
 		wisteria = new JButton("");
-		wisteria.setPreferredSize(new Dimension(25,25));
+		wisteria.setPreferredSize(new Dimension(25, 25));
 		wisteria.setBackground(wisteriaC);
 		midnight_blue = new JButton("");
-		midnight_blue.setPreferredSize(new Dimension(25,25));
+		midnight_blue.setPreferredSize(new Dimension(25, 25));
 		midnight_blue.setBackground(midnight_blueC);
 		sun_flower = new JButton("");
-		sun_flower.setPreferredSize(new Dimension(25,25));
+		sun_flower.setPreferredSize(new Dimension(25, 25));
 		sun_flower.setBackground(sun_flowerC);
 		carrot = new JButton("");
-		carrot.setPreferredSize(new Dimension(25,25));
+		carrot.setPreferredSize(new Dimension(25, 25));
 		carrot.setBackground(carrotC);
 		alizarin = new JButton("");
-		alizarin.setPreferredSize(new Dimension(25,25));
+		alizarin.setPreferredSize(new Dimension(25, 25));
 		alizarin.setBackground(alizarinC);
 		clouds = new JButton("");
-		clouds.setPreferredSize(new Dimension(25,25));
+		clouds.setPreferredSize(new Dimension(25, 25));
 		clouds.setBackground(cloudsC);
 		concrete = new JButton("");
-		concrete.setPreferredSize(new Dimension(25,25));
+		concrete.setPreferredSize(new Dimension(25, 25));
 		concrete.setBackground(concreteC);
 		orange = new JButton("");
-		orange.setPreferredSize(new Dimension(25,25));
+		orange.setPreferredSize(new Dimension(25, 25));
 		orange.setBackground(orangeC);
 		pumpkin = new JButton("");
-		pumpkin.setPreferredSize(new Dimension(25,25));
+		pumpkin.setPreferredSize(new Dimension(25, 25));
 		pumpkin.setBackground(pumpkinC);
 		pomegranate = new JButton("");
-		pomegranate.setPreferredSize(new Dimension(25,25));
+		pomegranate.setPreferredSize(new Dimension(25, 25));
 		pomegranate.setBackground(pomegranateC);
 		silver = new JButton("");
-		silver.setPreferredSize(new Dimension(25,25));
+		silver.setPreferredSize(new Dimension(25, 25));
 		silver.setBackground(silverC);
 		asbestos = new JButton("");
-		asbestos.setPreferredSize(new Dimension(25,25));
+		asbestos.setPreferredSize(new Dimension(25, 25));
 		asbestos.setBackground(asbestosC);
-		
+
 		primaryColor = new JButton("");
-		primaryColor.setPreferredSize(new Dimension(25,25));
+		primaryColor.setPreferredSize(new Dimension(25, 25));
 		primaryColor.setBackground(Color.black);
-		
-		
+
 		custom2 = new JButton("");
-		custom2.setPreferredSize(new Dimension(25,25));
+		custom2.setPreferredSize(new Dimension(25, 25));
 		custom2.setBackground(Color.white);
-	
+
 		custom3 = new JButton("");
-		custom3.setPreferredSize(new Dimension(25,25));
+		custom3.setPreferredSize(new Dimension(25, 25));
 		custom3.setBackground(Color.white);
-		
+
 		secondaryColor = new JButton("");
-		secondaryColor.setPreferredSize(new Dimension(25,25));
+		secondaryColor.setPreferredSize(new Dimension(25, 25));
 		secondaryColor.setBackground(Color.white);
-		
+
 		newColor = new JButton("Edit Color");
 
 		option = new JComboBox<String>();
 		option.addItem(PRIMARY_COLOR);
 		option.addItem(SECONDARY_COLOR);
 		option.setSelectedItem(PRIMARY_COLOR);
-		
+
 		fill = new JRadioButton("Fill");
 		fill.setSelected(false);
-		
-		cd = new ColorDialog(frame,primaryColor.getBackground());
-		
+
+		cd = new ColorDialog(frame, primaryColor.getBackground());
+
 		panel.add(turquoise);
 		panel.add(emerald);
 		panel.add(peter_river);
@@ -233,7 +228,7 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		panel.add(silver);
 		panel.add(asbestos);
 		panel.add(new JLabel("Most Recent"));
-		
+
 		panel.add(custom2);
 		panel.add(custom3);
 		panel.add(newColor);
@@ -245,82 +240,70 @@ public class ColorChooser1 extends JPanel implements ActionListener
 		panel.add(fill);
 	}
 
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if (e.getSource() == fill){
+		if (e.getSource() == fill) {
 			JRadioButton b = (JRadioButton) e.getSource();
 			frame.getInkPanel().setTransparency(!b.isSelected());
-		}else{
-		
-		JButton b = (JButton) e.getSource();
-			
-		if (b == custom2){
-		
-			Color switchs = custom2.getBackground();
-			custom2.setBackground(primaryColor.getBackground());
-			primaryColor.setBackground(switchs);
-			
-			
-		}
-		else if (b == custom3){
-		
-			Color oldCustom1 = primaryColor.getBackground();
-			primaryColor.setBackground(custom3.getBackground());
-			custom3.setBackground(custom2.getBackground());
-			custom2.setBackground(oldCustom1);
-			
-		}
-		else if (b == primaryColor){}
-		else if (b == secondaryColor){
-			secondaryColor.setBackground(primaryColor.getBackground());
+		} else {
+
+			JButton b = (JButton) e.getSource();
+
+			if (b == custom2) {
+
+				Color switchs = custom2.getBackground();
+				custom2.setBackground(primaryColor.getBackground());
+				primaryColor.setBackground(switchs);
+
+			} else if (b == custom3) {
+
+				Color oldCustom1 = primaryColor.getBackground();
+				primaryColor.setBackground(custom3.getBackground());
+				custom3.setBackground(custom2.getBackground());
+				custom2.setBackground(oldCustom1);
+
+			} else if (b == primaryColor) {
+			} else if (b == secondaryColor) {
+				secondaryColor.setBackground(primaryColor.getBackground());
+				frame.getInkPanel().setFillColor(secondaryColor.getBackground());
+			} else if (b == newColor) {
+				int i;
+				if (option.getSelectedItem() == PRIMARY_COLOR) {
+					i = cd.showCustomDialog(frame, primaryColor.getBackground());
+				} else {
+					i = cd.showCustomDialog(frame, secondaryColor.getBackground());
+				}
+
+				if (i == ColorDialog.APPLY_OPTION) {
+					if (option.getSelectedItem() == PRIMARY_COLOR) {
+						primaryColor.setBackground(cd.currentColor);
+					} else {
+						secondaryColor.setBackground(cd.currentColor);
+					}
+
+				}
+			}
+
+			else {
+				if (option.getSelectedItem() == PRIMARY_COLOR) {
+					custom3.setBackground(custom2.getBackground());
+					custom2.setBackground(primaryColor.getBackground());
+					primaryColor.setBackground(b.getBackground());
+				} else {
+					secondaryColor.setBackground(b.getBackground());
+
+				}
+
+			}
+
+			frame.getInkPanel().setColor(primaryColor.getBackground());
 			frame.getInkPanel().setFillColor(secondaryColor.getBackground());
 		}
-		else if (b == newColor){
-			int i;
-			if (option.getSelectedItem() == PRIMARY_COLOR){
-				i = cd.showCustomDialog(frame, primaryColor.getBackground());
-			}else{
-				i = cd.showCustomDialog(frame, secondaryColor.getBackground());
-			}
-			// The returned int indicates whether the user closed the dialog
-			// by pressing the Apply button or the Cancel button. If the Apply
-			// button was used, re-configure the message using the new
-			// attribute values. These are retrieved using instance methods.
-
-			if (i == ColorDialog.APPLY_OPTION)
-			{
-				if (option.getSelectedItem() == PRIMARY_COLOR){
-					primaryColor.setBackground(cd.currentColor);
-				}else {
-					secondaryColor.setBackground(cd.currentColor);
-				}
-				
-			}	
-		}
-
-		else{
-			if (option.getSelectedItem() == PRIMARY_COLOR){
-				custom3.setBackground(custom2.getBackground());
-				custom2.setBackground(primaryColor.getBackground());
-				primaryColor.setBackground(b.getBackground());
-			}else {
-				secondaryColor.setBackground(b.getBackground());
-				
-			}
-			
-		}
-		
-		
-		frame.getInkPanel().setColor(primaryColor.getBackground());
-		frame.getInkPanel().setFillColor(secondaryColor.getBackground());
-		}
 	}
-	
-    public JToolBar getToolBar()
-    {
-    	return this.cc;
-    }
-    
+
+	public JToolBar getToolBar() {
+		return this.cc;
+	}
+
 }
