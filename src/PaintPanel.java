@@ -135,7 +135,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 				}
 				else if (s.getShape() == CIRCLE){
 					g2.drawOval(s.getx1(), s.gety1(), s.getx2(), s.gety2());
-					if(transparent == false){
+					if(s.transparent == false){
 						g2.setColor(s.getfillColor());
 						g2.fillOval(s.getx1(), s.gety1(), s.getx2(), s.gety2());
 				}
@@ -152,14 +152,14 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 				else if (s.getShape() == RECTANGLE){
 				
 					g2.drawRect(s.getx1(), s.gety1(), s.getx2(), s.gety2());
-					if(transparent == false){
+					if(s.transparent == false){
 						g2.setColor(s.getfillColor());
 						g2.fillRect(s.getx1(), s.gety1(), s.getx2(), s.gety2());
 					}
 				}
 				else if (s.getShape() == CIRCLE){
 					g2.drawOval(s.getx1(), s.gety1(), s.getx2(), s.gety2());
-					if(transparent == false){
+					if(s.transparent == false){
 						g2.setColor(s.getfillColor());
 					g2.fillOval(s.getx1(), s.gety1(), s.getx2(), s.gety2());
 					}
