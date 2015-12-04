@@ -37,7 +37,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		private final int RECTANGLE = 2;
 		private final int CIRCLE = 3;
 		
-		private BasicStroke stroke = new BasicStroke((float) 1);
+		private BasicStroke stroke = new BasicStroke((float) 2);
 		BufferedImage canvas;
 		Graphics2D graphics2D;
 		private int activeTool = 0;
@@ -113,7 +113,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			}
 			g.drawImage(canvas, 0, 0, null);
 			Graphics2D g2 = (Graphics2D) g;
-			
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			for(Shape s : shapes){
 				
 				g2.setColor(s.getColor());
@@ -231,6 +231,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			// TODO Auto-generated method stub
+		
 			printCoords(e);
 			x2 = e.getX();
 			y2 = e.getY();
