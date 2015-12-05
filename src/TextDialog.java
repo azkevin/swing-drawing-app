@@ -136,7 +136,18 @@ public class TextDialog extends JDialog implements ActionListener, ChangeListene
 		this.setContentPane(p);
 		this.pack();
 	}
+	
+	public Font getFont() {
+		return this.mainFont;
+	}
 
+	public String getText() {
+		return this.inputText;
+	}
+	
+	public int getInputSize() {
+		return this.inputSize;
+	}
 	// -------------------------------
 	// implement ActionListener method
 	// -------------------------------

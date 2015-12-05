@@ -145,17 +145,7 @@ public class ToolBar implements ActionListener {
 		} else if (source == select) {
 			frame.getInkPanel().setTool(4);
 		} else if (source == text) {
-			
-			
-				int i = td.showCustomDialog(frame);
-		
-			if (i == TextDialog.APPLY_OPTION) {
-		
-					
-		
-				}
-
-			
+			frame.getInkPanel().setTool(5);
 		} else if (source == erase) {
 			frame.getInkPanel().setTool(6);
 		} else if (source == fill) {
