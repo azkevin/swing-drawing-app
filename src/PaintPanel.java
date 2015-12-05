@@ -39,6 +39,8 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		private final int LINE = 1;
 		private final int RECTANGLE = 2;
 		private final int CIRCLE = 3;
+		private final int TRIANGLE = 4;
+		private final int TEXT = 5;
 		
 		private BasicStroke stroke = new BasicStroke((float) 2);
 		BufferedImage canvas;
@@ -56,7 +58,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 		
 		int x1, y1, x2, y2;
 		
-		
+		private boolean dragged = false;
 		private Color currentColor;
 		private Color fillColor;
 		private boolean transparent;
@@ -274,6 +276,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			printCoords(e);
 			x2 = e.getX();
 			y2 = e.getY();
+			dragged = true;
 			if (activeTool == ERASER_TOOL){
 				shapes.push(new Shape(x1, y1, x2, y2,Color.white,stroke,1,grouped));
 				repaint();
@@ -328,7 +331,6 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 				}
 				repaint();
 			}
-			
 		}
 
 		@Override
@@ -369,12 +371,12 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 				grouped++;
 			
 			
-				if (activeTool == LINE_TOOL) {
+				if (activeTool == LINE_TOOL && dragged) {
 					shapes.push(new Shape(x1, y1, x2, y2,currentColor,stroke,1,fillColor,transparent));
 					repaint();
 					//graphics2D.drawLine(x1, y1, x2, y2);
 				}
-				else if (activeTool == RECTANGLE_TOOL) {
+				else if (activeTool == RECTANGLE_TOOL && dragged) {
 				
 					if (x1 < x2 && y1 < y2) {
 						shapes.push(new Shape(x1, y1, x2 - x1, y2 - y1,currentColor,stroke,2,fillColor,transparent));
@@ -394,7 +396,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 					}
 					
 				}
-				else if (activeTool == CIRCLE_TOOL) {
+				else if (activeTool == CIRCLE_TOOL && dragged) {
 					if (x1 < x2 && y1 < y2) {
 						shapes.push(new Shape(x1, y1, x2 - x1, y2 - y1,currentColor,stroke,3,fillColor,transparent));
 					//	graphics2D.draw(new Ellipse2D.Double(x1, y1, x2 - x1, y2 - y1));
@@ -421,6 +423,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 				else if (activeTool == FILL_TOOL) {
 					floodFill(new Point2D.Double(x1, y1), fillColor);
 				}
+				dragged = false;
 			removed.removeAllElements();
 			repaint();
 		}
