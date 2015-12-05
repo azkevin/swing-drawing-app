@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -76,20 +75,20 @@ public class ToolBar implements ActionListener {
 		toolBar.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
 		toolBar.setFloatable(false);
 
-		toolBar.setBackground( new Color(0, 153, 204));
+		//toolBar.setBackground( new Color(0, 153, 204));
 		
-		save = new JButton("Save");
-		open = new JButton("Open");
-		newFile = new JButton("New");
-		pencil = new JButton("Pencil");
+		save = new JButton("Save",new ImageIcon(this.getClass().getResource("/icons/Save-24.png")));
+		open = new JButton("Open",new ImageIcon(this.getClass().getResource("/icons/Add Folder-24.png")));
+		newFile = new JButton("New",new ImageIcon(this.getClass().getResource("/icons/Create New-24.png")));
+		pencil = new JButton("Pencil",new ImageIcon(this.getClass().getResource("/icons/Pencil-24.png")));
 		line = new JButton("Line", new ImageIcon(this.getClass().getResource("/icons/Line-24.png")));
 		rectangle = new JButton("Rectangle", new ImageIcon(this.getClass().getResource("/icons/Rectangle-24.png")));
 		circle = new JButton("Circle", new ImageIcon(this.getClass().getResource("/icons/Circled.png")));
-		text = new JButton("Text");
+		text = new JButton("Text",new ImageIcon(this.getClass().getResource("/icons/Type-24.png")));
 		erase = new JButton("Erase", new ImageIcon(this.getClass().getResource("/icons/Eraser-24.png")));
 		undo = new JButton("Undo", new ImageIcon(this.getClass().getResource("/icons/Undo-24.png")));
 		redo = new JButton("Redo", new ImageIcon(this.getClass().getResource("/icons/Redo-24.png")));
-		clear = new JButton("Clear");
+		clear = new JButton("Clear",new ImageIcon(this.getClass().getResource("/icons/Trash-24.png")));
 		
 		String[] items = { "Line Width","1", "2", "3", "4", "5", "6", "7", "8" };
 		
