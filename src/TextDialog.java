@@ -158,6 +158,7 @@ public class TextDialog extends JDialog implements ActionListener, ChangeListene
 
 		if (source == ok) {
 			userResponse = APPLY_OPTION;
+			update();
 			this.setVisible(false);
 		}
 

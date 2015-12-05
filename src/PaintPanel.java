@@ -1,6 +1,7 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -152,8 +153,8 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 					}
 				}
 				else if (s.getShape() == TEXT) {
-					g2.setFont(td.getFont());
-					g2.drawString(td.getText(), s.getx1(), s.gety1());
+					g2.setFont(s.getFont());
+					g2.drawString(s.getMessage(), s.getx1(), s.gety1());
 				}
 			}
 			if (preview.size() > 0){
@@ -439,7 +440,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 				else if (activeTool == TEXT_TOOL){
 					int i = td.showCustomDialog(frame);
 					if (i == TextDialog.APPLY_OPTION) {
-						shapes.push(new Shape(x1, y1, x2 - x1, y2 - y1, primary,stroke,5,fillColor,transparent));
+						shapes.push(new Shape(x1, y1, td.getInputSize(), td.getFont(), primary, stroke, 5, td.getText())); //int x1, int y1, int fontSize, Color color, Font font
 					}
 					
 					
