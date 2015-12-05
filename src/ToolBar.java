@@ -66,6 +66,8 @@ public class ToolBar implements ActionListener {
 		toolBar.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
 		toolBar.setFloatable(false);
 
+		toolBar.setBackground( new Color(0, 153, 204));
+		
 		select = new JButton("Select");
 		// open = new JButton("Open");
 		pencil = new JButton("Pencil");
@@ -89,14 +91,14 @@ public class ToolBar implements ActionListener {
 		clear = new JButton("Clear");
 		zoomIn = new JButton("Zoom In");
 		zoomOut = new JButton("Zoom Out");
-
+		clear.setBackground(new Color(0,153,204));
 		// select.setBackground(background);
 		// open.setBackground(background);
 		// pencil.setBackground(background);
 
 		String[] items = { "1", "2", "3", "4", "5", "6", "7", "8" };
 		comboBox = new JComboBox(items);
-		comboBox.setMaximumSize(new Dimension(20, 50));
+		comboBox.setMaximumSize(new Dimension(50, 50));
 
 		// ----------------
 		// add buttons to the tool bar

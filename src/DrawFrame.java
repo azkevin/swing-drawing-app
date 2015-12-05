@@ -47,7 +47,6 @@ public class DrawFrame extends JFrame
 		
 		// create a menu bar
 		menuBar = (new MenuBar(this, this.inkPanel )).getMenuBar();
-		
 
 		// create a tool bar		
 		toolBar = (new ToolBar(this)).getToolBar();

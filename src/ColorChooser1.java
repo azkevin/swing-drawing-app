@@ -84,7 +84,7 @@ public class ColorChooser1 extends JPanel implements ActionListener {
 		cc.setFloatable(false);
 		this.frame = frame;
 		this.initializeColorChooser(cc);
-
+		this.setBackground( new Color(44, 62, 80));
 		cd = new ColorDialog(frame, primaryColor.getBackground());
 
 		turquoise.addActionListener(this);
@@ -206,7 +206,7 @@ public class ColorChooser1 extends JPanel implements ActionListener {
 		fill.setSelected(false);
 
 		cd = new ColorDialog(frame, primaryColor.getBackground());
-
+		panel.setBackground( new Color(44, 62, 80));
 		panel.add(turquoise);
 		panel.add(emerald);
 		panel.add(peter_river);
@@ -296,7 +296,7 @@ public class ColorChooser1 extends JPanel implements ActionListener {
 						custom2.setBackground(secondaryColor.getBackground());
 						secondaryColor.setBackground(cd.currentColor);
 					}
-
+					System.out.println(cd.currentColor.getRed() + " " + cd.currentColor.getGreen()+ " " + cd.currentColor.getBlue());
 				}
 			}
 

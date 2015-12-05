@@ -124,25 +124,25 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			for(Shape s : shapes){
 				
-				graphics2D.setColor(s.getColor());
-				graphics2D.setStroke(s.getStroke());
+				g2.setColor(s.getColor());
+				g2.setStroke(s.getStroke());
 				
 				if (s.getShape() == LINE){
-					graphics2D.drawLine(s.getx1(), s.gety1(), s.getx2(), s.gety2());
+					g2.drawLine(s.getx1(), s.gety1(), s.getx2(), s.gety2());
 				}
 				else if (s.getShape() == RECTANGLE){
 					
-					graphics2D.drawRect(s.getx1(), s.gety1(), s.getx2(), s.gety2());
+					g2.drawRect(s.getx1(), s.gety1(), s.getx2(), s.gety2());
 					if(s.transparent == false){
-						graphics2D.setColor(s.getfillColor());
-						graphics2D.fillRect(s.getx1(), s.gety1(), s.getx2(), s.gety2());
+						g2.setColor(s.getfillColor());
+						g2.fillRect(s.getx1(), s.gety1(), s.getx2(), s.gety2());
 					}
 				}
 				else if (s.getShape() == CIRCLE){
-					graphics2D.drawOval(s.getx1(), s.gety1(), s.getx2(), s.gety2());
+					g2.drawOval(s.getx1(), s.gety1(), s.getx2(), s.gety2());
 					if(s.transparent == false){
-						graphics2D.setColor(s.getfillColor());
-						graphics2D.fillOval(s.getx1(), s.gety1(), s.getx2(), s.gety2());
+						g2.setColor(s.getfillColor());
+						g2.fillOval(s.getx1(), s.gety1(), s.getx2(), s.gety2());
 				}
 				}
 			}
@@ -251,22 +251,21 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 			Color targetColor = new Color(canvas.getRGB((int)point.getX(), (int)point.getY()));
 			Queue<Point2D.Double> queue = new LinkedList<Point2D.Double>();
 			queue.add(point);
-
-			if (targetColor.getRGB() != fillColor.getRGB())
-				while (!queue.isEmpty()) {
-					Point2D.Double p = queue.remove();
-					if (targetColor.getRGB() != fillColor.getRGB());
+			if (!targetColor.equals(fillColor));
+			while (!queue.isEmpty()) {
+				Point2D.Double p = queue.remove();
+				
 					if ((int)p.getX() >= 0 && (int)p.getX() < canvas.getWidth() && 
-							(int)p.getY() >= 0 && (int)p.getY() < canvas.getHeight())
+					(int)p.getY() >= 0 && (int)p.getY() < canvas.getHeight())
 						if (canvas.getRGB((int)p.getX(), (int)p.getY()) == targetColor.getRGB()) {
 							canvas.setRGB((int)p.getX(), (int)p.getY(), fillColor.getRGB());
 							queue.add(new Point2D.Double(p.getX() - 1, p.getY()));
 							queue.add(new Point2D.Double(p.getX() + 1, p.getY()));
 							queue.add(new Point2D.Double(p.getX(), p.getY() - 1));
 							queue.add(new Point2D.Double(p.getX(), p.getY() + 1));
-
+							//System.out.println("0");
 						}
-				}
+			}
 		}
 		@Override
 		public void mouseDragged(MouseEvent e) {
