@@ -288,8 +288,12 @@ public class ColorChooser1 extends JPanel implements ActionListener {
 
 				if (i == ColorDialog.APPLY_OPTION) {
 					if (option.getSelectedItem() == PRIMARY_COLOR) {
+						custom3.setBackground(custom2.getBackground());
+						custom2.setBackground(primaryColor.getBackground());
 						primaryColor.setBackground(cd.currentColor);
 					} else {
+						custom3.setBackground(custom2.getBackground());
+						custom2.setBackground(secondaryColor.getBackground());
 						secondaryColor.setBackground(cd.currentColor);
 					}
 
