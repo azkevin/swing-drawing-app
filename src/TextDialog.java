@@ -27,6 +27,8 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class TextDialog extends JDialog implements ActionListener, ChangeListener {
 	// the following avoids a "warning" with Java 1.5.0 complier (?)
@@ -77,6 +79,28 @@ public class TextDialog extends JDialog implements ActionListener, ChangeListene
 
 		input = new JTextField("Example");
 		input.setPreferredSize(new Dimension(200,50));
+		input.getDocument().addDocumentListener(new DocumentListener() {
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				update();
+			}
+
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				update();
+			}
+
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				// TODO Auto-generated method stub
+				update();
+			}
+		});
 		// -------------
 		// add listeners
 		// -------------
