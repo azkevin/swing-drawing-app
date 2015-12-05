@@ -302,6 +302,8 @@ public class ColorChooser1 extends JPanel implements ActionListener {
 					custom2.setBackground(primaryColor.getBackground());
 					primaryColor.setBackground(b.getBackground());
 				} else {
+					custom3.setBackground(custom2.getBackground());
+					custom2.setBackground(secondaryColor.getBackground());
 					secondaryColor.setBackground(b.getBackground());
 
 				}
