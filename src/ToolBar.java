@@ -1,6 +1,7 @@
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -30,6 +31,8 @@ public class ToolBar implements ActionListener {
 	private JButton undo;
 	private JButton redo;
 	private JButton clear;
+	private JButton zoomIn;
+	private JButton zoomOut;
 	private JComboBox comboBox;
 
 	private DrawFrame frame;
@@ -84,6 +87,8 @@ public class ToolBar implements ActionListener {
 		undo = new JButton("Undo", new ImageIcon(this.getClass().getResource("/icons/Undo-24.png")));
 		redo = new JButton("Redo", new ImageIcon(this.getClass().getResource("/icons/Redo-24.png")));
 		clear = new JButton("Clear");
+		zoomIn = new JButton("Zoom In");
+		zoomOut = new JButton("Zoom Out");
 
 		// select.setBackground(background);
 		// open.setBackground(background);
@@ -118,6 +123,8 @@ public class ToolBar implements ActionListener {
 		toolBar.addSeparator();
 		toolBar.add(clear);
 		toolBar.add(comboBox);
+		toolBar.add(zoomIn);
+		toolBar.add(zoomOut);
 	}
 
 	public void actionPerformed(ActionEvent ae) {
@@ -156,6 +163,14 @@ public class ToolBar implements ActionListener {
 		} else if (source == redo) {
 			frame.getInkPanel().redo();
 		}
+		else if (source == zoomIn)
+		{
+			
+		}
+		else if (source == zoomOut)
+		{
+			
+		}
 		else if (source == comboBox) {
 			System.out.println(1);
 			JComboBox combo = (JComboBox) ae.getSource();
@@ -169,6 +184,27 @@ public class ToolBar implements ActionListener {
 
 	public JToolBar getToolBar() {
 		return this.toolBar;
+	}
+	
+	private void setDimensions(int width, int height)
+	{
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		if(height > dim.height - 160 && width > dim.width - 150)
+		{
+			frame.getSP().setSize(dim.width - 150, dim.height - 160);
+		}	
+		else if(width > dim.width - 150)
+		{
+			frame.getSP().setSize(dim.width - 150, height);
+		}
+		else if(height > dim.height - 160)
+		{
+			frame.getSP().setSize(width, dim.height - 160);
+		}
+		else
+		{
+			frame.getSP().setSize(width, height);
+		}
 	}
 
 }
