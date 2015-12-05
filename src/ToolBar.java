@@ -94,12 +94,14 @@ public class ToolBar implements ActionListener {
 		
 		comboBox = new JComboBox(items);
 		
-		comboBox.setMaximumSize(new Dimension(100,100));
+		comboBox.setMaximumSize(new Dimension(100,25));
 		
 
 		// ----------------
 		// add buttons to the tool bar
 		// ----------------
+		toolBar.addSeparator();
+		toolBar.addSeparator();
 		toolBar.add(save);
 		toolBar.add(open);
 		toolBar.add(newFile);
@@ -117,7 +119,7 @@ public class ToolBar implements ActionListener {
 		toolBar.add(redo);
 		toolBar.addSeparator();
 		toolBar.add(clear);
-	
+		toolBar.addSeparator();
 		toolBar.add(comboBox);
 	}
 
