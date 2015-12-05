@@ -1,50 +1,58 @@
-
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class ToolBar implements ActionListener {
 	private JToolBar toolBar;
-
-	private JButton select;
-	private JButton open;
 	private JButton pencil;
 	private JButton line;
 	private JButton rectangle;
 	private JButton circle;
-	private JButton oval;
-	private JButton rotateLeft;
-	private JButton rotateRight;
-	private JButton flipHorizontal;
-	private JButton flipVertical;
 	private JButton text;
 	private JButton erase;
 	private JButton fill;
 	private JButton undo;
 	private JButton redo;
 	private JButton clear;
-	private JButton zoomIn;
-	private JButton zoomOut;
+	private Dimension newDimensions = new Dimension(700,500);
+	private JButton save;
+	private JButton open;
+	private JButton newFile;
+	private JFileChooser fc;
 	private JComboBox comboBox;
-
+	private File f;
 	private DrawFrame frame;
 
 	TextDialog td;
 	
 	public ToolBar(DrawFrame frame) {
 		this.frame = frame;
-
+		fc = new JFileChooser(new File("."));
+		fc.setFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png"));
 		this.initializeToolBar();
 		td = new TextDialog(frame);
-		
 		clear.addActionListener(this);
 		rectangle.addActionListener(this);
 		line.addActionListener(this);
@@ -54,8 +62,10 @@ public class ToolBar implements ActionListener {
 		comboBox.addActionListener(this);
 		undo.addActionListener(this);
 		redo.addActionListener(this);
-		fill.addActionListener(this);
 		text.addActionListener(this);
+		save.addActionListener(this);
+		open.addActionListener(this);
+		newFile.addActionListener(this);
 	}
 
 	private void initializeToolBar() {
@@ -68,65 +78,48 @@ public class ToolBar implements ActionListener {
 
 		toolBar.setBackground( new Color(0, 153, 204));
 		
-		select = new JButton("Select");
-		// open = new JButton("Open");
+		save = new JButton("Save");
+		open = new JButton("Open");
+		newFile = new JButton("New");
 		pencil = new JButton("Pencil");
 		line = new JButton("Line", new ImageIcon(this.getClass().getResource("/icons/Line-24.png")));
 		rectangle = new JButton("Rectangle", new ImageIcon(this.getClass().getResource("/icons/Rectangle-24.png")));
 		circle = new JButton("Circle", new ImageIcon(this.getClass().getResource("/icons/Circled.png")));
-		// oval = new JButton("Oval");
-		rotateLeft = new JButton("Rotate left",
-				new ImageIcon(this.getClass().getResource("/icons/Rotate Left-24.png")));
-		rotateRight = new JButton("Rotate right",
-				new ImageIcon(this.getClass().getResource("/icons/Rotate Right-24.png")));
-		flipHorizontal = new JButton("Flip horizontal",
-				new ImageIcon(this.getClass().getResource("/icons/Flip Horizontal-24.png")));
-		flipVertical = new JButton("Flip vertical",
-				new ImageIcon(this.getClass().getResource("/icons/Flip Vertical-24.png")));
 		text = new JButton("Text");
 		erase = new JButton("Erase", new ImageIcon(this.getClass().getResource("/icons/Eraser-24.png")));
-		fill = new JButton("Fill", new ImageIcon(this.getClass().getResource("/icons/Fill Color-24.png")));
 		undo = new JButton("Undo", new ImageIcon(this.getClass().getResource("/icons/Undo-24.png")));
 		redo = new JButton("Redo", new ImageIcon(this.getClass().getResource("/icons/Redo-24.png")));
 		clear = new JButton("Clear");
-		zoomIn = new JButton("Zoom In");
-		zoomOut = new JButton("Zoom Out");
-		clear.setBackground(new Color(0,153,204));
-		// select.setBackground(background);
-		// open.setBackground(background);
-		// pencil.setBackground(background);
-
-		String[] items = { "1", "2", "3", "4", "5", "6", "7", "8" };
+		
+		String[] items = { "Line Width","1", "2", "3", "4", "5", "6", "7", "8" };
+		
 		comboBox = new JComboBox(items);
-		comboBox.setMaximumSize(new Dimension(50, 50));
+		
+		comboBox.setMaximumSize(new Dimension(100,100));
+		
 
 		// ----------------
 		// add buttons to the tool bar
 		// ----------------
-
-		toolBar.add(select);
+		toolBar.add(save);
+		toolBar.add(open);
+		toolBar.add(newFile);
 		toolBar.addSeparator();
 		toolBar.add(pencil);
 		toolBar.add(line);
 		toolBar.add(rectangle);
 		toolBar.add(circle);
 		toolBar.addSeparator();
-		toolBar.add(rotateLeft);
-		toolBar.add(rotateRight);
-		toolBar.add(flipHorizontal);
-		toolBar.add(flipVertical);
 		toolBar.addSeparator();
 		toolBar.add(text);
 		toolBar.add(erase);
-		toolBar.add(fill);
 		toolBar.addSeparator();
 		toolBar.add(undo);
 		toolBar.add(redo);
 		toolBar.addSeparator();
 		toolBar.add(clear);
+	
 		toolBar.add(comboBox);
-		toolBar.add(zoomIn);
-		toolBar.add(zoomOut);
 	}
 
 	public void actionPerformed(ActionEvent ae) {
@@ -142,10 +135,10 @@ public class ToolBar implements ActionListener {
 			frame.getInkPanel().setTool(2);
 		} else if (source == circle) {
 			frame.getInkPanel().setTool(3);
-		} else if (source == select) {
-			frame.getInkPanel().setTool(4);
 		} else if (source == text) {
-			frame.getInkPanel().setTool(5);
+
+			frame.getInkPanel().setTool(5);			
+
 		} else if (source == erase) {
 			frame.getInkPanel().setTool(6);
 		} else if (source == fill) {
@@ -155,20 +148,34 @@ public class ToolBar implements ActionListener {
 		} else if (source == redo) {
 			frame.getInkPanel().redo();
 		}
-		else if (source == zoomIn)
-		{
-			
-		}
-		else if (source == zoomOut)
-		{
-			
-		}
 		else if (source == comboBox) {
-			System.out.println(1);
+			try {
 			JComboBox combo = (JComboBox) ae.getSource();
 			String current = (String) combo.getSelectedItem();
 			frame.getInkPanel().setThickness(Float.valueOf(current));
-		} else {
+			}catch(NumberFormatException e){
+				
+			}
+		} else if (source == open) {
+			if (fc.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+				f = fc.getSelectedFile();
+				openFile(f);
+			}
+		} else if (source == save) {
+			// open file saver
+			if (fc.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
+				f = new File(fc.getSelectedFile() + ".png");									
+				try {
+					saveFile(f);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		} else if (source == newFile) {
+			
+			newFile();
+		}else {
 			JButton b = (JButton) source;
 			frame.getInkPanel().setColor(b.getBackground());
 		}
@@ -198,5 +205,120 @@ public class ToolBar implements ActionListener {
 			frame.getSP().setSize(width, height);
 		}
 	}
+	private void newFile()
+	{
+		JFrame newFileFrame = new JFrame();
+		newFileFrame.setTitle("New");
+		newFileFrame.setBackground(Color.GRAY);
+		newFileFrame.setSize(400, 200);
+		newFileFrame.setPreferredSize(new Dimension(400,200));
+		newFileFrame.setLayout(null);
+		newFileFrame.setResizable(false);
+		newFileFrame.pack();
 
+		// put the frame in the middle of the display
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		newFileFrame.setLocation(dim.width / 2 - newFileFrame.getSize().width / 2, dim.height / 2 - newFileFrame.getSize().height / 2);
+
+		newFileFrame.setVisible(true);
+
+		JTextField width = new JTextField();
+		width.setSize(100, 25);
+		width.setLocation(100, 25);
+		
+		JLabel widthLabel = new JLabel("Width (px):");
+		widthLabel.setSize(75, 25);
+		widthLabel.setLocation(25, 25);
+		
+		JLabel heightLabel = new JLabel("Height (px):");
+		heightLabel.setSize(75, 25);
+		heightLabel.setLocation(25, 75);
+		
+		JTextField height = new JTextField();
+		height.setLocation(100, 75);
+		height.setSize(100, 25);
+
+		JButton okay = new JButton("OK");
+		okay.setLocation(250, 25);
+		okay.setSize(75, 25);
+		okay.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						try
+						{
+							newDimensions = new Dimension(Integer.parseInt(width.getText()), 
+									Integer.parseInt(height.getText()));
+							System.out.println(newDimensions);
+							frame.getInkPanel().setInkPanel(newDimensions.width, newDimensions.height);
+							Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+							setDimensions(newDimensions.width, newDimensions.height);
+							newFileFrame.dispose();
+						}
+						catch (NumberFormatException nfe)
+						{
+							JOptionPane.showMessageDialog(null, 
+									"Invalid numeric entry. A proper integer is required.", 
+									"New", 
+									JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				}
+		);
+
+		JButton cancel = new JButton("Cancel");
+		cancel.setSize(75, 25);
+		cancel.setLocation(250, 75);
+		cancel.addActionListener(new ActionListener()
+			{
+				public void actionPerformed(ActionEvent e)
+				{
+					newFileFrame.dispose();
+				}
+			}
+		);
+		
+		newFileFrame.add(heightLabel);
+		newFileFrame.add(widthLabel);
+		newFileFrame.add(width);
+		newFileFrame.add(height);
+		newFileFrame.add(okay);
+		newFileFrame.add(cancel);
+	}
+	private void openFile(File f) {
+
+		// ----------------
+		// update the contents of the jlabel to be the image from the selected file
+		// ----------------
+
+	//	Image image = Toolkit.getDefaultToolkit().getImage(f.getPath());
+		try {
+			frame.getInkPanel().setImage(ImageIO.read(f));
+			newDimensions = new Dimension(ImageIO.read(f).getWidth(), ImageIO.read(f).getHeight());
+			setDimensions(newDimensions.width, newDimensions.height);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+	}
+	private void saveFile(File f) throws IOException {
+
+		// ----------------
+		// Take all the contents of the jpanel and save them to a png 
+		// 		destination is the file they selected via the filechooser
+		// ----------------
+		BufferedImage im = makePanel(frame.getInkPanel());
+		ImageIO.write(im, "png", f);
+	}
+	private BufferedImage makePanel(JPanel panel)
+	{
+	    int w = panel.getWidth();
+	    int h = panel.getHeight();
+	    BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+	    Graphics2D g = bi.createGraphics();
+	    panel.print(g);
+	    return bi;
+	}
 }

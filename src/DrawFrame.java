@@ -46,7 +46,7 @@ public class DrawFrame extends JFrame
 		contentPane.setLayout(null);
 		
 		// create a menu bar
-		menuBar = (new MenuBar(this, this.inkPanel )).getMenuBar();
+	//	menuBar = (new MenuBar(this, this.inkPanel )).getMenuBar();
 
 		// create a tool bar		
 		toolBar = (new ToolBar(this)).getToolBar();
@@ -58,7 +58,7 @@ public class DrawFrame extends JFrame
 		cc1 = (new ColorChooser1(this)).getToolBar();
 
 		// create default color chooser
-		cc2 = (new ColorChooser2(this)).getColorChooser();
+	//	cc2 = (new ColorChooser2(this)).getColorChooser();
 		
 		// construct the panels needed. (INKPANEL COMES LAST)
 		inkPanel = new PaintPanel(0, this, inkPanelWidth, inkPanelHeight);
