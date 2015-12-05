@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -18,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -100,7 +102,7 @@ public class MenuFile implements ActionListener
 		} else if (source == saveFile) {
 			// open file saver
 			if (fc.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION) {
-				f = fc.getSelectedFile();								
+				f = new File(fc.getSelectedFile() + ".png");								
 				try {
 					saveFile(f);
 				} catch (IOException e1) {
@@ -220,10 +222,17 @@ public class MenuFile implements ActionListener
 		// Take all the contents of the jpanel and save them to a png 
 		// 		destination is the file they selected via the filechooser
 		// ----------------
-		Container c = frame.getInkPanel();
-		BufferedImage im = new BufferedImage(c.getWidth(), c.getHeight(), BufferedImage.TYPE_INT_ARGB);
-		c.paint(im.getGraphics());
-		ImageIO.write(im, ".png", f );
+		BufferedImage im = makePanel(frame.getInkPanel());
+		ImageIO.write(im, "png", f);
+	}
+	private BufferedImage makePanel(JPanel panel)
+	{
+	    int w = panel.getWidth();
+	    int h = panel.getHeight();
+	    BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+	    Graphics2D g = bi.createGraphics();
+	    panel.print(g);
+	    return bi;
 	}
 	private void setDimensions(int width, int height)
 	{
