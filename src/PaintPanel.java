@@ -152,6 +152,7 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 					}
 				}
 				else if (s.getShape() == TEXT) {
+					g2.setFont(td.getFont());
 					g2.drawString(td.getText(), s.getx1(), s.gety1());
 				}
 			}
@@ -438,10 +439,10 @@ public class PaintPanel extends JPanel implements MouseListener,MouseMotionListe
 				else if (activeTool == TEXT_TOOL){
 					int i = td.showCustomDialog(frame);
 					if (i == TextDialog.APPLY_OPTION) {
-						
+						shapes.push(new Shape(x1, y1, x2 - x1, y2 - y1, primary,stroke,5,fillColor,transparent));
 					}
 					
-					shapes.push(new Shape(x1, y1, x2 - x1, y2 - y1, primary,stroke,5,fillColor,transparent));
+					
 				}
 				else if (activeTool == FILL_TOOL) {
 					floodFill(new Point2D.Double(x1, y1), fillColor);
