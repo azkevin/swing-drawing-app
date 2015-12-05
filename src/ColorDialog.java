@@ -48,7 +48,7 @@ public class ColorDialog extends JDialog implements ActionListener, ChangeListen
 	ColorDialog(Frame owner, Color c) {
 		super(owner, "Customize Color", true);
 		this.setResizable(false);
-		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		//this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		String[] fontList = ge.getAvailableFontFamilyNames();

@@ -16,6 +16,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -55,7 +56,7 @@ public class TextDialog extends JDialog implements ActionListener, ChangeListene
 	TextDialog(Frame owner) {
 		super(owner, "Customize Text", true);
 		this.setResizable(false);
-		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		//this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		String[] fontList = ge.getAvailableFontFamilyNames();
