@@ -45,10 +45,11 @@ public class TextDialog extends JDialog implements ActionListener, ChangeListene
 	
 	Font font;
 	
-	String inputText;
+	
 	int inputSize;
 	Object inputFont;
 	
+	String inputText;
 	Font mainFont;
 	
 	TextDialog(Frame owner) {

@@ -232,9 +232,9 @@ public class ColorChooser1 extends JPanel implements ActionListener {
 		panel.add(custom2);
 		panel.add(custom3);
 		panel.add(newColor);
-		panel.add(new JLabel("Current color"));
+		panel.add(new JLabel("Primary color"));
 		panel.add(primaryColor);
-		panel.add(new JLabel("Fill color"));
+		panel.add(new JLabel("Secondary color"));
 		panel.add(secondaryColor);
 		panel.add(option);
 		panel.add(fill);
@@ -251,17 +251,28 @@ public class ColorChooser1 extends JPanel implements ActionListener {
 			JButton b = (JButton) e.getSource();
 
 			if (b == custom2) {
-
 				Color switchs = custom2.getBackground();
-				custom2.setBackground(primaryColor.getBackground());
-				primaryColor.setBackground(switchs);
+				if (option.getSelectedItem() == PRIMARY_COLOR){
+					
+					custom2.setBackground(primaryColor.getBackground());
+					primaryColor.setBackground(switchs);
+				}else{
+					custom2.setBackground(secondaryColor.getBackground());
+					secondaryColor.setBackground(switchs);
+				}
 
 			} else if (b == custom3) {
-
-				Color oldCustom1 = primaryColor.getBackground();
-				primaryColor.setBackground(custom3.getBackground());
-				custom3.setBackground(custom2.getBackground());
-				custom2.setBackground(oldCustom1);
+				if (option.getSelectedItem() == PRIMARY_COLOR){
+					Color oldCustom1 = primaryColor.getBackground();
+					primaryColor.setBackground(custom3.getBackground());
+					custom3.setBackground(custom2.getBackground());
+					custom2.setBackground(oldCustom1);
+				}else {
+					Color oldCustom1 = secondaryColor.getBackground();
+					secondaryColor.setBackground(custom3.getBackground());
+					custom3.setBackground(custom2.getBackground());
+					custom2.setBackground(oldCustom1);
+				}
 
 			} else if (b == primaryColor) {
 			} else if (b == secondaryColor) {
