@@ -1,22 +1,18 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JToolBar;
 
 public class ColorChooser1 extends JPanel implements ActionListener {
+	private static final long serialVersionUID = -2358101254605896432L;
 	private JButton turquoise;
 	private JButton emerald;
 	private JButton peter_river;
@@ -68,7 +64,7 @@ public class ColorChooser1 extends JPanel implements ActionListener {
 
 	private DrawFrame frame;
 
-	private JComboBox option;
+	private JComboBox<String> option;
 	private JRadioButton fill;
 
 	ColorDialog cd;

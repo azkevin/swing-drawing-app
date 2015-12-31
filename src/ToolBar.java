@@ -1,7 +1,10 @@
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Graphics2D;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -74,6 +77,7 @@ public class ToolBar implements ActionListener {
 		toolBar = new JToolBar(JToolBar.VERTICAL);
 		toolBar.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
 		toolBar.setFloatable(false);
+		toolBar.setLayout(new GridLayout(18,0));
 
 		//toolBar.setBackground( new Color(0, 153, 204));
 		
@@ -93,32 +97,26 @@ public class ToolBar implements ActionListener {
 		String[] items = { "Line Width","1", "2", "3", "4", "5", "6", "7", "8" };
 		
 		comboBox = new JComboBox(items);
-		
 		comboBox.setMaximumSize(new Dimension(100,25));
-		
 
 		// ----------------
 		// add buttons to the tool bar
 		// ----------------
-		toolBar.addSeparator();
-		toolBar.addSeparator();
-		toolBar.add(save);
-		toolBar.add(open);
 		toolBar.add(newFile);
+		toolBar.add(open);
+		toolBar.add(save);
 		toolBar.addSeparator();
 		toolBar.add(pencil);
 		toolBar.add(line);
 		toolBar.add(rectangle);
 		toolBar.add(circle);
 		toolBar.addSeparator();
-		toolBar.addSeparator();
 		toolBar.add(text);
 		toolBar.add(erase);
+		toolBar.add(clear);
 		toolBar.addSeparator();
 		toolBar.add(undo);
 		toolBar.add(redo);
-		toolBar.addSeparator();
-		toolBar.add(clear);
 		toolBar.addSeparator();
 		toolBar.add(comboBox);
 	}

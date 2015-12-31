@@ -1,34 +1,26 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.*;
 import java.awt.image.BufferedImage;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
-
 import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 
 
 public class PaintPanel extends JPanel implements MouseListener,MouseMotionListener
 	{
+	private static final long serialVersionUID = 2032329974746950013L;
 		private final int PENCIL_TOOL = 0;
 		private final int LINE_TOOL = 1;
 		private final int RECTANGLE_TOOL = 2;

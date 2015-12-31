@@ -1,12 +1,9 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.ComponentOrientation;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -24,7 +21,6 @@ public class DrawFrame extends JFrame
 	private JMenuBar menuBar;
 	private JToolBar toolBar;
 	private JToolBar cc1;
-	private JColorChooser cc2;
 	private CoordinateBar coordinateBar;
 	private JScrollPane sp;
 

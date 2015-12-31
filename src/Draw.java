@@ -6,11 +6,6 @@ public class Draw
 {
 	public static void main(String[] args)
 	{
-		// use look and feel for my system (Win32)
-//		try
-//		{
-//			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//		} catch (Exception e) {}
 
 		DrawFrame frame = new DrawFrame();
 		frame.setTitle("Draw");
