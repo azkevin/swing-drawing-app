@@ -2,12 +2,10 @@
 
 A paint application created using Java's Swing architecture. Features include opening, saving, free-hand drawing, insertion of text, and more.
 
-## Preview:
+## Preview (to be updated):
 <img src="http://i.imgur.com/eRWLGvu.jpg">
 
 ## How to run:
-2 ways to use the application:
-- Download PaintApp.jar in this project and run it.
 - Download the project and run /src/Draw.java
 
 ## Credit:
@@ -18,3 +16,9 @@ Created by:
 - Mina Zaki
 - Darren Tang
 
+## Update:
+This project was updated as part of UE21CS352B, an Object Oriented Analysis and Design with Java class at PES University.
+Changes include refactoring the code to align with the MVC architecture, fixing minor compatibility issues and adding a few functionalities.
+
+Updated by:
+- Adnan Zaki
