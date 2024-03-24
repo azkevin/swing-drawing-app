@@ -22,3 +22,6 @@ Changes include refactoring the code to align with the MVC architecture, fixing 
 
 Updated by:
 - Adnan Zaki
+- Naitik Jain
+- Saketh Vunka
+- Manas Gowda
