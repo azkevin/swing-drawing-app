@@ -61,6 +61,12 @@ public class Circle implements Shape {
     }
 
     @Override
+    public boolean isPointInside(int xD, int yD) {
+        // TODO
+        return false;
+    }
+
+    @Override
     public void draw(Graphics2D g) {
         if (fillColor != null && !transparent) {
             g.setColor(fillColor);

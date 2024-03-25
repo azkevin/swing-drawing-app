@@ -35,6 +35,7 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 	private final int CIRCLE_TOOL = 3;
 	private final int SELECT_TOOL = 4;
 	private final int TEXT_TOOL = 5;
+	private final int MOVE_TOOL = 10;
 	private final int ERASER_TOOL = 6;
 	private final int FILL_TOOL = 7;
 	private final int ELLIPSE_TOOL = 8;
@@ -194,7 +195,6 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 			while (removed.isEmpty() == false && removed.peek().getGroup() == lastRemoved.getGroup()) {
 				shapes.push(removed.pop());
 				repaint();
-
 			}
 
 		}
@@ -338,6 +338,8 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 				// graphics2D.draw(new Ellipse2D.Double(x2, y2, x1 - x2, y1 - y2));
 			}
 			repaint();
+		} else if (activeTool == MOVE_TOOL) {
+			// TODO
 		}
 
 	}
@@ -481,6 +483,8 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 																												// font
 			}
 
+		} else if (activeTool == MOVE_TOOL) {
+			// TODO
 		} else if (activeTool == FILL_TOOL) {
 			floodFill(new Point2D.Double(x1, y1), fillColor);
 		}

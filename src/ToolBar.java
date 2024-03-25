@@ -35,6 +35,7 @@ public class ToolBar implements ActionListener {
 	private JButton circle;
 	private JButton ellipse;
 	private JButton text;
+	private JButton move;
 	private JButton erase;
 	private JButton fill;
 	private JButton undo;
@@ -69,6 +70,7 @@ public class ToolBar implements ActionListener {
 		undo.addActionListener(this);
 		redo.addActionListener(this);
 		text.addActionListener(this);
+		move.addActionListener(this);
 		save.addActionListener(this);
 		open.addActionListener(this);
 		newFile.addActionListener(this);
@@ -95,6 +97,7 @@ public class ToolBar implements ActionListener {
 		circle = new JButton("Circle", new ImageIcon(this.getClass().getResource("/icons/Circled.png")));
 		ellipse = new JButton("Ellipse", new ImageIcon(this.getClass().getResource("/icons/Circled.png")));
 		text = new JButton("Text", new ImageIcon(this.getClass().getResource("/icons/Type-24.png")));
+		move = new JButton("Move", new ImageIcon(this.getClass().getResource("/icons/Type-24.png")));
 		erase = new JButton("Erase", new ImageIcon(this.getClass().getResource("/icons/Eraser-24.png")));
 		undo = new JButton("Undo", new ImageIcon(this.getClass().getResource("/icons/Undo-24.png")));
 		redo = new JButton("Redo", new ImageIcon(this.getClass().getResource("/icons/Redo-24.png")));
@@ -120,6 +123,7 @@ public class ToolBar implements ActionListener {
 		toolBar.add(ellipse);
 		toolBar.addSeparator();
 		toolBar.add(text);
+		toolBar.add(move);
 		toolBar.add(erase);
 		toolBar.add(clear);
 		toolBar.addSeparator();
@@ -148,6 +152,8 @@ public class ToolBar implements ActionListener {
 			frame.getInkPanel().setTool(8);
 		} else if (source == text) {
 			frame.getInkPanel().setTool(5);
+		} else if (source == move) {
+			frame.getInkPanel().setTool(10);
 		} else if (source == erase) {
 			frame.getInkPanel().setTool(6);
 		} else if (source == fill) {

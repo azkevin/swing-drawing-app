@@ -80,6 +80,12 @@ public class Triangle implements Shape {
     }
 
     @Override
+    public boolean isPointInside(int xD, int yD) {
+        // TODO
+        return false;
+    }
+
+    @Override
     public void draw(Graphics2D g) {
         int xPoints[] = { x1, x2, x3 };
         int yPoints[] = { y1, y2, y3 };

@@ -59,6 +59,12 @@ public class Line implements Shape {
     }
 
     @Override
+    public boolean isPointInside(int xD, int yD) {
+        // TODO
+        return false;
+    }
+
+    @Override
     public void draw(Graphics2D g) {
         g.setColor(color);
         g.setStroke(stroke);

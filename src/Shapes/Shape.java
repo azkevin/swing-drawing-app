@@ -19,5 +19,7 @@ public interface Shape {
 
     int getGroup();
 
+    boolean isPointInside(int xD, int yD);
+
     void draw(Graphics2D g); // Let each shape implementation define how to draw itself
 }
