@@ -6,8 +6,8 @@ import java.awt.Graphics2D;
 
 public class Rectangle implements Shape {
 
-    private final int x1;
-    private final int y1;
+    private int x1;
+    private int y1;
     private final int width;
     private final int height;
     private final Color color;
@@ -67,8 +67,14 @@ public class Rectangle implements Shape {
 
     @Override
     public boolean isPointInside(int xD, int yD) {
-        // TODO
-        return false;
+        // return (((xD - this.x1) <= this.width) && ((yD - this.y1) <= this.height));
+        return (xD >= this.x1 && xD <= (this.x1 + width) && yD >= this.y1 && yD <= (this.y1 + height));
+    }
+
+    @Override
+    public void displace(int dx, int dy) {
+        this.x1 += dx;
+        this.y1 += dy;
     }
 
     @Override

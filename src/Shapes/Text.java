@@ -67,6 +67,11 @@ public class Text implements Shape {
     }
 
     @Override
+    public void displace(int dx, int dy) {
+        // TODO
+    }
+
+    @Override
     public void draw(Graphics2D g) {
         // g.setFont(font);
         // g.setColor(color);

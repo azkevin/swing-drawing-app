@@ -62,8 +62,16 @@ public class Circle implements Shape {
 
     @Override
     public boolean isPointInside(int xD, int yD) {
-        // TODO
+        if ((Math.sqrt((xD - (this.x + this.radius)) * (xD - (this.x + this.radius))
+                + (yD - (this.y + this.radius)) * (yD - (this.y + this.radius)))) < this.radius) {
+            return true;
+        }
         return false;
+    }
+
+    @Override
+    public void displace(int dx, int dy) {
+        // TODO
     }
 
     @Override

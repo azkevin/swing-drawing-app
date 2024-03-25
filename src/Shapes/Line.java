@@ -60,8 +60,14 @@ public class Line implements Shape {
 
     @Override
     public boolean isPointInside(int xD, int yD) {
+        float m = (float) (this.y2 - this.y1) / (this.x2 - this.x1);
+        float c = this.y1 - m * this.x1;
+        return yD == m * xD + c;
+    }
+
+    @Override
+    public void displace(int dx, int dy) {
         // TODO
-        return false;
     }
 
     @Override

@@ -65,6 +65,11 @@ public class EraserTool implements Shape {
     }
 
     @Override
+    public void displace(int dx, int dy) {
+        // nothing to do
+    }
+
+    @Override
     public void draw(Graphics2D g) {
         g.setColor(color);
         g.setStroke(stroke);

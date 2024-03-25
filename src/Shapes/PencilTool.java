@@ -59,9 +59,13 @@ public class PencilTool implements Shape {
     }
 
     @Override
-    public boolean isPointInside(int xD, int yD) {
+    public void displace(int dx, int dy) {
         // TODO
-        return false;
+    }
+
+    @Override
+    public boolean isPointInside(int xD, int yD) {
+        return (this.x1 == xD && this.y1 == yD);
     }
 
     @Override

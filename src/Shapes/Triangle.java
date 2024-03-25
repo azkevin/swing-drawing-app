@@ -81,8 +81,20 @@ public class Triangle implements Shape {
 
     @Override
     public boolean isPointInside(int xD, int yD) {
+        double denominator = ((this.y2 - this.y3) * (this.x1 - this.x3) + (this.x3 - this.x2) * (this.y1 - this.y3));
+        double b1 = ((this.y2 - this.y3) * (this.x1 - this.x3) + (this.x3 - this.x2) * (this.y1 - this.y3))
+                / denominator;
+        double b2 = ((this.y3 - this.y1) * (this.x1 - this.x3) + (this.x1 - this.x3) * (this.y1 - this.y3))
+                / denominator;
+        double b3 = 1.0f - b1 - b2;
+
+        // Check if the point lies inside the triangle
+        return b1 >= 0 && b2 >= 0 && b3 >= 0;
+    }
+
+    @Override
+    public void displace(int dx, int dy) {
         // TODO
-        return false;
     }
 
     @Override

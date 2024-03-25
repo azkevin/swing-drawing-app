@@ -65,8 +65,21 @@ public class Ellipse implements Shape {
 
     @Override
     public boolean isPointInside(int xD, int yD) {
-        // TODO
+        double rx = (this.x1 - this.x2) / 2;
+        double ry = (this.y1 - this.y2) / 2;
+        double xx = (this.x1 + this.x2) / 2;
+        double yy = (this.y1 + this.y2) / 2;
+        double x_part = Math.pow((xx - xD), 2) / Math.pow(rx, 2);
+        double y_part = Math.pow((yy - yD), 2) / Math.pow(ry, 2);
+        if (x_part + y_part <= 1) {
+            return true;
+        }
         return false;
+    }
+
+    @Override
+    public void displace(int dx, int dy) {
+        // TODO
     }
 
     @Override

@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
@@ -10,6 +11,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.*;
 import java.awt.image.BufferedImage;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -59,6 +61,10 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 	private Stack<Shape> shapes;
 	private Stack<Shape> removed;
 	private Stack<Shape> preview;
+
+	private Shape selectedShape;
+	private int selectedShapeGroup;
+	private Point initialMousePosition;
 
 	private int grouped;
 
@@ -338,8 +344,27 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 				// graphics2D.draw(new Ellipse2D.Double(x2, y2, x1 - x2, y1 - y2));
 			}
 			repaint();
-		} else if (activeTool == MOVE_TOOL) {
-			// TODO
+		} else if (activeTool == MOVE_TOOL && selectedShape != null) {
+			int deltaX = x2 - initialMousePosition.x;
+			int deltaY = y2 - initialMousePosition.y;
+
+			initialMousePosition.x = x2;
+			initialMousePosition.y = y2;
+
+			// Update the shape's position based on the mouse movement
+			if (selectedShapeGroup != 0) {
+				Iterator<Shape> iterator = shapes.iterator();
+				while (iterator.hasNext()) {
+					Shape shape = iterator.next();
+					if (shape.getGroup() == selectedShapeGroup) {
+						shape.displace(deltaX, deltaY);
+					}
+				}
+			} else {
+				selectedShape.displace(deltaX, deltaY);
+			}
+
+			repaint();
 		}
 
 	}
@@ -374,6 +399,30 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 		printCoords(e);
 		x1 = e.getX();
 		y1 = e.getY();
+
+		if (activeTool == MOVE_TOOL) {
+
+			Stack<Shape> temp = new Stack<Shape>();
+
+			while (!shapes.isEmpty()) {
+				Shape shape = shapes.pop();
+				if (shape.isPointInside(e.getX(), e.getY())) {
+					selectedShape = shape;
+					selectedShapeGroup = shape.getGroup();
+					initialMousePosition = e.getPoint();
+					break;
+				} else {
+					temp.push(shape);
+				}
+			}
+
+			while (!temp.isEmpty()) {
+				shapes.push(temp.pop());
+			}
+			if (selectedShape != null) {
+				shapes.push(selectedShape);
+			}
+		}
 	}
 
 	@Override
@@ -483,8 +532,8 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 																												// font
 			}
 
-		} else if (activeTool == MOVE_TOOL) {
-			// TODO
+		} else if (activeTool == MOVE_TOOL && selectedShape != null) {
+			selectedShape = null;
 		} else if (activeTool == FILL_TOOL) {
 			floodFill(new Point2D.Double(x1, y1), fillColor);
 		}
