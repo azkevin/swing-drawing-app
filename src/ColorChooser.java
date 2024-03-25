@@ -14,26 +14,6 @@ import javax.swing.border.Border;
 
 public class ColorChooser extends JPanel implements ActionListener {
 	private static final long serialVersionUID = -2358101254605896432L;
-	// private JButton turquoise;
-	// private JButton emerald;
-	// private JButton peter_river;
-	// private JButton amethyst;
-	// private JButton wet_asphalt;
-	// private JButton green_sea;
-	// private JButton nephritis;
-	// private JButton belize_hole;
-	// private JButton wisteria;
-	// private JButton midnight_blue;
-	// private JButton sun_flower;
-	// private JButton carrot;
-	// private JButton alizarin;
-	// private JButton clouds;
-	// private JButton concrete;
-	// private JButton orange;
-	// private JButton pumpkin;
-	// private JButton pomegranate;
-	// private JButton silver;
-	// private JButton asbestos;
 	private JButton[] colorButtons;
 
 	private JButton primaryColor;
@@ -42,26 +22,6 @@ public class ColorChooser extends JPanel implements ActionListener {
 	private JButton newColor;
 	private JButton secondaryColor;
 
-	// private Color turquoiseC = new Color(26, 188, 156);
-	// private Color emeraldC = new Color(46, 204, 113);
-	// private Color peter_riverC = new Color(52, 152, 219);
-	// private Color amethystC = new Color(155, 89, 182);
-	// private Color wet_asphaltC = new Color(52, 73, 94);
-	// private Color green_seaC = new Color(22, 160, 133);
-	// private Color nephritisC = new Color(39, 174, 96);
-	// private Color belize_holeC = new Color(41, 128, 185);
-	// private Color wisteriaC = new Color(142, 68, 173);
-	// private Color midnight_blueC = new Color(44, 62, 80);
-	// private Color sun_flowerC = new Color(241, 196, 15);
-	// private Color carrotC = new Color(230, 126, 34);
-	// private Color alizarinC = new Color(231, 76, 60);
-	// private Color cloudsC = new Color(236, 240, 241);
-	// private Color concreteC = new Color(149, 165, 166);
-	// private Color orangeC = new Color(243, 156, 18);
-	// private Color pumpkinC = new Color(211, 84, 0);
-	// private Color pomegranateC = new Color(192, 57, 43);
-	// private Color silverC = new Color(189, 195, 199);
-	// private Color asbestosC = new Color(127, 140, 141);
 	private Color[] colors;
 
 	private JToolBar cc;

@@ -31,7 +31,9 @@ public class ToolBar implements ActionListener {
 	private JButton pencil;
 	private JButton line;
 	private JButton rectangle;
+	private JButton triangle;
 	private JButton circle;
+	private JButton ellipse;
 	private JButton text;
 	private JButton erase;
 	private JButton fill;
@@ -57,8 +59,10 @@ public class ToolBar implements ActionListener {
 		td = new TextDialog(frame);
 		clear.addActionListener(this);
 		rectangle.addActionListener(this);
+		triangle.addActionListener(this);
 		line.addActionListener(this);
 		circle.addActionListener(this);
+		ellipse.addActionListener(this);
 		erase.addActionListener(this);
 		pencil.addActionListener(this);
 		comboBox.addActionListener(this);
@@ -77,7 +81,7 @@ public class ToolBar implements ActionListener {
 		toolBar = new JToolBar(JToolBar.VERTICAL);
 		toolBar.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
 		toolBar.setFloatable(false);
-		toolBar.setLayout(new GridLayout(18, 0));
+		toolBar.setLayout(new GridLayout(20, 0));
 
 		// toolBar.setBackground( new Color(0, 153, 204));
 
@@ -87,7 +91,9 @@ public class ToolBar implements ActionListener {
 		pencil = new JButton("Pencil", new ImageIcon(this.getClass().getResource("/icons/Pencil-24.png")));
 		line = new JButton("Line", new ImageIcon(this.getClass().getResource("/icons/Line-24.png")));
 		rectangle = new JButton("Rectangle", new ImageIcon(this.getClass().getResource("/icons/Rectangle-24.png")));
+		triangle = new JButton("Triangle", new ImageIcon(this.getClass().getResource("/icons/Rectangle-24.png")));
 		circle = new JButton("Circle", new ImageIcon(this.getClass().getResource("/icons/Circled.png")));
+		ellipse = new JButton("Ellipse", new ImageIcon(this.getClass().getResource("/icons/Circled.png")));
 		text = new JButton("Text", new ImageIcon(this.getClass().getResource("/icons/Type-24.png")));
 		erase = new JButton("Erase", new ImageIcon(this.getClass().getResource("/icons/Eraser-24.png")));
 		undo = new JButton("Undo", new ImageIcon(this.getClass().getResource("/icons/Undo-24.png")));
@@ -109,7 +115,9 @@ public class ToolBar implements ActionListener {
 		toolBar.add(pencil);
 		toolBar.add(line);
 		toolBar.add(rectangle);
+		toolBar.add(triangle);
 		toolBar.add(circle);
+		toolBar.add(ellipse);
 		toolBar.addSeparator();
 		toolBar.add(text);
 		toolBar.add(erase);
@@ -132,12 +140,14 @@ public class ToolBar implements ActionListener {
 			frame.getInkPanel().setTool(1);
 		} else if (source == rectangle) {
 			frame.getInkPanel().setTool(2);
+		} else if (source == triangle) {
+			frame.getInkPanel().setTool(9);
 		} else if (source == circle) {
 			frame.getInkPanel().setTool(3);
+		} else if (source == ellipse) {
+			frame.getInkPanel().setTool(8);
 		} else if (source == text) {
-
 			frame.getInkPanel().setTool(5);
-
 		} else if (source == erase) {
 			frame.getInkPanel().setTool(6);
 		} else if (source == fill) {

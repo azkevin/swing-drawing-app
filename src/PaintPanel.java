@@ -18,12 +18,14 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import Shapes.Circle;
+import Shapes.Ellipse;
 import Shapes.EraserTool;
 import Shapes.Line;
 import Shapes.PencilTool;
 import Shapes.Rectangle;
 import Shapes.Shape;
 import Shapes.Text;
+import Shapes.Triangle;
 
 public class PaintPanel extends JPanel implements MouseListener, MouseMotionListener {
 	private static final long serialVersionUID = 2032329974746950013L;
@@ -35,12 +37,14 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 	private final int TEXT_TOOL = 5;
 	private final int ERASER_TOOL = 6;
 	private final int FILL_TOOL = 7;
+	private final int ELLIPSE_TOOL = 8;
+	private final int TRIANGLE_TOOL = 9;
 
-	private final int LINE = 1;
-	private final int RECTANGLE = 2;
-	private final int CIRCLE = 3;
-	private final int TRIANGLE = 4;
-	private final int TEXT = 5;
+	// private final int LINE = 1;
+	// private final int RECTANGLE = 2;
+	// private final int CIRCLE = 3;
+	// private final int TRIANGLE = 4;
+	// private final int TEXT = 5;
 
 	private TextDialog td;
 	private BasicStroke stroke = new BasicStroke((float) 2);
@@ -119,7 +123,8 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 		if (canvas == null) {
 			canvas = new BufferedImage(inkPanelWidth, inkPanelHeight, BufferedImage.TYPE_INT_ARGB);
 			graphics2D = canvas.createGraphics();
-			graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
 			clear();
 		}
 		g.drawImage(canvas, 0, 0, null);
@@ -278,22 +283,63 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 				// graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
 			}
 			repaint();
-		} else if (activeTool == CIRCLE_TOOL) {
+		} else if (activeTool == TRIANGLE_TOOL) {
 			if (x1 < x2 && y1 < y2) {
-				preview.push(new Circle(x1, y1, (x2 - x1) / 2, primary, stroke, secondary, transparent));
+				preview.push(
+						new Triangle(x1, y2, (int) (x1 + x2) / 2, y1, x2, y2, primary, stroke, secondary, transparent));
+			} else if (x2 < x1 && y1 < y2) {
+				preview.push(
+						new Triangle(x1, y2, (int) (x1 + x2) / 2, y1, x2, y2, primary, stroke, secondary, transparent));
+			} else if (x1 < x2 && y2 < y1) {
+				preview.push(
+						new Triangle(x1, y2, (int) (x1 + x2) / 2, y1, x2, y2, primary, stroke, secondary, transparent));
+			} else if (x2 < x1 && y2 < y1) {
+				preview.push(
+						new Triangle(x1, y2, (int) (x1 + x2) / 2, y1, x2, y2, primary, stroke, secondary, transparent));
+			}
+			repaint();
+		} else if (activeTool == CIRCLE_TOOL) {
+			// int radius = (int) Math.sqrt(((x1 - x2) / 2) * ((x1 - x2) / 2) + ((y1 - y2) /
+			// 2) * ((y1 - y2) / 2));
+			int radius;
+			if (Math.abs(x2 - x1) > Math.abs(y2 - y1)) {
+				radius = (int) (y2 - y1) / 2;
+				radius = Math.abs(radius);
+			} else {
+				radius = (int) (x2 - x1) / 2;
+				radius = Math.abs(radius);
+			}
+			if (x1 < x2 && y1 < y2) {
+				preview.push(new Circle(x1, y1, radius, primary, stroke, secondary, transparent));
 				// graphics2D.draw(new Ellipse2D.Double(x1, y1, x2 - x1, y2 - y1));
 			} else if (x2 < x1 && y1 < y2) {
-				preview.push(new Circle(x1, y1, (y2 - y1) / 2, primary, stroke, secondary, transparent));
+				preview.push(new Circle(x2, y1, radius, primary, stroke, secondary, transparent));
 				// graphics2D.draw(new Ellipse2D.Double(x2, y1, x1 - x2, y2 - y1));
 			} else if (x1 < x2 && y2 < y1) {
-				preview.push(new Circle(x1, y1, (x2 - x1) / 2, primary, stroke, secondary, transparent));
+				preview.push(new Circle(x1, y2, radius, primary, stroke, secondary, transparent));
 				// graphics2D.draw(new Ellipse2D.Double(x1, y2, x2 - x1, y1 - y2));
 			} else if (x2 < x1 && y2 < y1) {
-				preview.push(new Circle(x2, y1, (x1 - x2) / 2, primary, stroke, secondary, transparent));
+				preview.push(new Circle(x2, y2, radius, primary, stroke, secondary, transparent));
+				// graphics2D.draw(new Ellipse2D.Double(x2, y2, x1 - x2, y1 - y2));
+			}
+			repaint();
+		} else if (activeTool == ELLIPSE_TOOL) {
+			if (x1 < x2 && y1 < y2) {
+				preview.push(new Ellipse(x1, y1, x2, y2, primary, stroke, secondary, transparent));
+				// graphics2D.draw(new Ellipse2D.Double(x1, y1, x2 - x1, y2 - y1));
+			} else if (x2 < x1 && y1 < y2) {
+				preview.push(new Ellipse(x2, y1, x1, y2, primary, stroke, secondary, transparent));
+				// graphics2D.draw(new Ellipse2D.Double(x2, y1, x1 - x2, y2 - y1));
+			} else if (x1 < x2 && y2 < y1) {
+				preview.push(new Ellipse(x1, y2, x2, y1, primary, stroke, secondary, transparent));
+				// graphics2D.draw(new Ellipse2D.Double(x1, y2, x2 - x1, y1 - y2));
+			} else if (x2 < x1 && y2 < y1) {
+				preview.push(new Ellipse(x2, y2, x1, y1, primary, stroke, secondary, transparent));
 				// graphics2D.draw(new Ellipse2D.Double(x2, y2, x1 - x2, y1 - y2));
 			}
 			repaint();
 		}
+
 	}
 
 	@Override
@@ -360,20 +406,64 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 				// graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
 			}
 
-		} else if (activeTool == CIRCLE_TOOL && dragged) {
+		} else if (activeTool == TRIANGLE_TOOL) {
 			if (x1 < x2 && y1 < y2) {
-				shapes.push(new Circle(x1, y1, (x2 - x1) / 2, primary, stroke, secondary, transparent));
+				shapes.push(
+						new Triangle(x1, y2, (int) (x1 + x2) / 2, y1, x2, y2, primary, stroke, secondary, transparent));
+				// graphics2D.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
+			} else if (x2 < x1 && y1 < y2) {
+				shapes.push(
+						new Triangle(x1, y2, (int) (x1 + x2) / 2, y1, x2, y2, primary, stroke, secondary, transparent));
+				// graphics2D.draw(new Rectangle2D.Double(x2, y1, x1 - x2, y2 - y1));
+			} else if (x1 < x2 && y2 < y1) {
+				shapes.push(
+						new Triangle(x1, y2, (int) (x1 + x2) / 2, y1, x2, y2, primary, stroke, secondary, transparent));
+				// graphics2D.draw(new Rectangle2D.Double(x1, y2, x2 - x1, y1 - y2));
+			} else if (x2 < x1 && y2 < y1) {
+				shapes.push(
+						new Triangle(x1, y2, (int) (x1 + x2) / 2, y1, x2, y2, primary, stroke, secondary, transparent));
+				// graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
+			}
+			repaint();
+		} else if (activeTool == CIRCLE_TOOL && dragged) {
+			// int radius = (int) Math.sqrt(((x1 - x2) / 2) * ((x1 - x2) / 2) + ((y1 - y2) /
+			// 2) * ((y1 - y2) / 2));
+			int radius;
+			if (Math.abs(x2 - x1) > Math.abs(y2 - y1)) {
+				radius = (int) (y2 - y1) / 2;
+				radius = Math.abs(radius);
+			} else {
+				radius = (int) (x2 - x1) / 2;
+				radius = Math.abs(radius);
+			}
+			if (x1 < x2 && y1 < y2) {
+				shapes.push(new Circle(x1, y1, radius, primary, stroke, secondary, transparent));
 				// graphics2D.draw(new Ellipse2D.Double(x1, y1, x2 - x1, y2 - y1));
 			} else if (x2 < x1 && y1 < y2) {
-				shapes.push(new Circle(x2, y1, (y2 - y1) / 2, primary, stroke, secondary, transparent));
+				shapes.push(new Circle(x2, y1, radius, primary, stroke, secondary, transparent));
 				// graphics2D.draw(new Ellipse2D.Double(x2, y1, x1 - x2, y2 - y1));
 			} else if (x1 < x2 && y2 < y1) {
-				shapes.push(new Circle(x1, y2, (x2 - x1) / 2, primary, stroke, secondary, transparent));
+				shapes.push(new Circle(x1, y2, radius, primary, stroke, secondary, transparent));
 				// graphics2D.draw(new Ellipse2D.Double(x1, y2, x2 - x1, y1 - y2));
 			} else if (x2 < x1 && y2 < y1) {
-				shapes.push(new Circle(x2, y2, (x1 - x2) / 2, primary, stroke, secondary, transparent));
+				shapes.push(new Circle(x2, y2, radius, primary, stroke, secondary, transparent));
 				// graphics2D.draw(new Ellipse2D.Double(x2, y2, x1 - x2, y1 - y2));
 			}
+		} else if (activeTool == ELLIPSE_TOOL && dragged) {
+			if (x1 < x2 && y1 < y2) {
+				shapes.push(new Ellipse(x1, y1, x2, y2, primary, stroke, secondary, transparent));
+				// graphics2D.draw(new Ellipse2D.Double(x1, y1, x2 - x1, y2 - y1));
+			} else if (x2 < x1 && y1 < y2) {
+				shapes.push(new Ellipse(x2, y1, x1, y2, primary, stroke, secondary, transparent));
+				// graphics2D.draw(new Ellipse2D.Double(x2, y1, x1 - x2, y2 - y1));
+			} else if (x1 < x2 && y2 < y1) {
+				shapes.push(new Ellipse(x1, y2, x2, y1, primary, stroke, secondary, transparent));
+				// graphics2D.draw(new Ellipse2D.Double(x1, y2, x2 - x1, y1 - y2));
+			} else if (x2 < x1 && y2 < y1) {
+				shapes.push(new Ellipse(x2, y2, x1, y1, primary, stroke, secondary, transparent));
+				// graphics2D.draw(new Ellipse2D.Double(x2, y2, x1 - x2, y1 - y2));
+			}
+			repaint();
 		} else if (activeTool == SELECT_TOOL) {
 
 		} else if (activeTool == TEXT_TOOL) {

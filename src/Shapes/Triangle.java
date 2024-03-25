@@ -4,21 +4,28 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Circle implements Shape {
+public class Triangle implements Shape {
 
-    private final int x;
-    private final int y;
-    private final int radius;
+    private final int x1;
+    private final int y1;
+    private final int x2;
+    private final int y2;
+    private final int x3;
+    private final int y3;
     private final Color color;
     private final BasicStroke stroke;
     private final Color fillColor;
     private final boolean transparent;
     private final int group = 0;
 
-    public Circle(int x, int y, int radius, Color color, BasicStroke stroke, Color fillColor, boolean transparent) {
-        this.x = x;
-        this.y = y;
-        this.radius = radius;
+    public Triangle(int x1, int y1, int x2, int y2, int x3, int y3, Color color, BasicStroke stroke, Color fillColor,
+            boolean transparent) {
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x2;
+        this.y2 = y2;
+        this.x3 = x3;
+        this.y3 = y3;
         this.color = color;
         this.stroke = stroke;
         this.fillColor = fillColor;
@@ -27,22 +34,34 @@ public class Circle implements Shape {
 
     @Override
     public int getX1() {
-        return x - radius; // Top-left corner for drawing
+        return x1;
     }
 
     @Override
     public int getY1() {
-        return y - radius;
+        return y1;
     }
 
     @Override
     public int getX2() {
-        return x + radius; // Bottom-right corner for drawing
+        // Bottom-right corner for drawing
+        return x2;
     }
 
     @Override
     public int getY2() {
-        return y + radius;
+        // Bottom-right corner for drawing
+        return y2;
+    }
+
+    public int getX3() {
+        // Bottom-right corner for drawing
+        return x3;
+    }
+
+    public int getY3() {
+        // Bottom-right corner for drawing
+        return y3;
     }
 
     @Override
@@ -62,14 +81,16 @@ public class Circle implements Shape {
 
     @Override
     public void draw(Graphics2D g) {
+        int xPoints[] = { x1, x2, x3 };
+        int yPoints[] = { y1, y2, y3 };
         if (fillColor != null && !transparent) {
             g.setColor(fillColor);
-            g.fillOval(x, y, 2 * radius, 2 * radius);
+            g.fillPolygon(xPoints, yPoints, 3);
         }
         if (color != null) {
             g.setColor(color);
             g.setStroke(stroke);
-            g.drawOval(x, y, 2 * radius, 2 * radius);
+            g.drawPolygon(xPoints, yPoints, 3);
         }
     }
 }
