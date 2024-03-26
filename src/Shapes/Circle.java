@@ -6,8 +6,8 @@ import java.awt.Graphics2D;
 
 public class Circle implements Shape {
 
-    private final int x;
-    private final int y;
+    private int x;
+    private int y;
     private final int radius;
     private final Color color;
     private final BasicStroke stroke;
@@ -71,7 +71,8 @@ public class Circle implements Shape {
 
     @Override
     public void displace(int dx, int dy) {
-        // TODO
+        this.x += dx;
+        this.y += dy;
     }
 
     @Override

@@ -4,28 +4,22 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Triangle implements Shape {
+public class Square implements Shape {
 
     private int x1;
     private int y1;
-    private int x2;
-    private int y2;
-    private int x3;
-    private int y3;
+    private final int side;
     private final Color color;
     private final BasicStroke stroke;
     private final Color fillColor;
     private final boolean transparent;
     private final int group = 0;
 
-    public Triangle(int x1, int y1, int x2, int y2, int x3, int y3, Color color, BasicStroke stroke, Color fillColor,
+    public Square(int x1, int y1, int side, Color color, BasicStroke stroke, Color fillColor,
             boolean transparent) {
         this.x1 = x1;
         this.y1 = y1;
-        this.x2 = x2;
-        this.y2 = y2;
-        this.x3 = x3;
-        this.y3 = y3;
+        this.side = side;
         this.color = color;
         this.stroke = stroke;
         this.fillColor = fillColor;
@@ -45,23 +39,13 @@ public class Triangle implements Shape {
     @Override
     public int getX2() {
         // Bottom-right corner for drawing
-        return x2;
+        return x1 + side;
     }
 
     @Override
     public int getY2() {
         // Bottom-right corner for drawing
-        return y2;
-    }
-
-    public int getX3() {
-        // Bottom-right corner for drawing
-        return x3;
-    }
-
-    public int getY3() {
-        // Bottom-right corner for drawing
-        return y3;
+        return y1 + side;
     }
 
     @Override
@@ -81,39 +65,25 @@ public class Triangle implements Shape {
 
     @Override
     public boolean isPointInside(int xD, int yD) {
-        double denominator = ((this.y2 - this.y3) * (this.x1 - this.x3) + (this.x3 - this.x2) * (this.y1 - this.y3));
-        double b1 = ((this.y2 - this.y3) * (this.x1 - this.x3) + (this.x3 - this.x2) * (this.y1 - this.y3))
-                / denominator;
-        double b2 = ((this.y3 - this.y1) * (this.x1 - this.x3) + (this.x1 - this.x3) * (this.y1 - this.y3))
-                / denominator;
-        double b3 = 1.0f - b1 - b2;
-
-        // Check if the point lies inside the triangle
-        return b1 >= 0 && b2 >= 0 && b3 >= 0;
+        return (xD >= this.x1 && xD <= (this.x1 + side) && yD >= this.y1 && yD <= (this.y1 + side));
     }
 
     @Override
     public void displace(int dx, int dy) {
         this.x1 += dx;
-        this.x2 += dx;
-        this.x3 += dx;
         this.y1 += dy;
-        this.y2 += dy;
-        this.y3 += dy;
     }
 
     @Override
     public void draw(Graphics2D g) {
-        int xPoints[] = { x1, x2, x3 };
-        int yPoints[] = { y1, y2, y3 };
         if (fillColor != null && !transparent) {
             g.setColor(fillColor);
-            g.fillPolygon(xPoints, yPoints, 3);
+            g.fillRect(x1, y1, side, side);
         }
         if (color != null) {
             g.setColor(color);
             g.setStroke(stroke);
-            g.drawPolygon(xPoints, yPoints, 3);
+            g.drawRect(x1, y1, side, side);
         }
     }
 }

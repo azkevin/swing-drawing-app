@@ -5,10 +5,10 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class PencilTool implements Shape {
-    private final int x1;
-    private final int y1;
-    private final int x2;
-    private final int y2;
+    private int x1;
+    private int y1;
+    private int x2;
+    private int y2;
     private final Color color;
     private final BasicStroke stroke;
     private final int group;
@@ -60,12 +60,15 @@ public class PencilTool implements Shape {
 
     @Override
     public void displace(int dx, int dy) {
-        // TODO
+        this.x1 += dx;
+        this.x2 += dx;
+        this.y1 += dy;
+        this.y2 += dy;
     }
 
     @Override
     public boolean isPointInside(int xD, int yD) {
-        return (this.x1 == xD && this.y1 == yD);
+        return (this.x1 + 5 >= xD && this.x1 - 5 <= xD && this.y1 + 5 >= yD && this.y1 - 5 <= yD);
     }
 
     @Override

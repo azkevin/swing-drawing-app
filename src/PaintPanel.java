@@ -26,6 +26,7 @@ import Shapes.Line;
 import Shapes.PencilTool;
 import Shapes.Rectangle;
 import Shapes.Shape;
+import Shapes.Square;
 import Shapes.Text;
 import Shapes.Triangle;
 
@@ -34,6 +35,7 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 	private final int PENCIL_TOOL = 0;
 	private final int LINE_TOOL = 1;
 	private final int RECTANGLE_TOOL = 2;
+	private final int SQUARE_TOOL = 11;
 	private final int CIRCLE_TOOL = 3;
 	private final int SELECT_TOOL = 4;
 	private final int TEXT_TOOL = 5;
@@ -289,6 +291,24 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 				// graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
 			}
 			repaint();
+		} else if (activeTool == SQUARE_TOOL) {
+			int side = Math.min(
+					Math.abs(x2 - x1),
+					Math.abs(y2 - y1));
+			if (x1 < x2 && y1 < y2) {
+				preview.push(new Square(x1, y1, side, primary, stroke, secondary, transparent));
+				// graphics2D.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
+			} else if (x2 < x1 && y1 < y2) {
+				preview.push(new Square(x2, y1, side, primary, stroke, secondary, transparent));
+				// graphics2D.draw(new Rectangle2D.Double(x2, y1, x1 - x2, y2 - y1));
+			} else if (x1 < x2 && y2 < y1) {
+				preview.push(new Square(x1, y2, side, primary, stroke, secondary, transparent));
+				// graphics2D.draw(new Rectangle2D.Double(x1, y2, x2 - x1, y1 - y2));
+			} else if (x2 < x1 && y2 < y1) {
+				preview.push(new Square(x2, y2, side, primary, stroke, secondary, transparent));
+				// graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
+			}
+			repaint();
 		} else if (activeTool == TRIANGLE_TOOL) {
 			if (x1 < x2 && y1 < y2) {
 				preview.push(
@@ -457,6 +477,24 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 				// graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
 			}
 
+		} else if (activeTool == SQUARE_TOOL && dragged) {
+			int side = Math.min(
+					Math.abs(x2 - x1),
+					Math.abs(y2 - y1));
+			if (x1 < x2 && y1 < y2) {
+				shapes.push(new Square(x1, y1, side, primary, stroke, secondary, transparent));
+				// graphics2D.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
+			} else if (x2 < x1 && y1 < y2) {
+				shapes.push(new Square(x2, y1, side, primary, stroke, secondary, transparent));
+				// graphics2D.draw(new Rectangle2D.Double(x2, y1, x1 - x2, y2 - y1));
+			} else if (x1 < x2 && y2 < y1) {
+				shapes.push(new Square(x1, y2, side, primary, stroke, secondary, transparent));
+				// graphics2D.draw(new Rectangle2D.Double(x1, y2, x2 - x1, y1 - y2));
+			} else if (x2 < x1 && y2 < y1) {
+				shapes.push(new Square(x2, y2, side, primary, stroke, secondary, transparent));
+				// graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
+			}
+			repaint();
 		} else if (activeTool == TRIANGLE_TOOL) {
 			if (x1 < x2 && y1 < y2) {
 				shapes.push(

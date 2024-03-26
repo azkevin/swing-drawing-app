@@ -6,10 +6,10 @@ import java.awt.Graphics2D;
 
 public class Ellipse implements Shape {
 
-    private final int x1;
-    private final int y1;
-    private final int x2;
-    private final int y2;
+    private int x1;
+    private int y1;
+    private int x2;
+    private int y2;
     private final Color color;
     private final BasicStroke stroke;
     private final Color fillColor;
@@ -79,7 +79,10 @@ public class Ellipse implements Shape {
 
     @Override
     public void displace(int dx, int dy) {
-        // TODO
+        this.x1 += dx;
+        this.x2 += dx;
+        this.y1 += dy;
+        this.y2 += dy;
     }
 
     @Override

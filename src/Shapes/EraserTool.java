@@ -60,7 +60,7 @@ public class EraserTool implements Shape {
 
     @Override
     public boolean isPointInside(int xD, int yD) {
-        // TODO
+        // not applicable
         return false;
     }
 

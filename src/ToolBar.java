@@ -31,6 +31,7 @@ public class ToolBar implements ActionListener {
 	private JButton pencil;
 	private JButton line;
 	private JButton rectangle;
+	private JButton square;
 	private JButton triangle;
 	private JButton circle;
 	private JButton ellipse;
@@ -60,6 +61,7 @@ public class ToolBar implements ActionListener {
 		td = new TextDialog(frame);
 		clear.addActionListener(this);
 		rectangle.addActionListener(this);
+		square.addActionListener(this);
 		triangle.addActionListener(this);
 		line.addActionListener(this);
 		circle.addActionListener(this);
@@ -83,7 +85,7 @@ public class ToolBar implements ActionListener {
 		toolBar = new JToolBar(JToolBar.VERTICAL);
 		toolBar.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
 		toolBar.setFloatable(false);
-		toolBar.setLayout(new GridLayout(20, 0));
+		toolBar.setLayout(new GridLayout(22, 0));
 
 		// toolBar.setBackground( new Color(0, 153, 204));
 
@@ -93,6 +95,7 @@ public class ToolBar implements ActionListener {
 		pencil = new JButton("Pencil", new ImageIcon(this.getClass().getResource("/icons/Pencil-24.png")));
 		line = new JButton("Line", new ImageIcon(this.getClass().getResource("/icons/Line-24.png")));
 		rectangle = new JButton("Rectangle", new ImageIcon(this.getClass().getResource("/icons/Rectangle-24.png")));
+		square = new JButton("Square", new ImageIcon(this.getClass().getResource("/icons/Rectangle-24.png")));
 		triangle = new JButton("Triangle", new ImageIcon(this.getClass().getResource("/icons/Rectangle-24.png")));
 		circle = new JButton("Circle", new ImageIcon(this.getClass().getResource("/icons/Circled.png")));
 		ellipse = new JButton("Ellipse", new ImageIcon(this.getClass().getResource("/icons/Circled.png")));
@@ -118,6 +121,7 @@ public class ToolBar implements ActionListener {
 		toolBar.add(pencil);
 		toolBar.add(line);
 		toolBar.add(rectangle);
+		toolBar.add(square);
 		toolBar.add(triangle);
 		toolBar.add(circle);
 		toolBar.add(ellipse);
@@ -144,6 +148,8 @@ public class ToolBar implements ActionListener {
 			frame.getInkPanel().setTool(1);
 		} else if (source == rectangle) {
 			frame.getInkPanel().setTool(2);
+		} else if (source == square) {
+			frame.getInkPanel().setTool(11);
 		} else if (source == triangle) {
 			frame.getInkPanel().setTool(9);
 		} else if (source == circle) {
