@@ -79,17 +79,23 @@ public class Triangle implements Shape {
         return group;
     }
 
+    private double area(int x1, int y1, int x2, int y2,
+            int x3, int y3) {
+        return Math.abs((x1 * (y2 - y3) + x2 * (y3 - y1) +
+                x3 * (y1 - y2)) / 2.0);
+    }
+
     @Override
     public boolean isPointInside(int xD, int yD) {
-        double denominator = ((this.y2 - this.y3) * (this.x1 - this.x3) + (this.x3 - this.x2) * (this.y1 - this.y3));
-        double b1 = ((this.y2 - this.y3) * (this.x1 - this.x3) + (this.x3 - this.x2) * (this.y1 - this.y3))
-                / denominator;
-        double b2 = ((this.y3 - this.y1) * (this.x1 - this.x3) + (this.x1 - this.x3) * (this.y1 - this.y3))
-                / denominator;
-        double b3 = 1.0f - b1 - b2;
+        double A = area(this.x1, this.y1, this.x2, this.y2, this.x3, this.y3);
 
-        // Check if the point lies inside the triangle
-        return b1 >= 0 && b2 >= 0 && b3 >= 0;
+        double A1 = area(xD, yD, this.x2, this.y2, this.x3, this.y3);
+
+        double A2 = area(this.x1, this.y1, xD, yD, this.x3, this.y3);
+
+        double A3 = area(this.x1, this.y1, this.x2, this.y2, xD, yD);
+
+        return (A == A1 + A2 + A3);
     }
 
     @Override
