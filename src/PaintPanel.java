@@ -11,6 +11,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -22,6 +23,7 @@ import javax.swing.SwingUtilities;
 import Shapes.Circle;
 import Shapes.Ellipse;
 import Shapes.EraserTool;
+import Shapes.ImageShape;
 import Shapes.Line;
 import Shapes.PencilTool;
 import Shapes.Rectangle;
@@ -39,6 +41,7 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 	private final int CIRCLE_TOOL = 3;
 	private final int SELECT_TOOL = 4;
 	private final int TEXT_TOOL = 5;
+	private final int IMAGE_TOOL = 12;
 	private final int MOVE_TOOL = 10;
 	private final int ERASER_TOOL = 6;
 	private final int FILL_TOOL = 7;
@@ -52,6 +55,7 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 	// private final int TEXT = 5;
 
 	private TextDialog td;
+	private ImageDialog imgd;
 	private BasicStroke stroke = new BasicStroke((float) 2);
 	BufferedImage canvas;
 	Graphics2D graphics2D;
@@ -119,6 +123,7 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 		this.preview = new Stack<Shape>();
 		this.transparent = true;
 		td = new TextDialog(frame);
+		imgd = new ImageDialog(frame);
 		// if the mouse is pressed it sets the oldX & oldY
 		// coordinates as the mouses x & y coordinates
 
@@ -570,6 +575,16 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 																												// font
 			}
 
+		} else if (activeTool == IMAGE_TOOL) {
+			int i = imgd.showCustomDialog(frame);
+			if (i == ImageDialog.APPLY_OPTION) {
+				int width = imgd.getWidthValue();
+				int height = imgd.getHeightValue();
+				File selectedFile = imgd.getSelectedFile();
+				if (selectedFile != null) {
+					shapes.push(new ImageShape(x1, y1, selectedFile, width, height));
+				}
+			}
 		} else if (activeTool == MOVE_TOOL && selectedShape != null) {
 			selectedShape = null;
 		} else if (activeTool == FILL_TOOL) {
