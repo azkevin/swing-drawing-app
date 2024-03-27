@@ -18,7 +18,7 @@ Created by:
 
 ## Update Credit:
 This project was updated as part of UE21CS352B, an Object Oriented Analysis and Design with Java class at PES University.
-Changes include refactoring the code to align with the MVC architecture, fixing minor compatibility issues and adding a few functionalities.
+Changes include refactoring the code to align with the MVC architecture, fixing minor compatibility issues and adding more features such as Move, Import Image and more Shapes.
 
 Updated by:
 - Adnan Zaki
