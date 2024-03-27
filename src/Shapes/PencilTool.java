@@ -4,7 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class PencilTool implements Shape, Cloneable {
+public class PencilTool implements Shape {
     private int x1;
     private int y1;
     private int x2;
@@ -76,15 +76,5 @@ public class PencilTool implements Shape, Cloneable {
         g.setColor(color);
         g.setStroke(stroke);
         g.drawLine(x1, y1, x2, y2);
-    }
-
-    @Override
-    public PencilTool clone() {
-        try {
-            return (PencilTool) super.clone();
-        } catch (CloneNotSupportedException e) {
-            // Should never happen because PencilTool implements Cloneable
-            throw new InternalError(e);
-        }
     }
 }

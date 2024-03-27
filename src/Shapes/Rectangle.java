@@ -4,7 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Rectangle implements Shape, Cloneable {
+public class Rectangle implements Shape {
 
     private int x1;
     private int y1;
@@ -87,18 +87,6 @@ public class Rectangle implements Shape, Cloneable {
             g.setColor(color);
             g.setStroke(stroke);
             g.drawRect(x1, y1, width, height);
-        }
-    }
-
-    @Override
-    public Rectangle clone() {
-        try {
-            Rectangle clonedRect = (Rectangle) super.clone();
-            // Create a new instance of Color and BasicStroke to avoid shallow copy
-            return clonedRect;
-        } catch (CloneNotSupportedException e) {
-            // Should never happen because Rectangle implements Cloneable
-            throw new InternalError(e);
         }
     }
 }

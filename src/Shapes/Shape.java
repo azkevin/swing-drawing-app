@@ -24,6 +24,4 @@ public interface Shape {
     void displace(int dx, int dy);
 
     void draw(Graphics2D g); // Let each shape implementation define how to draw itself
-
-    Shape clone();
 }

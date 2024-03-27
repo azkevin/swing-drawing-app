@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class ImageShape implements Shape, Cloneable {
+public class ImageShape implements Shape {
 
     private int x1;
     private int y1;
@@ -92,18 +92,6 @@ public class ImageShape implements Shape, Cloneable {
     public void draw(Graphics2D g) {
         if (imageBuffered != null) {
             g.drawImage(imageBuffered, x1, y1, width, height, null);
-        }
-    }
-
-    @Override
-    public ImageShape clone() {
-        try {
-            ImageShape clonedShape = (ImageShape) super.clone();
-            // Create a deep copy of the BufferedImage
-            return clonedShape;
-        } catch (CloneNotSupportedException e) {
-            // Should never happen because ImageShape implements Cloneable
-            throw new InternalError(e);
         }
     }
 }
