@@ -4,7 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Circle implements Shape {
+public class Circle implements Shape, Cloneable {
 
     private int x;
     private int y;
@@ -85,6 +85,19 @@ public class Circle implements Shape {
             g.setColor(color);
             g.setStroke(stroke);
             g.drawOval(x, y, 2 * radius, 2 * radius);
+        }
+    }
+
+    @Override
+    public Circle clone() {
+        try {
+            Circle clonedCircle = (Circle) super.clone();
+            // Create new instances for mutable fields to ensure deep copy
+            // No need to clone fillColor and transparent, they are immutable
+            return clonedCircle;
+        } catch (CloneNotSupportedException e) {
+            // Should never happen because Circle implements Cloneable
+            throw new InternalError(e);
         }
     }
 }

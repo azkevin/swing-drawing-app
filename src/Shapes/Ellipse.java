@@ -4,7 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Ellipse implements Shape {
+public class Ellipse implements Shape, Cloneable {
 
     private int x1;
     private int y1;
@@ -95,6 +95,18 @@ public class Ellipse implements Shape {
             g.setColor(color);
             g.setStroke(stroke);
             g.drawOval(x1, y1, Math.abs(x2 - x1), Math.abs(y2 - y1));
+        }
+    }
+
+    @Override
+    public Ellipse clone() {
+        try {
+            Ellipse clonedEllipse = (Ellipse) super.clone();
+            // Create new instances for mutable fields to ensure deep copy
+            return clonedEllipse;
+        } catch (CloneNotSupportedException e) {
+            // Should never happen because Ellipse implements Cloneable
+            throw new InternalError(e);
         }
     }
 }

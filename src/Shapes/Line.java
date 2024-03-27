@@ -4,7 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Line implements Shape {
+public class Line implements Shape, Cloneable {
 
     private int x1;
     private int y1;
@@ -78,5 +78,15 @@ public class Line implements Shape {
         g.setColor(color);
         g.setStroke(stroke);
         g.drawLine(x1, y1, x2, y2);
+    }
+
+    @Override
+    public Line clone() {
+        try {
+            return (Line) super.clone();
+        } catch (CloneNotSupportedException e) {
+            // Should never happen because Line implements Cloneable
+            throw new InternalError(e);
+        }
     }
 }

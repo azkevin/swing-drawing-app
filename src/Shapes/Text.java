@@ -7,7 +7,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 
-public class Text implements Shape {
+public class Text implements Shape, Cloneable {
 
     private final String text;
     private int x;
@@ -96,5 +96,15 @@ public class Text implements Shape {
         System.out.println(this.y);
         System.out.println(this.width);
         System.out.println(this.height);
+    }
+
+    @Override
+    public Text clone() {
+        try {
+            return (Text) super.clone();
+        } catch (CloneNotSupportedException e) {
+            // Should never happen because Text implements Cloneable
+            throw new InternalError(e);
+        }
     }
 }

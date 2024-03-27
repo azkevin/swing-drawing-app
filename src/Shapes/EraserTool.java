@@ -76,4 +76,9 @@ public class EraserTool implements Shape {
         g.drawLine(x1, y1, x2, y2);
     }
 
+    @Override
+    public EraserTool clone() {
+        // not applicable
+        return null;
+    }
 }

@@ -4,7 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Triangle implements Shape {
+public class Triangle implements Shape, Cloneable {
 
     private int x1;
     private int y1;
@@ -120,6 +120,16 @@ public class Triangle implements Shape {
             g.setColor(color);
             g.setStroke(stroke);
             g.drawPolygon(xPoints, yPoints, 3);
+        }
+    }
+
+    @Override
+    public Triangle clone() {
+        try {
+            return (Triangle) super.clone();
+        } catch (CloneNotSupportedException e) {
+            // Should never happen because Triangle implements Cloneable
+            throw new InternalError(e);
         }
     }
 }

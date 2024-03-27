@@ -4,7 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Square implements Shape {
+public class Square implements Shape, Cloneable {
 
     private int x1;
     private int y1;
@@ -84,6 +84,16 @@ public class Square implements Shape {
             g.setColor(color);
             g.setStroke(stroke);
             g.drawRect(x1, y1, side, side);
+        }
+    }
+
+    @Override
+    public Square clone() {
+        try {
+            return (Square) super.clone();
+        } catch (CloneNotSupportedException e) {
+            // Should never happen because Square implements Cloneable
+            throw new InternalError(e);
         }
     }
 }
