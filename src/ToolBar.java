@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -42,6 +43,7 @@ public class ToolBar implements ActionListener {
 	private JButton fill;
 	private JButton undo;
 	private JButton redo;
+	private JButton delete;
 	private JButton clear;
 	private Dimension newDimensions = new Dimension(700, 500);
 	private JButton save;
@@ -62,6 +64,7 @@ public class ToolBar implements ActionListener {
 		this.initializeToolBar();
 		td = new TextDialog(frame);
 		imgd = new ImageDialog(frame);
+		delete.addActionListener(this);
 		clear.addActionListener(this);
 		rectangle.addActionListener(this);
 		square.addActionListener(this);
@@ -82,6 +85,12 @@ public class ToolBar implements ActionListener {
 		newFile.addActionListener(this);
 	}
 
+	private ImageIcon resizeImageIcon(String imagePath, int width, int height) {
+		ImageIcon icon = new ImageIcon(this.getClass().getResource(imagePath));
+		Image image = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		return new ImageIcon(image);
+	}
+
 	private void initializeToolBar() {
 		// ----------------
 		// create buttons for the tool bar
@@ -89,27 +98,28 @@ public class ToolBar implements ActionListener {
 		toolBar = new JToolBar(JToolBar.VERTICAL);
 		toolBar.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
 		toolBar.setFloatable(false);
-		toolBar.setLayout(new GridLayout(22, 0));
+		toolBar.setLayout(new GridLayout(23, 0));
 
 		// toolBar.setBackground( new Color(0, 153, 204));
 
-		save = new JButton("Save", new ImageIcon(this.getClass().getResource("/icons/Save-24.png")));
-		open = new JButton("Open", new ImageIcon(this.getClass().getResource("/icons/Add Folder-24.png")));
-		newFile = new JButton("New", new ImageIcon(this.getClass().getResource("/icons/Create New-24.png")));
-		pencil = new JButton("Pencil", new ImageIcon(this.getClass().getResource("/icons/Pencil-24.png")));
-		line = new JButton("Line", new ImageIcon(this.getClass().getResource("/icons/Line-24.png")));
-		rectangle = new JButton("Rectangle", new ImageIcon(this.getClass().getResource("/icons/Rectangle-24.png")));
-		square = new JButton("Square", new ImageIcon(this.getClass().getResource("/icons/Rectangle-24.png")));
-		triangle = new JButton("Triangle", new ImageIcon(this.getClass().getResource("/icons/Rectangle-24.png")));
-		circle = new JButton("Circle", new ImageIcon(this.getClass().getResource("/icons/Circled.png")));
-		ellipse = new JButton("Ellipse", new ImageIcon(this.getClass().getResource("/icons/Circled.png")));
-		text = new JButton("Text", new ImageIcon(this.getClass().getResource("/icons/Type-24.png")));
-		imageBtn = new JButton("Image", new ImageIcon(this.getClass().getResource("/icons/Type-24.png")));
-		move = new JButton("Move", new ImageIcon(this.getClass().getResource("/icons/Type-24.png")));
-		erase = new JButton("Erase", new ImageIcon(this.getClass().getResource("/icons/Eraser-24.png")));
-		undo = new JButton("Undo", new ImageIcon(this.getClass().getResource("/icons/Undo-24.png")));
-		redo = new JButton("Redo", new ImageIcon(this.getClass().getResource("/icons/Redo-24.png")));
-		clear = new JButton("Clear", new ImageIcon(this.getClass().getResource("/icons/Trash-24.png")));
+		save = new JButton("Save", resizeImageIcon("/icons/save.png", 24, 24));
+		open = new JButton("Open", resizeImageIcon("/icons/open-file.png", 28, 28));
+		newFile = new JButton("New", resizeImageIcon("/icons/new-file.png", 24, 24));
+		pencil = new JButton("Pencil", resizeImageIcon("/icons/pencil.png", 24, 24));
+		line = new JButton("Line", resizeImageIcon("/icons/line.png", 24, 24));
+		rectangle = new JButton("Rectangle", resizeImageIcon("/icons/rectangle.png", 30, 30));
+		square = new JButton("Square", resizeImageIcon("/icons/square.png", 24, 24));
+		triangle = new JButton("Triangle", resizeImageIcon("/icons/triangle.png", 24, 24));
+		circle = new JButton("Circle", resizeImageIcon("/icons/circle.png", 24, 24));
+		ellipse = new JButton("Ellipse", resizeImageIcon("/icons/ellipse.png", 30, 30));
+		text = new JButton("Text", resizeImageIcon("/icons/text.png", 24, 24));
+		imageBtn = new JButton("Image", resizeImageIcon("/icons/image.png", 24, 24));
+		move = new JButton("Move", resizeImageIcon("/icons/move.png", 24, 24));
+		erase = new JButton("Erase", resizeImageIcon("/icons/eraser.png", 24, 24));
+		undo = new JButton("Undo", resizeImageIcon("/icons/undo.png", 24, 24));
+		redo = new JButton("Redo", resizeImageIcon("/icons/redo.png", 24, 24));
+		clear = new JButton("Clear", resizeImageIcon("/icons/clear.png", 24, 24));
+		delete = new JButton("Delete", resizeImageIcon("/icons/delete.png", 24, 24));
 
 		String[] items = { "Line Width", "1", "2", "3", "4", "5", "6", "7", "8" };
 
@@ -135,6 +145,7 @@ public class ToolBar implements ActionListener {
 		toolBar.add(imageBtn);
 		toolBar.add(move);
 		toolBar.add(erase);
+		toolBar.add(delete);
 		toolBar.add(clear);
 		toolBar.addSeparator();
 		toolBar.add(undo);
@@ -148,6 +159,8 @@ public class ToolBar implements ActionListener {
 
 		if (source == clear) {
 			frame.getInkPanel().clear();
+		} else if (source == delete) {
+			frame.getInkPanel().setTool(13);
 		} else if (source == pencil) {
 			frame.getInkPanel().setTool(0);
 		} else if (source == line) {

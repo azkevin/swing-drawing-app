@@ -47,12 +47,7 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 	private final int FILL_TOOL = 7;
 	private final int ELLIPSE_TOOL = 8;
 	private final int TRIANGLE_TOOL = 9;
-
-	// private final int LINE = 1;
-	// private final int RECTANGLE = 2;
-	// private final int CIRCLE = 3;
-	// private final int TRIANGLE = 4;
-	// private final int TEXT = 5;
+	private final int DELETE_TOOL = 13;
 
 	private TextDialog td;
 	private ImageDialog imgd;
@@ -609,8 +604,35 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 			}
 			operations.push(new OperationWrapper(OperationType.DRAW));
 			repaint();
-		} else if (activeTool == SELECT_TOOL) {
+		} else if (activeTool == DELETE_TOOL) {
+			Stack<Shape> temp = new Stack<Shape>();
 
+			while (!shapes.isEmpty()) {
+				Shape shape = shapes.pop();
+				if (shape.isPointInside(e.getX(), e.getY())) {
+					if (shape.getGroup() != 0) {
+						/////////////////////////////////////////////
+						while (!temp.isEmpty()) {
+							shapes.push(temp.pop());
+						}
+
+						while (!shapes.isEmpty()) {
+							Shape shape2 = shapes.pop();
+							if (shape2.getGroup() != shape.getGroup()) {
+								temp.push(shape2);
+							}
+						}
+						/////////////////////////////////////////////
+					}
+					break;
+				} else {
+					temp.push(shape);
+				}
+			}
+
+			while (!temp.isEmpty()) {
+				shapes.push(temp.pop());
+			}
 		} else if (activeTool == TEXT_TOOL) {
 			int i = td.showCustomDialog(frame);
 			if (i == TextDialog.APPLY_OPTION) {

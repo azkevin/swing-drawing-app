@@ -60,9 +60,31 @@ public class Line implements Shape {
 
     @Override
     public boolean isPointInside(int xD, int yD) {
-        float m = (float) (this.y2 - this.y1) / (this.x2 - this.x1);
-        float c = this.y1 - m * this.x1;
-        return yD == m * xD + c;
+        // double m = (this.y2 - this.y1) / (this.x2 - this.x1);
+        // double c = this.y1 - m * this.x1;
+        // for (double i = -5; i < 6; i++) {
+        // for (double j = -5; j < 6; j++) {
+        // double x = xD + i;
+        // double y = yD + j;
+        // if (y == m * x + c) {
+        // return true;
+        // }
+
+        // }
+        // }
+        // return false;
+
+        double distance1 = distanceWithBuffer(x1, y1, x2, y2);
+        double distance2 = distanceWithBuffer(x1, y1, xD, yD);
+        double distance3 = distanceWithBuffer(xD, yD, x2, y2);
+
+        return Math.abs(distance2 + distance3 - distance1) < 5;
+
+    }
+
+    public double distanceWithBuffer(double x1, double y1, double x2, double y2) {
+        double distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        return Math.abs(distance);
     }
 
     @Override
