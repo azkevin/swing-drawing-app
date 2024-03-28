@@ -60,19 +60,6 @@ public class Line implements Shape {
 
     @Override
     public boolean isPointInside(int xD, int yD) {
-        // double m = (this.y2 - this.y1) / (this.x2 - this.x1);
-        // double c = this.y1 - m * this.x1;
-        // for (double i = -5; i < 6; i++) {
-        // for (double j = -5; j < 6; j++) {
-        // double x = xD + i;
-        // double y = yD + j;
-        // if (y == m * x + c) {
-        // return true;
-        // }
-
-        // }
-        // }
-        // return false;
 
         double distance1 = distanceWithBuffer(x1, y1, x2, y2);
         double distance2 = distanceWithBuffer(x1, y1, xD, yD);
