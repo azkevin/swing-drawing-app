@@ -61,15 +61,15 @@ public class Line implements Shape {
     @Override
     public boolean isPointInside(int xD, int yD) {
 
-        double distance1 = distanceWithBuffer(x1, y1, x2, y2);
-        double distance2 = distanceWithBuffer(x1, y1, xD, yD);
-        double distance3 = distanceWithBuffer(xD, yD, x2, y2);
+        double distance1 = distance(x1, y1, x2, y2);
+        double distance2 = distance(x1, y1, xD, yD);
+        double distance3 = distance(xD, yD, x2, y2);
 
-        return Math.abs(distance2 + distance3 - distance1) < 5;
+        return Math.abs(distance2 + distance3 - distance1) <= 2;
 
     }
 
-    public double distanceWithBuffer(double x1, double y1, double x2, double y2) {
+    private double distance(double x1, double y1, double x2, double y2) {
         double distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
         return Math.abs(distance);
     }

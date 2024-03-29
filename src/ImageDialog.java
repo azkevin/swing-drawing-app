@@ -14,8 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class ImageDialog extends JDialog implements ActionListener {
-    static final long serialVersionUID = 43L;
-
     public static final int APPLY_OPTION = 0;
     public static final int CANCEL_OPTION = 1;
     int userResponse;

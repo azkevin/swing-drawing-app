@@ -13,7 +13,6 @@ import javax.swing.JToolBar;
 import javax.swing.border.Border;
 
 public class ColorChooser extends JPanel implements ActionListener {
-	private static final long serialVersionUID = -2358101254605896432L;
 	private JButton[] colorButtons;
 
 	private JButton primaryColor;

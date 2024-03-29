@@ -24,9 +24,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class TextDialog extends JDialog implements ActionListener, ChangeListener {
-	// the following avoids a "warning" with Java 1.5.0 complier (?)
-	static final long serialVersionUID = 42L;
-
 	public static final int APPLY_OPTION = 0;
 	public static final int CANCEL_OPTION = 1;
 	int userResponse;

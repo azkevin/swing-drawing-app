@@ -33,13 +33,11 @@ import Shapes.Text;
 import Shapes.Triangle;
 
 public class PaintPanel extends JPanel implements MouseListener, MouseMotionListener {
-	private static final long serialVersionUID = 2032329974746950013L;
 	private final int PENCIL_TOOL = 0;
 	private final int LINE_TOOL = 1;
 	private final int RECTANGLE_TOOL = 2;
 	private final int SQUARE_TOOL = 11;
 	private final int CIRCLE_TOOL = 3;
-	private final int SELECT_TOOL = 4;
 	private final int TEXT_TOOL = 5;
 	private final int IMAGE_TOOL = 12;
 	private final int MOVE_TOOL = 10;
@@ -199,14 +197,14 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 				Shape toMove = lastOperation.getShape();
 
 				if (toMove.getGroup() == 0) {
-					lastOperation.getShape().displace(-lastOperation.deltaX, -lastOperation.deltaY);
+					lastOperation.getShape().displace(-lastOperation.getDeltaX(), -lastOperation.getDeltaY());
 				} else {
 					Iterator<Shape> itr = shapes.iterator();
 
 					while (itr.hasNext()) {
 						Shape nextShape = itr.next();
 						if (nextShape.getGroup() == toMove.getGroup()) {
-							nextShape.displace(-lastOperation.deltaX, -lastOperation.deltaY);
+							nextShape.displace(-lastOperation.getDeltaX(), -lastOperation.getDeltaY());
 						}
 
 					}
@@ -236,14 +234,14 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 			Shape toMove = lastOperation.getShape();
 
 			if (toMove.getGroup() == 0) {
-				lastOperation.getShape().displace(lastOperation.deltaX, lastOperation.deltaY);
+				lastOperation.getShape().displace(lastOperation.getDeltaX(), lastOperation.getDeltaY());
 			} else {
 				Iterator<Shape> itr = shapes.iterator();
 
 				while (itr.hasNext()) {
 					Shape nextShape = itr.next();
 					if (nextShape.getGroup() == toMove.getGroup()) {
-						nextShape.displace(lastOperation.deltaX, lastOperation.deltaY);
+						nextShape.displace(lastOperation.getDeltaX(), lastOperation.getDeltaY());
 					}
 				}
 			}

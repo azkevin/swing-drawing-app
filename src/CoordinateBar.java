@@ -6,7 +6,6 @@ import javax.swing.JLabel;
 import javax.swing.JToolBar;
 
 public class CoordinateBar extends JToolBar {
-	private static final long serialVersionUID = -3379603174188645836L;
 	private JLabel coordinates;
 	private JLabel frameSize;
 	private Separator separator;
