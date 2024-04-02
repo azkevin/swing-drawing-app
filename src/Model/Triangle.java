@@ -14,8 +14,8 @@ public class Triangle implements Shape {
     private int y3;
     private final Color color;
     private final BasicStroke stroke;
-    private final Color fillColor;
-    private final boolean transparent;
+    private Color fillColor;
+    private boolean transparent;
     private final int group = 0;
 
     public Triangle(int x1, int y1, int x2, int y2, int x3, int y3, Color color, BasicStroke stroke, Color fillColor,
@@ -106,6 +106,12 @@ public class Triangle implements Shape {
         this.y1 += dy;
         this.y2 += dy;
         this.y3 += dy;
+    }
+
+    @Override
+    public void fill(Color fillColor) {
+        this.fillColor = fillColor;
+        this.transparent = false;
     }
 
     @Override

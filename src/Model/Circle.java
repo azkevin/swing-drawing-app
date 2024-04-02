@@ -11,8 +11,8 @@ public class Circle implements Shape {
     private final int radius;
     private final Color color;
     private final BasicStroke stroke;
-    private final Color fillColor;
-    private final boolean transparent;
+    private Color fillColor;
+    private boolean transparent;
     private final int group = 0;
 
     public Circle(int x, int y, int radius, Color color, BasicStroke stroke, Color fillColor, boolean transparent) {
@@ -73,6 +73,12 @@ public class Circle implements Shape {
     public void displace(int dx, int dy) {
         this.x += dx;
         this.y += dy;
+    }
+
+    @Override
+    public void fill(Color fillColor) {
+        this.fillColor = fillColor;
+        this.transparent = false;
     }
 
     @Override

@@ -75,6 +75,7 @@ public class ToolBar implements ActionListener {
 		text.addActionListener(this);
 		imageBtn.addActionListener(this);
 		move.addActionListener(this);
+		fill.addActionListener(this);
 		save.addActionListener(this);
 		open.addActionListener(this);
 		newFile.addActionListener(this);
@@ -93,7 +94,7 @@ public class ToolBar implements ActionListener {
 		toolBar = new JToolBar(JToolBar.VERTICAL);
 		toolBar.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.BLACK));
 		toolBar.setFloatable(false);
-		toolBar.setLayout(new GridLayout(23, 0));
+		toolBar.setLayout(new GridLayout(24, 0));
 
 		// toolBar.setBackground( new Color(0, 153, 204));
 
@@ -110,6 +111,7 @@ public class ToolBar implements ActionListener {
 		text = new JButton("Text", resizeImageIcon("/icons/text.png", 24, 24));
 		imageBtn = new JButton("Image", resizeImageIcon("/icons/image.png", 24, 24));
 		move = new JButton("Move", resizeImageIcon("/icons/move.png", 24, 24));
+		fill = new JButton("Fill", resizeImageIcon("/icons/move.png", 24, 24));
 		erase = new JButton("Erase", resizeImageIcon("/icons/eraser.png", 24, 24));
 		undo = new JButton("Undo", resizeImageIcon("/icons/undo.png", 24, 24));
 		redo = new JButton("Redo", resizeImageIcon("/icons/redo.png", 24, 24));
@@ -139,6 +141,7 @@ public class ToolBar implements ActionListener {
 		toolBar.add(text);
 		toolBar.add(imageBtn);
 		toolBar.add(move);
+		toolBar.add(fill);
 		toolBar.add(erase);
 		toolBar.add(delete);
 		toolBar.add(clear);

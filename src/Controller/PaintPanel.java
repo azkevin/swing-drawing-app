@@ -11,12 +11,9 @@ import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.geom.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Stack;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -248,28 +245,6 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 
 	public void setTransparency(Boolean b) {
 		this.transparent = b;
-	}
-
-	public void floodFill(Point2D.Double point, Color fillColor) {
-		Color targetColor = new Color(canvas.getRGB((int) point.getX(), (int) point.getY()));
-		Queue<Point2D.Double> queue = new LinkedList<Point2D.Double>();
-		queue.add(point);
-		if (!targetColor.equals(fillColor))
-			;
-		while (!queue.isEmpty()) {
-			Point2D.Double p = queue.remove();
-
-			if ((int) p.getX() >= 0 && (int) p.getX() < canvas.getWidth() &&
-					(int) p.getY() >= 0 && (int) p.getY() < canvas.getHeight())
-				if (canvas.getRGB((int) p.getX(), (int) p.getY()) == targetColor.getRGB()) {
-					canvas.setRGB((int) p.getX(), (int) p.getY(), fillColor.getRGB());
-					queue.add(new Point2D.Double(p.getX() - 1, p.getY()));
-					queue.add(new Point2D.Double(p.getX() + 1, p.getY()));
-					queue.add(new Point2D.Double(p.getX(), p.getY() - 1));
-					queue.add(new Point2D.Double(p.getX(), p.getY() + 1));
-					// System.out.println("0");
-				}
-		}
 	}
 
 	@Override
@@ -638,7 +613,23 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 
 			selectedShape = null;
 		} else if (activeTool == FILL_TOOL) {
-			floodFill(new Point2D.Double(x1, y1), fillColor);
+			Stack<Shape> temp = new Stack<Shape>();
+
+			while (!shapes.isEmpty()) {
+				Shape shape = shapes.pop();
+				if (shape.isPointInside(e.getX(), e.getY()) && shape.getGroup() == 0) {
+					// TODO fill logic
+					shape.fill(fillColor);
+					shapes.push(shape);
+					break;
+				} else {
+					temp.push(shape);
+				}
+			}
+
+			while (!temp.isEmpty()) {
+				shapes.push(temp.pop());
+			}
 		}
 
 		dragged = false;
@@ -714,6 +705,7 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 	// Enum to represent types of operations
 	private enum OperationType {
 		DRAW,
-		MOVE
+		MOVE,
+		FILL
 	}
 }

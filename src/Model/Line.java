@@ -83,6 +83,11 @@ public class Line implements Shape {
     }
 
     @Override
+    public void fill(Color fillColor) {
+        // nothing to do, NA
+    }
+
+    @Override
     public void draw(Graphics2D g) {
         g.setColor(color);
         g.setStroke(stroke);

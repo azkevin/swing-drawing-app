@@ -12,8 +12,8 @@ public class Ellipse implements Shape {
     private int y2;
     private final Color color;
     private final BasicStroke stroke;
-    private final Color fillColor;
-    private final boolean transparent;
+    private Color fillColor;
+    private boolean transparent;
     private final int group = 0;
 
     public Ellipse(int x1, int y1, int x2, int y2, Color color, BasicStroke stroke, Color fillColor,
@@ -83,6 +83,12 @@ public class Ellipse implements Shape {
         this.x2 += dx;
         this.y1 += dy;
         this.y2 += dy;
+    }
+
+    @Override
+    public void fill(Color fillColor) {
+        this.fillColor = fillColor;
+        this.transparent = false;
     }
 
     @Override

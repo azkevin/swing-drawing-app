@@ -11,8 +11,8 @@ public class Square implements Shape {
     private final int side;
     private final Color color;
     private final BasicStroke stroke;
-    private final Color fillColor;
-    private final boolean transparent;
+    private Color fillColor;
+    private boolean transparent;
     private final int group = 0;
 
     public Square(int x1, int y1, int side, Color color, BasicStroke stroke, Color fillColor,
@@ -72,6 +72,12 @@ public class Square implements Shape {
     public void displace(int dx, int dy) {
         this.x1 += dx;
         this.y1 += dy;
+    }
+
+    @Override
+    public void fill(Color fillColor) {
+        this.fillColor = fillColor;
+        this.transparent = false;
     }
 
     @Override
