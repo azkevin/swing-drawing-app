@@ -111,7 +111,7 @@ public class ToolBar implements ActionListener {
 		text = new JButton("Text", resizeImageIcon("/icons/text.png", 24, 24));
 		imageBtn = new JButton("Image", resizeImageIcon("/icons/image.png", 24, 24));
 		move = new JButton("Move", resizeImageIcon("/icons/move.png", 24, 24));
-		fill = new JButton("Fill", resizeImageIcon("/icons/move.png", 24, 24));
+		fill = new JButton("Fill", resizeImageIcon("/icons/fill.png", 24, 24));
 		erase = new JButton("Erase", resizeImageIcon("/icons/eraser.png", 24, 24));
 		undo = new JButton("Undo", resizeImageIcon("/icons/undo.png", 24, 24));
 		redo = new JButton("Redo", resizeImageIcon("/icons/redo.png", 24, 24));
