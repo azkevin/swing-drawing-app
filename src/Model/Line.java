@@ -49,6 +49,12 @@ public class Line implements Shape {
     }
 
     @Override
+    public Color getFillColor() {
+        // not applicable
+        return null;
+    }
+
+    @Override
     public BasicStroke getStroke() {
         return stroke;
     }

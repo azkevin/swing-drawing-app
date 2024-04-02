@@ -15,6 +15,8 @@ public interface Shape {
 
     Color getColor();
 
+    Color getFillColor();
+
     BasicStroke getStroke();
 
     int getGroup();

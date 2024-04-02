@@ -67,6 +67,12 @@ public class ImageShape implements Shape {
     }
 
     @Override
+    public Color getFillColor() {
+        // Not applicable
+        return null;
+    }
+
+    @Override
     public BasicStroke getStroke() {
         // Not applicable
         return null;

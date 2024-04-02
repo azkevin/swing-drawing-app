@@ -54,6 +54,13 @@ public class Ellipse implements Shape {
     }
 
     @Override
+    public Color getFillColor() {
+        if (transparent)
+            return null;
+        return fillColor;
+    }
+
+    @Override
     public BasicStroke getStroke() {
         return stroke;
     }

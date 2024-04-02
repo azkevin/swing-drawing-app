@@ -155,6 +155,11 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 		graphics2D.setColor(currentColor);
 	}
 
+	public void clearRedoStack() {
+		removed.removeAllElements();
+		undoneOperations.removeAllElements();
+	}
+
 	public void undo() {
 		if (!operations.isEmpty()) {
 			OperationWrapper lastOperation = operations.pop();
@@ -171,7 +176,9 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 						repaint();
 					}
 				}
-			} else {
+			} else if (lastOperation.getType() == OperationType.FILL) {
+				lastOperation.getShape().fill(lastOperation.getFromColor());
+			} else if (lastOperation.getType() == OperationType.MOVE) {
 				Shape toMove = lastOperation.getShape();
 
 				if (toMove.getGroup() == 0) {
@@ -188,6 +195,7 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 					}
 				}
 			}
+
 			undoneOperations.add(lastOperation);
 			repaint();
 		}
@@ -208,7 +216,9 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 					repaint();
 				}
 			}
-		} else {
+		} else if (lastOperation.getType() == OperationType.FILL) {
+			lastOperation.getShape().fill(lastOperation.getToColor());
+		} else if (lastOperation.getType() == OperationType.MOVE) {
 			Shape toMove = lastOperation.getShape();
 
 			if (toMove.getGroup() == 0) {
@@ -391,31 +401,28 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		printCoords(e);
+		// not using
+		// printCoords(e);
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+		// not using
 
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		// not using
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
+		// not using
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		printCoords(e);
 		x1 = e.getX();
 		y1 = e.getY();
@@ -618,7 +625,11 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 			while (!shapes.isEmpty()) {
 				Shape shape = shapes.pop();
 				if (shape.isPointInside(e.getX(), e.getY()) && shape.getGroup() == 0) {
-					// TODO fill logic
+					Color fromColor = shape.getFillColor();
+					Color toColor = fillColor;
+
+					operations.push(new OperationWrapper(OperationType.FILL, shape, fromColor, toColor));
+
 					shape.fill(fillColor);
 					shapes.push(shape);
 					break;
@@ -668,14 +679,17 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 	}
 
 	// Inner class to wrap both draw and move operations
-	private static class OperationWrapper {
+	private class OperationWrapper {
 		private OperationType type;
 		private Shape shape;
 		private int deltaX;
 		private int deltaY;
+		private Color fromColor;
+		private Color toColor;
 
 		public OperationWrapper(OperationType type) {
 			this.type = type;
+			clearRedoStack();
 		}
 
 		public OperationWrapper(OperationType type, Shape shape, int deltaX, int deltaY) {
@@ -683,6 +697,15 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 			this.shape = shape;
 			this.deltaX = deltaX;
 			this.deltaY = deltaY;
+			clearRedoStack();
+		}
+
+		public OperationWrapper(OperationType type, Shape shape, Color fromColor, Color toColor) {
+			this.type = type;
+			this.shape = shape;
+			this.fromColor = fromColor;
+			this.toColor = toColor;
+			clearRedoStack();
 		}
 
 		public OperationType getType() {
@@ -699,6 +722,14 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 
 		public int getDeltaY() {
 			return deltaY;
+		}
+
+		public Color getFromColor() {
+			return fromColor;
+		}
+
+		public Color getToColor() {
+			return toColor;
 		}
 	}
 
