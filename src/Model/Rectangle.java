@@ -6,15 +6,27 @@ import java.awt.Graphics2D;
 
 public class Rectangle implements Shape {
 
-    private int x1;
-    private int y1;
-    private final int width;
-    private final int height;
-    private final Color color;
-    private final BasicStroke stroke;
-    private Color fillColor;
-    private boolean transparent;
-    private final int group = 0;
+    protected int x1;
+    protected int y1;
+    protected final int width;
+    protected final int height;
+    protected final Color color;
+    protected final BasicStroke stroke;
+    protected Color fillColor;
+    protected boolean transparent;
+    protected final int group = 0;
+
+    public Rectangle(int x1, int y1,int side, Color color, BasicStroke stroke, Color fillColor,
+            boolean transparent) {
+        this.x1 = x1;
+        this.y1 = y1;
+        width = side;
+        height = side;
+        this.color = color;
+        this.stroke = stroke;
+        this.fillColor = fillColor;
+        this.transparent = transparent;
+    }
 
     public Rectangle(int x1, int y1, int x2, int y2, Color color, BasicStroke stroke, Color fillColor,
             boolean transparent) {

@@ -28,6 +28,18 @@ public class Ellipse implements Shape {
         this.transparent = transparent;
     }
 
+    public Ellipse(int x1, int y1, int radius, Color color, BasicStroke stroke, Color fillColor,
+            boolean transparent) {
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x2 = x1 + 2*radius;
+        this.y2 = y1 + 2*radius;
+        this.color = color;
+        this.stroke = stroke;
+        this.fillColor = fillColor;
+        this.transparent = transparent;
+    }
+
     @Override
     public int getX1() {
         return x1; // Top-left corner for drawing
