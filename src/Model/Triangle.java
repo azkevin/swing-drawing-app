@@ -4,7 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Triangle implements Shape {
+public class Triangle implements ClosedShape {
 
     private int x1;
     private int y1;
@@ -44,23 +44,19 @@ public class Triangle implements Shape {
 
     @Override
     public int getX2() {
-        // Bottom-right corner for drawing
         return x2;
     }
 
     @Override
     public int getY2() {
-        // Bottom-right corner for drawing
         return y2;
     }
 
     public int getX3() {
-        // Bottom-right corner for drawing
         return x3;
     }
 
     public int getY3() {
-        // Bottom-right corner for drawing
         return y3;
     }
 

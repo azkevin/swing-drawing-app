@@ -4,7 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class EraserTool implements Shape {
+public class EraserTool implements MyElement {
     private final int x1;
     private final int y1;
     private final int x2;
@@ -44,40 +44,8 @@ public class EraserTool implements Shape {
     }
 
     @Override
-    public Color getColor() {
-        return color;
-    }
-
-    @Override
-    public Color getFillColor() {
-        // not applicable
-        return null;
-    }
-
-    @Override
-    public BasicStroke getStroke() {
-        return stroke;
-    }
-
-    @Override
     public int getGroup() {
         return group;
-    }
-
-    @Override
-    public boolean isPointInside(int xD, int yD) {
-        // not applicable
-        return false;
-    }
-
-    @Override
-    public void displace(int dx, int dy) {
-        // nothing to do
-    }
-
-    @Override
-    public void fill(Color fillColor) {
-        // nothing to do, NA
     }
 
     @Override

@@ -18,17 +18,7 @@ import java.util.Stack;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import Model.Circle;
-import Model.Ellipse;
-import Model.EraserTool;
-import Model.ImageShape;
-import Model.Line;
-import Model.PencilTool;
-import Model.Rectangle;
-import Model.Shape;
-import Model.Square;
-import Model.Text;
-import Model.Triangle;
+import Model.*;
 import View.DrawFrame;
 
 public class PaintPanel extends JPanel implements MouseListener, MouseMotionListener {
@@ -54,14 +44,14 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 	private int activeTool = 0;
 	private DrawFrame frame;
 
-	private Stack<Shape> shapes;
-	private Stack<Shape> removed;
-	private Stack<Shape> preview;
+	private Stack<MyElement> shapes;
+	private Stack<MyElement> removed;
+	private Stack<MyElement> preview;
 
 	private Stack<OperationWrapper> operations;
 	private Stack<OperationWrapper> undoneOperations;
 
-	private Shape selectedShape;
+	private MyElement selectedShape;
 	private int selectedShapeGroup;
 	private Point initialMousePosition;
 	private Point beforeMovePosition;
@@ -98,12 +88,12 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 		this.addMouseMotionListener(this);
 		this.frame = frame;
 		this.printPaintPanelSize(inkPanelWidth, inkPanelHeight);
-		this.shapes = new Stack<Shape>();
-		this.removed = new Stack<Shape>();
+		this.shapes = new Stack<MyElement>();
+		this.removed = new Stack<MyElement>();
 		this.operations = new Stack<OperationWrapper>();
 		this.undoneOperations = new Stack<OperationWrapper>();
 		this.grouped = 1;
-		this.preview = new Stack<Shape>();
+		this.preview = new Stack<MyElement>();
 		this.transparent = true;
 		td = new TextDialog(frame);
 		imgd = new ImageDialog(frame);
@@ -123,11 +113,11 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		for (Shape s : shapes) {
+		for (MyElement s : shapes) {
 			s.draw(g2);
 		}
 		if (!preview.isEmpty()) {
-			Shape s = preview.pop();
+			MyElement s = preview.pop();
 			s.draw(g2);
 		}
 
@@ -168,7 +158,7 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 					removed.push(shapes.pop());
 					repaint();
 				} else if (shapes.size() > 0 && shapes.peek().getGroup() != 0) {
-					Shape lastRemoved = shapes.pop();
+					MyElement lastRemoved = shapes.pop();
 					removed.push(lastRemoved);
 
 					while (!shapes.isEmpty() && shapes.peek().getGroup() == lastRemoved.getGroup()) {
@@ -177,17 +167,19 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 					}
 				}
 			} else if (lastOperation.getType() == OperationType.FILL) {
-				lastOperation.getShape().fill(lastOperation.getFromColor());
+				ClosedShape temp = (ClosedShape) lastOperation.getShape();
+				temp.fill(lastOperation.getFromColor());
 			} else if (lastOperation.getType() == OperationType.MOVE) {
-				Shape toMove = lastOperation.getShape();
+				MoveableElement toMove = (MoveableElement) lastOperation.getShape();
 
 				if (toMove.getGroup() == 0) {
-					lastOperation.getShape().displace(-lastOperation.getDeltaX(), -lastOperation.getDeltaY());
+					MoveableElement temp = (MoveableElement) lastOperation.getShape();
+					temp.displace(-lastOperation.getDeltaX(), -lastOperation.getDeltaY());
 				} else {
-					Iterator<Shape> itr = shapes.iterator();
+					Iterator<MyElement> itr = shapes.iterator();
 
 					while (itr.hasNext()) {
-						Shape nextShape = itr.next();
+						MoveableElement nextShape = (MoveableElement) itr.next();
 						if (nextShape.getGroup() == toMove.getGroup()) {
 							nextShape.displace(-lastOperation.getDeltaX(), -lastOperation.getDeltaY());
 						}
@@ -202,13 +194,17 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 	}
 
 	public void redo() {
+		if (undoneOperations.isEmpty()) {
+			return;
+		}
+
 		OperationWrapper lastOperation = undoneOperations.pop();
 		if (lastOperation.getType() == OperationType.DRAW) {
 			if (removed.size() > 0 && removed.peek().getGroup() == 0) {
 				shapes.push(removed.pop());
 				repaint();
 			} else if (removed.size() > 0 && removed.peek().getGroup() != 0) {
-				Shape lastRemoved = removed.pop();
+				MyElement lastRemoved = removed.pop();
 				shapes.push(lastRemoved);
 
 				while (removed.isEmpty() == false && removed.peek().getGroup() == lastRemoved.getGroup()) {
@@ -217,17 +213,19 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 				}
 			}
 		} else if (lastOperation.getType() == OperationType.FILL) {
-			lastOperation.getShape().fill(lastOperation.getToColor());
+			ClosedShape temp = (ClosedShape) lastOperation.getShape();
+			temp.fill(lastOperation.getToColor());
 		} else if (lastOperation.getType() == OperationType.MOVE) {
-			Shape toMove = lastOperation.getShape();
+			MoveableElement toMove = (MoveableElement) lastOperation.getShape();
 
 			if (toMove.getGroup() == 0) {
-				lastOperation.getShape().displace(lastOperation.getDeltaX(), lastOperation.getDeltaY());
+				MoveableElement temp = (MoveableElement) lastOperation.getShape();
+				temp.displace(lastOperation.getDeltaX(), lastOperation.getDeltaY());
 			} else {
-				Iterator<Shape> itr = shapes.iterator();
+				Iterator<MyElement> itr = shapes.iterator();
 
 				while (itr.hasNext()) {
-					Shape nextShape = itr.next();
+					MoveableElement nextShape = (MoveableElement) itr.next();
 					if (nextShape.getGroup() == toMove.getGroup()) {
 						nextShape.displace(lastOperation.getDeltaX(), lastOperation.getDeltaY());
 					}
@@ -259,25 +257,27 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
 		Color primary = currentColor;
 		Color secondary = fillColor;
+
 		if (SwingUtilities.isRightMouseButton(e)) {
 			primary = secondary;
 			secondary = currentColor;
 		}
+
 		printCoords(e);
 		x2 = e.getX();
 		y2 = e.getY();
+
 		dragged = true;
+
 		if (activeTool == ERASER_TOOL) {
 			shapes.push(new EraserTool(x1, y1, x2, y2, Color.white, stroke, grouped));
 			operations.push(new OperationWrapper(OperationType.DRAW));
 			repaint();
 			x1 = x2;
 			y1 = y2;
-		}
-		if (activeTool == PENCIL_TOOL) {
+		} else if (activeTool == PENCIL_TOOL) {
 			shapes.push(new PencilTool(x1, y1, x2, y2, primary, stroke, grouped));
 			operations.push(new OperationWrapper(OperationType.DRAW));
 			repaint();
@@ -289,16 +289,12 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 		} else if (activeTool == RECTANGLE_TOOL) {
 			if (x1 < x2 && y1 < y2) {
 				preview.push(new Rectangle(x1, y1, x2, y2, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
 			} else if (x2 < x1 && y1 < y2) {
 				preview.push(new Rectangle(x2, y1, x1, y2, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Rectangle2D.Double(x2, y1, x1 - x2, y2 - y1));
 			} else if (x1 < x2 && y2 < y1) {
 				preview.push(new Rectangle(x1, y2, x2, y1, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Rectangle2D.Double(x1, y2, x2 - x1, y1 - y2));
 			} else if (x2 < x1 && y2 < y1) {
 				preview.push(new Rectangle(x2, y2, x1, y1, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
 			}
 			repaint();
 		} else if (activeTool == SQUARE_TOOL) {
@@ -307,16 +303,12 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 					Math.abs(y2 - y1));
 			if (x1 < x2 && y1 < y2) {
 				preview.push(new Square(x1, y1, side, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
 			} else if (x2 < x1 && y1 < y2) {
 				preview.push(new Square(x2, y1, side, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Rectangle2D.Double(x2, y1, x1 - x2, y2 - y1));
 			} else if (x1 < x2 && y2 < y1) {
 				preview.push(new Square(x1, y2, side, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Rectangle2D.Double(x1, y2, x2 - x1, y1 - y2));
 			} else if (x2 < x1 && y2 < y1) {
 				preview.push(new Square(x2, y2, side, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
 			}
 			repaint();
 		} else if (activeTool == TRIANGLE_TOOL) {
@@ -335,8 +327,6 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 			}
 			repaint();
 		} else if (activeTool == CIRCLE_TOOL) {
-			// int radius = (int) Math.sqrt(((x1 - x2) / 2) * ((x1 - x2) / 2) + ((y1 - y2) /
-			// 2) * ((y1 - y2) / 2));
 			int radius;
 			if (Math.abs(x2 - x1) > Math.abs(y2 - y1)) {
 				radius = (int) (y2 - y1) / 2;
@@ -345,33 +335,26 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 				radius = (int) (x2 - x1) / 2;
 				radius = Math.abs(radius);
 			}
+
 			if (x1 < x2 && y1 < y2) {
 				preview.push(new Circle(x1, y1, radius, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Ellipse2D.Double(x1, y1, x2 - x1, y2 - y1));
 			} else if (x2 < x1 && y1 < y2) {
 				preview.push(new Circle(x2, y1, radius, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Ellipse2D.Double(x2, y1, x1 - x2, y2 - y1));
 			} else if (x1 < x2 && y2 < y1) {
 				preview.push(new Circle(x1, y2, radius, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Ellipse2D.Double(x1, y2, x2 - x1, y1 - y2));
 			} else if (x2 < x1 && y2 < y1) {
 				preview.push(new Circle(x2, y2, radius, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Ellipse2D.Double(x2, y2, x1 - x2, y1 - y2));
 			}
 			repaint();
 		} else if (activeTool == ELLIPSE_TOOL) {
 			if (x1 < x2 && y1 < y2) {
 				preview.push(new Ellipse(x1, y1, x2, y2, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Ellipse2D.Double(x1, y1, x2 - x1, y2 - y1));
 			} else if (x2 < x1 && y1 < y2) {
 				preview.push(new Ellipse(x2, y1, x1, y2, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Ellipse2D.Double(x2, y1, x1 - x2, y2 - y1));
 			} else if (x1 < x2 && y2 < y1) {
 				preview.push(new Ellipse(x1, y2, x2, y1, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Ellipse2D.Double(x1, y2, x2 - x1, y1 - y2));
 			} else if (x2 < x1 && y2 < y1) {
 				preview.push(new Ellipse(x2, y2, x1, y1, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Ellipse2D.Double(x2, y2, x1 - x2, y1 - y2));
 			}
 			repaint();
 		} else if (activeTool == MOVE_TOOL && selectedShape != null) {
@@ -383,15 +366,17 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 
 			// Update the shape's position based on the mouse movement
 			if (selectedShapeGroup != 0) {
-				Iterator<Shape> iterator = shapes.iterator();
+				Iterator<MyElement> iterator = shapes.iterator();
 				while (iterator.hasNext()) {
-					Shape shape = iterator.next();
+					MyElement shape = iterator.next();
 					if (shape.getGroup() == selectedShapeGroup) {
-						shape.displace(deltaX, deltaY);
+						MoveableElement temp = (MoveableElement) shape;
+						temp.displace(deltaX, deltaY);
 					}
 				}
 			} else {
-				selectedShape.displace(deltaX, deltaY);
+				MoveableElement temp = (MoveableElement) selectedShape;
+				temp.displace(deltaX, deltaY);
 			}
 
 			repaint();
@@ -402,7 +387,6 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		// not using
-		// printCoords(e);
 	}
 
 	@Override
@@ -423,23 +407,29 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		printCoords(e);
 		x1 = e.getX();
 		y1 = e.getY();
 
 		if (activeTool == MOVE_TOOL) {
-			Stack<Shape> temp = new Stack<Shape>();
+			Stack<MyElement> temp = new Stack<MyElement>();
 
 			while (!shapes.isEmpty()) {
-				Shape shape = shapes.pop();
-				if (shape.isPointInside(e.getX(), e.getY())) {
-					selectedShape = shape;
-					selectedShapeGroup = shape.getGroup();
+				MyElement shape = shapes.pop();
+
+				if (shape instanceof EraserTool) {
+					temp.push(shape);
+					continue;
+				}
+
+				MoveableElement shapeMv = (MoveableElement) shape;
+				if (shapeMv.isPointInside(e.getX(), e.getY())) {
+					selectedShape = shapeMv;
+					selectedShapeGroup = shapeMv.getGroup();
 					initialMousePosition = e.getPoint();
 					beforeMovePosition = e.getPoint();
 					break;
 				} else {
-					temp.push(shape);
+					temp.push(shapeMv);
 				}
 			}
 
@@ -455,6 +445,7 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		grouped++;
+
 		Color primary = currentColor;
 		Color secondary = fillColor;
 		if (SwingUtilities.isRightMouseButton(e)) {
@@ -466,21 +457,15 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 			shapes.push(new Line(x1, y1, x2, y2, primary, stroke));
 			operations.push(new OperationWrapper(OperationType.DRAW));
 			repaint();
-			// graphics2D.drawLine(x1, y1, x2, y2);
 		} else if (activeTool == RECTANGLE_TOOL && dragged) {
-
 			if (x1 < x2 && y1 < y2) {
 				shapes.push(new Rectangle(x1, y1, x2, y2, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
 			} else if (x2 < x1 && y1 < y2) {
 				shapes.push(new Rectangle(x2, y1, x1, y2, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Rectangle2D.Double(x2, y1, x1 - x2, y2 - y1));
 			} else if (x1 < x2 && y2 < y1) {
 				shapes.push(new Rectangle(x1, y2, x2, y1, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Rectangle2D.Double(x1, y2, x2 - x1, y1 - y2));
 			} else if (x2 < x1 && y2 < y1) {
 				shapes.push(new Rectangle(x2, y2, x1, y1, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
 			}
 			operations.push(new OperationWrapper(OperationType.DRAW));
 			repaint();
@@ -488,18 +473,15 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 			int side = Math.min(
 					Math.abs(x2 - x1),
 					Math.abs(y2 - y1));
+
 			if (x1 < x2 && y1 < y2) {
 				shapes.push(new Square(x1, y1, side, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
 			} else if (x2 < x1 && y1 < y2) {
 				shapes.push(new Square(x2, y1, side, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Rectangle2D.Double(x2, y1, x1 - x2, y2 - y1));
 			} else if (x1 < x2 && y2 < y1) {
 				shapes.push(new Square(x1, y2, side, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Rectangle2D.Double(x1, y2, x2 - x1, y1 - y2));
 			} else if (x2 < x1 && y2 < y1) {
 				shapes.push(new Square(x2, y2, side, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
 			}
 			operations.push(new OperationWrapper(OperationType.DRAW));
 			repaint();
@@ -507,25 +489,19 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 			if (x1 < x2 && y1 < y2) {
 				shapes.push(
 						new Triangle(x1, y2, (int) (x1 + x2) / 2, y1, x2, y2, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1));
 			} else if (x2 < x1 && y1 < y2) {
 				shapes.push(
 						new Triangle(x1, y2, (int) (x1 + x2) / 2, y1, x2, y2, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Rectangle2D.Double(x2, y1, x1 - x2, y2 - y1));
 			} else if (x1 < x2 && y2 < y1) {
 				shapes.push(
 						new Triangle(x1, y2, (int) (x1 + x2) / 2, y1, x2, y2, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Rectangle2D.Double(x1, y2, x2 - x1, y1 - y2));
 			} else if (x2 < x1 && y2 < y1) {
 				shapes.push(
 						new Triangle(x1, y2, (int) (x1 + x2) / 2, y1, x2, y2, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Rectangle2D.Double(x2, y2, x1 - x2, y1 - y2));
 			}
 			operations.push(new OperationWrapper(OperationType.DRAW));
 			repaint();
 		} else if (activeTool == CIRCLE_TOOL && dragged) {
-			// int radius = (int) Math.sqrt(((x1 - x2) / 2) * ((x1 - x2) / 2) + ((y1 - y2) /
-			// 2) * ((y1 - y2) / 2));
 			int radius;
 			if (Math.abs(x2 - x1) > Math.abs(y2 - y1)) {
 				radius = (int) (y2 - y1) / 2;
@@ -534,51 +510,51 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 				radius = (int) (x2 - x1) / 2;
 				radius = Math.abs(radius);
 			}
+
 			if (x1 < x2 && y1 < y2) {
 				shapes.push(new Circle(x1, y1, radius, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Ellipse2D.Double(x1, y1, x2 - x1, y2 - y1));
 			} else if (x2 < x1 && y1 < y2) {
 				shapes.push(new Circle(x2, y1, radius, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Ellipse2D.Double(x2, y1, x1 - x2, y2 - y1));
 			} else if (x1 < x2 && y2 < y1) {
 				shapes.push(new Circle(x1, y2, radius, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Ellipse2D.Double(x1, y2, x2 - x1, y1 - y2));
 			} else if (x2 < x1 && y2 < y1) {
 				shapes.push(new Circle(x2, y2, radius, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Ellipse2D.Double(x2, y2, x1 - x2, y1 - y2));
 			}
 			operations.push(new OperationWrapper(OperationType.DRAW));
 			repaint();
 		} else if (activeTool == ELLIPSE_TOOL && dragged) {
 			if (x1 < x2 && y1 < y2) {
 				shapes.push(new Ellipse(x1, y1, x2, y2, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Ellipse2D.Double(x1, y1, x2 - x1, y2 - y1));
 			} else if (x2 < x1 && y1 < y2) {
 				shapes.push(new Ellipse(x2, y1, x1, y2, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Ellipse2D.Double(x2, y1, x1 - x2, y2 - y1));
 			} else if (x1 < x2 && y2 < y1) {
 				shapes.push(new Ellipse(x1, y2, x2, y1, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Ellipse2D.Double(x1, y2, x2 - x1, y1 - y2));
 			} else if (x2 < x1 && y2 < y1) {
 				shapes.push(new Ellipse(x2, y2, x1, y1, primary, stroke, secondary, transparent));
-				// graphics2D.draw(new Ellipse2D.Double(x2, y2, x1 - x2, y1 - y2));
 			}
 			operations.push(new OperationWrapper(OperationType.DRAW));
 			repaint();
 		} else if (activeTool == DELETE_TOOL) {
-			Stack<Shape> temp = new Stack<Shape>();
+			Stack<MyElement> temp = new Stack<MyElement>();
 
 			while (!shapes.isEmpty()) {
-				Shape shape = shapes.pop();
-				if (shape.isPointInside(e.getX(), e.getY())) {
-					if (shape.getGroup() != 0) {
+				MyElement shape = shapes.pop();
+
+				if (shape instanceof EraserTool) {
+					temp.push(shape);
+					continue;
+				}
+
+				MoveableElement shapeMv = (MoveableElement) shape;
+				if (shapeMv.isPointInside(e.getX(), e.getY())) {
+					if (shapeMv.getGroup() != 0) {
 						/////////////////////////////////////////////
 						while (!temp.isEmpty()) {
 							shapes.push(temp.pop());
 						}
 
 						while (!shapes.isEmpty()) {
-							Shape shape2 = shapes.pop();
+							MyElement shape2 = shapes.pop();
 							if (shape2.getGroup() != shape.getGroup()) {
 								temp.push(shape2);
 							}
@@ -620,21 +596,28 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 
 			selectedShape = null;
 		} else if (activeTool == FILL_TOOL) {
-			Stack<Shape> temp = new Stack<Shape>();
+			Stack<MyElement> temp = new Stack<MyElement>();
 
 			while (!shapes.isEmpty()) {
-				Shape shape = shapes.pop();
-				if (shape.isPointInside(e.getX(), e.getY()) && shape.getGroup() == 0) {
-					Color fromColor = shape.getFillColor();
+				MyElement shape = shapes.pop();
+
+				if (!(shape instanceof ClosedShape)) {
+					temp.push(shape);
+					continue;
+				}
+
+				ClosedShape shapeCl = (ClosedShape) shape;
+				if (shapeCl.isPointInside(e.getX(), e.getY()) && shapeCl.getGroup() == 0) {
+					Color fromColor = shapeCl.getFillColor();
 					Color toColor = fillColor;
 
-					operations.push(new OperationWrapper(OperationType.FILL, shape, fromColor, toColor));
+					operations.push(new OperationWrapper(OperationType.FILL, shapeCl, fromColor, toColor));
 
-					shape.fill(fillColor);
-					shapes.push(shape);
+					shapeCl.fill(fillColor);
+					shapes.push(shapeCl);
 					break;
 				} else {
-					temp.push(shape);
+					temp.push(shapeCl);
 				}
 			}
 
@@ -654,7 +637,6 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 		frame.getCoordinateBar().getCoordinates().setText(posX + ",  " + posY + " px");
 	}
 
-	// print drawer panel size at status tool bar
 	public void printPaintPanelSize(int width, int height) {
 		frame.getCoordinateBar().getFrameSize().setText(width + ",  " + height + " px");
 	}
@@ -678,10 +660,17 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 
 	}
 
+	// Enum to represent types of operations
+	private enum OperationType {
+		DRAW,
+		MOVE,
+		FILL
+	}
+
 	// Inner class to wrap both draw and move operations
 	private class OperationWrapper {
 		private OperationType type;
-		private Shape shape;
+		private MyElement shape;
 		private int deltaX;
 		private int deltaY;
 		private Color fromColor;
@@ -692,7 +681,7 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 			clearRedoStack();
 		}
 
-		public OperationWrapper(OperationType type, Shape shape, int deltaX, int deltaY) {
+		public OperationWrapper(OperationType type, MyElement shape, int deltaX, int deltaY) {
 			this.type = type;
 			this.shape = shape;
 			this.deltaX = deltaX;
@@ -712,7 +701,7 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 			return type;
 		}
 
-		public Shape getShape() {
+		public MyElement getShape() {
 			return shape;
 		}
 
@@ -731,12 +720,5 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 		public Color getToColor() {
 			return toColor;
 		}
-	}
-
-	// Enum to represent types of operations
-	private enum OperationType {
-		DRAW,
-		MOVE,
-		FILL
 	}
 }

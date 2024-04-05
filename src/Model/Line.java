@@ -49,12 +49,6 @@ public class Line implements Shape {
     }
 
     @Override
-    public Color getFillColor() {
-        // not applicable
-        return null;
-    }
-
-    @Override
     public BasicStroke getStroke() {
         return stroke;
     }
@@ -86,11 +80,6 @@ public class Line implements Shape {
         this.x2 += dx;
         this.y1 += dy;
         this.y2 += dy;
-    }
-
-    @Override
-    public void fill(Color fillColor) {
-        // nothing to do, NA
     }
 
     @Override

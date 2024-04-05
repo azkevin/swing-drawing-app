@@ -4,7 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Rectangle implements Shape {
+public class Rectangle implements ClosedShape {
 
     protected int x1;
     protected int y1;
@@ -16,7 +16,7 @@ public class Rectangle implements Shape {
     protected boolean transparent;
     protected final int group = 0;
 
-    public Rectangle(int x1, int y1,int side, Color color, BasicStroke stroke, Color fillColor,
+    public Rectangle(int x1, int y1, int side, Color color, BasicStroke stroke, Color fillColor,
             boolean transparent) {
         this.x1 = x1;
         this.y1 = y1;
@@ -52,13 +52,11 @@ public class Rectangle implements Shape {
 
     @Override
     public int getX2() {
-        // Bottom-right corner for drawing
         return x1 + width;
     }
 
     @Override
     public int getY2() {
-        // Bottom-right corner for drawing
         return y1 + height;
     }
 
@@ -86,7 +84,6 @@ public class Rectangle implements Shape {
 
     @Override
     public boolean isPointInside(int xD, int yD) {
-        // return (((xD - this.x1) <= this.width) && ((yD - this.y1) <= this.height));
         return (xD >= this.x1 && xD <= (this.x1 + width) && yD >= this.y1 && yD <= (this.y1 + height));
     }
 

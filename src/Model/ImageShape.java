@@ -1,15 +1,12 @@
 package Model;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
-public class ImageShape implements Shape {
+public class ImageShape implements MoveableElement {
 
     private int x1;
     private int y1;
@@ -50,32 +47,12 @@ public class ImageShape implements Shape {
 
     @Override
     public int getX2() {
-        // Bottom-right corner for drawing
         return x1 + width;
     }
 
     @Override
     public int getY2() {
-        // Bottom-right corner for drawing
         return y1 + height;
-    }
-
-    @Override
-    public Color getColor() {
-        // Not applicable
-        return null;
-    }
-
-    @Override
-    public Color getFillColor() {
-        // Not applicable
-        return null;
-    }
-
-    @Override
-    public BasicStroke getStroke() {
-        // Not applicable
-        return null;
     }
 
     @Override
@@ -92,11 +69,6 @@ public class ImageShape implements Shape {
     public void displace(int dx, int dy) {
         this.x1 += dx;
         this.y1 += dy;
-    }
-
-    @Override
-    public void fill(Color fillColor) {
-        // nothing to do, NA
     }
 
     @Override

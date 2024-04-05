@@ -49,12 +49,6 @@ public class PencilTool implements Shape {
     }
 
     @Override
-    public Color getFillColor() {
-        // not applicable
-        return null;
-    }
-
-    @Override
     public BasicStroke getStroke() {
         return stroke;
     }
@@ -75,11 +69,6 @@ public class PencilTool implements Shape {
     @Override
     public boolean isPointInside(int xD, int yD) {
         return (this.x1 + 5 >= xD && this.x1 - 5 <= xD && this.y1 + 5 >= yD && this.y1 - 5 <= yD);
-    }
-
-    @Override
-    public void fill(Color fillColor) {
-        // nothing to do, NA
     }
 
     @Override
