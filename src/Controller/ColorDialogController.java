@@ -3,7 +3,7 @@ package Controller;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFrame;
+import java.awt.Frame;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -12,7 +12,7 @@ import View.ColorDialogView;
 public class ColorDialogController implements ActionListener, ChangeListener {
     private ColorDialogView view;
 
-    public ColorDialogController(JFrame owner, Color initialColor) {
+    public ColorDialogController(Frame owner, Color initialColor) {
         view = new ColorDialogView(owner, initialColor);
 
         // Add action listeners

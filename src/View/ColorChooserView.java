@@ -27,12 +27,14 @@ public class ColorChooserView extends JPanel {
     private final String PRIMARY_COLOR = "Primary Color";
     private final String SECONDARY_COLOR = "Secondary Color";
 
+    private JToolBar panel;
+
     public ColorChooserView() {
         initializeColorChooser();
     }
 
     private void initializeColorChooser() {
-        JToolBar panel = new JToolBar(JToolBar.HORIZONTAL);
+        panel = new JToolBar(JToolBar.HORIZONTAL);
         panel.setLayout(new FlowLayout());
         panel.setBorder(BorderFactory.createMatteBorder(1, 0, 1, 0, Color.BLACK));
         panel.setFloatable(false);
@@ -153,4 +155,8 @@ public class ColorChooserView extends JPanel {
     public JRadioButton getFillRadioButton() {
         return fill;
     }
+
+    public JToolBar getToolBar() {
+		return this.panel;
+	}
 }

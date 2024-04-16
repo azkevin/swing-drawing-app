@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
-import Controller.ColorChooser;
+import Controller.ColorChooserController;
 import Controller.CoordinateBar;
 import Controller.PaintPanel;
 import Controller.ToolBar;
@@ -33,6 +33,9 @@ public class DrawFrame extends JFrame {
 	private int inkPanelHeight;
 	private final Color background = Color.GRAY;
 
+	private ColorChooserController colorChooserController;
+	private ColorChooserView colorChooserView;
+
 	// ContentPane > Toolbar, cc, InkPanel,
 	public DrawFrame() {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -49,7 +52,9 @@ public class DrawFrame extends JFrame {
 		coordinateBar = new CoordinateBar();
 
 		// create color chooser
-		colorChooser = (new ColorChooser(this)).getToolBar();
+		colorChooserView = new ColorChooserView();
+		colorChooserController = new ColorChooserController(colorChooserView, this);
+		colorChooser = colorChooserView.getToolBar();
 
 		// construct the panels needed. (INKPANEL COMES LAST)
 		inkPanel = new PaintPanel(0, this, inkPanelWidth, inkPanelHeight);

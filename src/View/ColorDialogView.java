@@ -1,8 +1,9 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
-import javax.swing.JFrame;
+import java.awt.Frame;
 import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -14,6 +15,9 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeListener;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.BorderFactory;
 
 public class ColorDialogView extends JDialog {
     public JButton ok;
@@ -27,36 +31,48 @@ public class ColorDialogView extends JDialog {
     public static final int APPLY_OPTION = 0;
     public static final int CANCEL_OPTION = 1;
 
-    public ColorDialogView(JFrame owner, Color initialColor) {
+    public ColorDialogView(Frame owner, Color initialColor) {
         super(owner, "Customize Color", true);
         initComponents(initialColor);
     }
 
     private void initComponents(Color initialColor) {
         JPanel p0 = new JPanel();
-        red = new JSlider(SwingConstants.HORIZONTAL, 0, 255, initialColor.getRed());
+        red = new JSlider(0, 255, initialColor.getRed());
         p0.add(red);
+        p0.setBorder(new TitledBorder(new EtchedBorder(), "Red"));
+
 
         JPanel p1 = new JPanel();
-        green = new JSlider(SwingConstants.HORIZONTAL, 0, 255, initialColor.getGreen());
+        green = new JSlider(0, 255, initialColor.getGreen());
         p1.add(green);
+        p1.setBorder(new TitledBorder(new EtchedBorder(), "Green"));
 
         JPanel p2 = new JPanel();
-        blue = new JSlider(SwingConstants.HORIZONTAL, 0, 255, initialColor.getBlue());
+        blue = new JSlider(0, 255, initialColor.getBlue());
         p2.add(blue);
+        p2.setAlignmentX(Component.CENTER_ALIGNMENT);
+
 
         JPanel p3 = new JPanel();
         example = new JTextField();
         example.setHorizontalAlignment(SwingConstants.CENTER);
         example.setEditable(false);
         example.setBackground(initialColor);
+        p3.setLayout(new BoxLayout(p3, BoxLayout.Y_AXIS));
         p3.add(example);
+		p3.setPreferredSize(new Dimension(250, 60));
+		p3.setMaximumSize(new Dimension(250, 60));
+		p3.setAlignmentX(Component.CENTER_ALIGNMENT);
+
 
         JPanel p4 = new JPanel();
         ok = new JButton("Apply");
         cancel = new JButton("Cancel");
         p4.add(ok);
         p4.add(cancel);
+        p4.setAlignmentX(Component.CENTER_ALIGNMENT);
+
 
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
