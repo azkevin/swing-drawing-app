@@ -37,7 +37,7 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 	private final int DELETE_TOOL = 13;
 
 	private TextDialog td;
-	private ImageDialog imgd;
+	private ImageDialogController imgd;
 	private BasicStroke stroke = new BasicStroke((float) 2);
 	BufferedImage canvas;
 	Graphics2D graphics2D;
@@ -96,7 +96,7 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 		this.preview = new Stack<MyElement>();
 		this.transparent = true;
 		td = new TextDialog(frame);
-		imgd = new ImageDialog(frame);
+		imgd = new ImageDialogController(frame);
 	}
 
 	@Override
@@ -579,7 +579,7 @@ public class PaintPanel extends JPanel implements MouseListener, MouseMotionList
 
 		} else if (activeTool == IMAGE_TOOL) {
 			int i = imgd.showCustomDialog(frame);
-			if (i == ImageDialog.APPLY_OPTION) {
+			if (i == ImageDialogController.APPLY_OPTION) {
 				int width = imgd.getWidthValue();
 				int height = imgd.getHeightValue();
 				File selectedFile = imgd.getSelectedFile();
