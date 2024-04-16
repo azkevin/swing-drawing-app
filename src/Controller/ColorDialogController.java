@@ -12,6 +12,9 @@ import View.ColorDialogView;
 public class ColorDialogController implements ActionListener, ChangeListener {
     private ColorDialogView view;
 
+    public Color selectedColor;
+    public int userResponse;
+
     public ColorDialogController(Frame owner, Color initialColor) {
         view = new ColorDialogView(owner, initialColor);
 
@@ -27,13 +30,15 @@ public class ColorDialogController implements ActionListener, ChangeListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == view.ok) {
             // User clicked "Apply"
-            Color selectedColor = view.getColor();
+            userResponse = view.APPLY_OPTION;
+            selectedColor = view.getColor();
             // Now you can use the selectedColor as needed
 
             // Close the dialog
             view.dispose();
         } else if (e.getSource() == view.cancel) {
             // User clicked "Cancel"
+            userResponse = view.CANCEL_OPTION;
             // Close the dialog without any action
             view.dispose();
         }

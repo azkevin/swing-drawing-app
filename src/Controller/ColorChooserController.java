@@ -206,6 +206,24 @@ public class ColorChooserController implements ActionListener {
                              view.getPrimaryColorButton().getBackground() :
                              view.getSecondaryColorButton().getBackground();
         ColorDialogController colorDialogController = new ColorDialogController(frame, initialColor);
+        if(colorDialogController.userResponse == 0){
+            JButton custom2Button = view.getCustom2Button();
+            JButton custom3Button = view.getCustom3Button();
+            if (view.getOptionComboBox().getSelectedItem().equals("Primary Color")){
+                JButton primaryColorButton = view.getPrimaryColorButton();
+                custom3Button.setBackground(custom2Button.getBackground());
+                custom2Button.setBackground(primaryColorButton.getBackground());
+                primaryColorButton.setBackground(colorDialogController.selectedColor);
+                frame.getInkPanel().setColor(primaryColorButton.getBackground());
+            }
+            else{
+                JButton secondaryColorButton = view.getSecondaryColorButton();
+                custom3Button.setBackground(custom2Button.getBackground());
+                custom2Button.setBackground(secondaryColorButton.getBackground());
+                secondaryColorButton.setBackground(colorDialogController.selectedColor);
+                frame.getInkPanel().setFillColor(secondaryColorButton.getBackground());
+            }
+        }
     }
     
 

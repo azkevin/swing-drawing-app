@@ -51,6 +51,7 @@ public class ColorDialogView extends JDialog {
         JPanel p2 = new JPanel();
         blue = new JSlider(0, 255, initialColor.getBlue());
         p2.add(blue);
+        p2.setBorder(new TitledBorder(new EtchedBorder(), "Blue"));
         p2.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 
